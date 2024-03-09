@@ -1,5 +1,5 @@
 package restaurant.building_blocks.food;
 
-public class Cocktail {
+public class Cocktail extends Food{
 }
 

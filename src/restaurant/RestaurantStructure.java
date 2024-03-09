@@ -1,6 +1,6 @@
 package restaurant;
 
-import restaurant.building_blocks.rooms.Kitchen;
+import restaurant.building_blocks.room.Kitchen;
 
 public class RestaurantStructure {
     public static final Kitchen KITCHEN = new Kitchen();

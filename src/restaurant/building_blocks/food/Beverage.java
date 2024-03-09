@@ -1,4 +1,4 @@
 package restaurant.building_blocks.food;
 
-public class Beverage {
+public class Beverage extends Food{
 }
