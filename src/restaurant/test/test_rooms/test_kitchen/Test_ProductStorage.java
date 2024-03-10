@@ -7,7 +7,7 @@ import restaurant.building_blocks.Product;
 import restaurant.building_blocks.room.kitchen.ProductOutOfStockException;
 import restaurant.building_blocks.room.kitchen.ProductStorage;
 
-public class Test_KitchenStorage {
+public class Test_ProductStorage {
 
     public ProductStorage storage;
 
