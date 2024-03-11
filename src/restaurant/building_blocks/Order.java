@@ -5,10 +5,12 @@ import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order {
-    private ArrayList<Meal> meals;
-    private ArrayList<Beverage> beverages;
+    private HashMap<Meal, Integer> meals;
+    private HashMap<Beverage, Integer> beverages;
     private int orderID;
 
     private static int orderIDcount = 10_000;
@@ -19,41 +21,41 @@ public class Order {
         this.orderID = orderIDcount++;
     }
 
-    public Order(ArrayList<Meal> meals, ArrayList<Beverage> beverages) {
+    public Order(HashMap<Meal, Integer> meals, HashMap<Beverage, Integer> beverages) {
         this.meals = meals;
         this.beverages = beverages;
         this.orderID = orderIDcount++;
     }
 
-    public ArrayList<Meal> getMeals() {
+    public HashMap<Meal, Integer> getMeals() {
         return meals;
     }
 
-    public void setMeals(ArrayList<Meal> meals) {
-        this.meals = meals;
-    }
-
-    public ArrayList<Beverage> getDrinks() {
+    public HashMap<Beverage, Integer> getDrinks() {
         return beverages;
     }
 
-    public void setDrinks(ArrayList<Beverage> beverages) {
-        this.beverages = beverages;
+    public boolean addMeal(Meal meal, int count) {
+        int size = meals.size();
+        meals.put(meal, count);
+        return meals.size() == size + 1;
     }
 
-    public int getOrderID() {
-        return orderID;
+    public boolean addDrink(Beverage beverage, int count) {
+        int size = beverages.size();
+        beverages.put(beverage, count);
+        return beverages.size() == size + 1;
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
+    public double calculateTotalPrice() {
+        double price = 0;
+        for(Map.Entry<Meal, Integer> meal : meals.entrySet()){
+            price += (meal.getKey().getPrice() * meal.getValue());
+        }
+        for(Map.Entry<Beverage, Integer> drink : beverages.entrySet()){
+            price += (drink.getKey().getPrice() * drink.getValue());
+        }
+        return price;
     }
 
-    boolean addMeal(Meal meal) {
-        return meals.add(meal);
-    }
-
-    boolean addDrink(Beverage beverage) {
-        return beverages.add(beverage);
-    }
 }

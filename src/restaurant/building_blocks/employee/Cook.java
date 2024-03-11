@@ -15,9 +15,9 @@ public class Cook extends Employee {
 
     public ArrayList<Meal> cookMeal(Order order, ProductStorage storage) throws ProductOutOfStockException {
         ArrayList<Meal> cookedMeals = new ArrayList<>();
-        for (Meal meal : order.getMeals()) {
-            Meal newMeal = cookMealsmall(meal.getRecipe(), storage);
-            newMeal.setName(meal.getName());
+        for(Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()) {
+            Meal newMeal = cookMealsmall(meal.getKey().getRecipe(), storage);
+            newMeal.setName(meal.getKey().getName());
             cookedMeals.add(newMeal);
         }
         return cookedMeals;
