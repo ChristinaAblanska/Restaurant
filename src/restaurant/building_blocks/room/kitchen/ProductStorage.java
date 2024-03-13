@@ -17,39 +17,51 @@ public class ProductStorage {
     public double getStock(String productName) {
         if (container.containsKey(productName)) {
             Shaft shaft = container.get(productName);
-            return shaft.getQuantity();
+            String formatted = String.format("%.1f", shaft.getQuantity());
+            return Double.parseDouble(formatted.replaceAll(",", "."));
         }
         return 0;
     }
 
-    public void addProduct(Product product, Product.Unit unit, double quantityPerUnit, int productsCount) {
-        double quantity = quantityPerUnit * unit.getValue();
+    /** When we add  by Product.Unit.Брой we must initialize @param weight with
+     * value in unit of gram.
+     * @param product
+     * @param unit
+     * @param weight
+     * @param count   We put here a number > 1 if the Product that we want to add
+     *                        to the ProductStorage is composite.
+     * @implNote Example of composite product: addProduct(onion, Product.Unit.Kilogram, 1,20)-
+     * Here we have 1 Kilogram of onion composed of 20 pcs.
+     */
+    public void addProduct(Product product, Product.Unit unit, double weight, int count) {
+        double quantity = weight * unit.getValue() / product.getUnit().getValue();
         if (container.containsKey(product.getName())) {
             Shaft shaft = container.get(product.getName());
-            shaft.add(quantity, productsCount);
+            shaft.add(quantity, count);
         } else {
-            Shaft newShaft = new Shaft(unit);
-            newShaft.add(quantity, productsCount);
+            Shaft newShaft = new Shaft(product.getUnit());
+            newShaft.add(quantity, count);
             container.put(product.getName(), newShaft);
         }
     }
 
     public void getProduct(Product product, Product.Unit unit, double quantity) throws ProductOutOfStockException {
+
         if (quantity > 0) {
             if (container.containsKey(product.getName())) {
                 Shaft shaft = container.get(product.getName());
-                double totalQuantity = quantity * unit.getValue();
                 double shaftQuantity = shaft.getQuantity();
-
                 if (unit.equals(Product.Unit.Брой)) {
-
+                    double totalQuantity = quantity * unit.getValue();
                     if (shaft.getProductsCount() >= totalQuantity) {
                         shaft.getPiece(totalQuantity);
                     } else {
                         throw new ProductOutOfStockException("Продукта е изчерпан");
                     }
                 } else {
+                    double totalQuantity = quantity * unit.getValue() / product.getUnit().getValue();
                     if (shaftQuantity >= totalQuantity) {
+
                         shaft.get(totalQuantity);
                     } else {
                         throw new ProductOutOfStockException("Продукта е изчерпан");
@@ -64,12 +76,17 @@ public class ProductStorage {
     public void printStock() {
         for (Map.Entry<String, Shaft> record : container.entrySet()) {
             Shaft s = record.getValue();
-            System.out.println(record.getKey() + " | " + s.quantity + " " +
-                    s.quantityUnit + "  " + s.getProductsCount());
+            System.out.println(record.getKey() + " | тегло: "
+                    + getStock(record.getKey()) + " " + "  Брой: "
+                    + String.format("%.2f", s.getProductsCount()));
         }
     }
 
-    public static class Shaft {
+    public void emptying() {
+        this.container.clear();
+    }
+
+    private static class Shaft {
         private double quantity;
 
         public Shaft(Product.Unit quantityUnit) {
