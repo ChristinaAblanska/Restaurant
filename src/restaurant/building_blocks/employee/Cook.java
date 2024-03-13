@@ -26,7 +26,7 @@ public class Cook extends Employee {
     private Meal cookMealsmall(Recipe recipe, ProductStorage storage) throws ProductOutOfStockException {
         for (Map.Entry<Product, Integer> entry : recipe.getIngredients().entrySet()) {
             try {
-                storage.getProduct(entry.getKey(), entry.getValue());
+                storage.getProduct(entry.getKey(), Product.Unit.Брой, entry.getValue());
             } catch (ProductOutOfStockException e) {
                 System.out.println("Недостатъчна наличност!");
             }
