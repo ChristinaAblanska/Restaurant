@@ -49,18 +49,18 @@ public class TestProductStorage {
         Assert.assertEquals(1, storage.getStock("egg"), 0.0003f);
 
         storage.emptying();
-        Product potatoes = new ProductPerKilogram("potatoes", 5);
+        Product potatoes = new ProductPerKilogram("potatoes", 5.45);
         storage.addProductPerKilogram(potatoes, 10);
         Assert.assertEquals(10, storage.getStock("potatoes"), 0.0003f);
-        storage.getProductPerKilogram(potatoes, 2);
-        Assert.assertEquals(8, storage.getStock("potatoes"), 0.0003f);
+        storage.getProductPerGram(potatoes, 2000);
+        Assert.assertEquals(8.0, storage.getStock("potatoes"), 0.0003f);
 
         storage.emptying();
         Product vinegar = new ProductPerLitre("vinegar", 2.45);
         storage.addProductPerLiter(vinegar, 0.7);
         Assert.assertEquals(0.7, storage.getStock("vinegar"), 0.0003f);
-        storage.getProductPerLiter(vinegar, 0.2);
-        Assert.assertEquals(0.5, storage.getStock("vinegar"), 0.0003f);
+        storage.getProductPerMilliliter(vinegar, 200);
+        Assert.assertEquals(0.500, storage.getStock("vinegar"), 0.0003f);
     }
 
     @Test
@@ -78,21 +78,22 @@ public class TestProductStorage {
         storage.emptying();
         Product potatoes = new ProductPerKilogram("potatoes", 5);
         storage.addProductPerKilogram(potatoes, 10);
-        storage.getProductPerKilogram(potatoes, 10);
+        storage.getProductPerGram(potatoes, 10000);
         Assert.assertThrows(ProductOutOfStockException.class, () -> {
-            storage.getProductPerKilogram(potatoes, 1);
+            storage.getProductPerGram(potatoes, 1);
         });
 
         storage.emptying();
         Product vinegar = new ProductPerLitre("vinegar", 2.45);
         storage.addProductPerLiter(vinegar, 0.7);
-        storage.getProductPerLiter(vinegar, 0.7);
+        storage.getProductPerMilliliter(vinegar, 700);
         Assert.assertThrows(ProductOutOfStockException.class, () -> {
-            storage.getProductPerLiter(vinegar, 0.1);
+            storage.getProductPerMilliliter(vinegar, 0.1);
         });
     }
+
     @Test
-    public void test_PrintStock() throws ProductOutOfStockException {
+    public void test_PrintStock() {
 
         Product egg = new EnumerableProduct("egg", 2.4);
         storage.addEnumerableProduct(egg, 20);

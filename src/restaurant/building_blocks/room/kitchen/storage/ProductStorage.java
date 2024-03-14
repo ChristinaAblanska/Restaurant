@@ -36,7 +36,7 @@ public class ProductStorage {
 
     public void addEnumerableProduct(Product product, int productsCount) {
 
-        if (container.containsKey(product.getName())) {
+        if (container.containsKey(product.getName()) && productsCount > 0) {
             EnumerableShaft shaft = (EnumerableShaft) container.get(product.getName());
             shaft.add(productsCount);
         } else {
@@ -48,7 +48,7 @@ public class ProductStorage {
 
     public void addProductPerKilogram(Product product, double weightInKilogram) {
 
-        if (container.containsKey(product.getName())) {
+        if (container.containsKey(product.getName()) && weightInKilogram > 0) {
             ShaftPerKilogram shaft = (ShaftPerKilogram) container.get(product.getName());
             shaft.add(weightInKilogram);
         } else {
@@ -60,13 +60,60 @@ public class ProductStorage {
 
     public void addProductPerLiter(Product product, double volumeInLitres) {
 
-        if (container.containsKey(product.getName())) {
+        if (container.containsKey(product.getName()) && volumeInLitres > 0) {
             ShaftPerLiter shaft = (ShaftPerLiter) container.get(product.getName());
             shaft.add(volumeInLitres);
         } else {
             ShaftPerLiter enumShaft = new ShaftPerLiter();
             enumShaft.add(volumeInLitres);
             container.put(product.getName(), enumShaft);
+        }
+    }
+
+    public void getEnumerableProduct(Product product, int productsCount) throws ProductOutOfStockException {
+        if (productsCount > 0) {
+            if (container.containsKey(product.getName())) {
+                EnumerableShaft shaft = (EnumerableShaft) container.get(product.getName());
+                if (shaft.getQuantity() > 0) {
+                    shaft.get(productsCount);
+                } else {
+                    throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+                }
+            } else {
+                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+            }
+        }
+    }
+
+    public void getProductPerGram(Product product, double weightInGrams) throws ProductOutOfStockException {
+        if (weightInGrams > 0) {
+            if (container.containsKey(product.getName())) {
+                ShaftPerKilogram shaft = (ShaftPerKilogram) container.get(product.getName());
+                double grams = weightInGrams / 1000;
+                if (shaft.getQuantity() >= grams) {
+                    shaft.get(grams);
+                } else {
+                    throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+                }
+            } else {
+                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+            }
+        }
+    }
+
+    public void getProductPerMilliliter(Product product, double volumeInMillilitres) throws ProductOutOfStockException {
+        if (volumeInMillilitres > 0) {
+            if (container.containsKey(product.getName())) {
+                ShaftPerLiter shaft = (ShaftPerLiter) container.get(product.getName());
+                double millilitres = volumeInMillilitres / 1000;
+                if (shaft.getQuantity() >= millilitres) {
+                    shaft.get(millilitres);
+                } else {
+                    throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+                }
+            } else {
+                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+            }
         }
     }
 
@@ -84,44 +131,5 @@ public class ProductStorage {
 
     public void emptying() {
         this.container.clear();
-    }
-
-    public void getEnumerableProduct(Product product, int productsCount) throws ProductOutOfStockException {
-        if (container.containsKey(product.getName())) {
-            EnumerableShaft shaft = (EnumerableShaft) container.get(product.getName());
-            if (shaft.getQuantity() > 0) {
-                shaft.get(productsCount);
-            } else {
-                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
-            }
-        } else {
-            throw new ProductOutOfStockException(product.getName() + " is out of Stock");
-        }
-    }
-
-    public void getProductPerKilogram(Product product, double weightInKilogram) throws ProductOutOfStockException {
-        if (container.containsKey(product.getName())) {
-            ShaftPerKilogram shaft = (ShaftPerKilogram) container.get(product.getName());
-            if (shaft.getQuantity() > 0) {
-                shaft.get(weightInKilogram);
-            } else {
-                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
-            }
-        } else {
-            throw new ProductOutOfStockException(product.getName() + " is out of Stock");
-        }
-    }
-
-    public void getProductPerLiter(Product product, double volumeInLitres) throws ProductOutOfStockException {
-        if (container.containsKey(product.getName())) {
-            ShaftPerLiter shaft = (ShaftPerLiter) container.get(product.getName());
-            if (shaft.getQuantity() > 0) {
-                shaft.get(volumeInLitres);
-            } else {
-                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
-            }
-        } else {
-            throw new ProductOutOfStockException(product.getName() + " is out of Stock");
-        }
     }
 }

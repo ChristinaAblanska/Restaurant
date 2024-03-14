@@ -1,13 +1,11 @@
 package restaurant.test;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
-import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
 public class TestProduct {
     @Test
