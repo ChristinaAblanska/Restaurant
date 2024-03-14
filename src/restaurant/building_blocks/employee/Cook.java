@@ -2,11 +2,11 @@
 package restaurant.building_blocks.employee;
 
 import restaurant.building_blocks.Order;
-import restaurant.building_blocks.Product;
+import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.Recipe;
 import restaurant.building_blocks.food.Meal;
-import restaurant.building_blocks.room.kitchen.ProductOutOfStockException;
-import restaurant.building_blocks.room.kitchen.ProductStorage;
+import restaurant.building_blocks.exceptions.ProductOutOfStockException;
+import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -25,11 +25,11 @@ public class Cook extends Employee {
 
     private Meal cookMealsmall(Recipe recipe, ProductStorage storage) throws ProductOutOfStockException {
         for (Map.Entry<Product, Integer> entry : recipe.getIngredients().entrySet()) {
-            try {
+           /* try {
                 storage.getProduct(entry.getKey(), Product.Unit.Брой, entry.getValue());
             } catch (ProductOutOfStockException e) {
                 System.out.println("Недостатъчна наличност!");
-            }
+            }*/
         }
         return new Meal(recipe);
     }
