@@ -7,8 +7,8 @@ import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLiter;
-import restaurant.building_blocks.room.kitchen.ProductOutOfStockException;
-import restaurant.building_blocks.room.kitchen.ProductStorage;
+import restaurant.building_blocks.exceptions.ProductOutOfStockException;
+import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
 public class TestProductStorage {
 
@@ -23,40 +23,44 @@ public class TestProductStorage {
     public void test_getStock() {
 
         Product egg = new EnumerableProduct("egg", 2.4);
-        Assert.assertEquals(0, storage.getStock("egg"), 0);
+        Assert.assertEquals(0, storage.getStock("egg"), 0.0003f);
 
         storage.addEnumerableProduct(egg, 20);
-        Assert.assertEquals(20, storage.getStock("egg"), 0);
+        Assert.assertEquals(20, storage.getStock("egg"), 0.0003f);
 
         storage.emptying();
         Product potatoes = new ProductPerKilogram("potatoes", 5);
         storage.addProductPerKilogram(potatoes, 10);
-        Assert.assertEquals(10, storage.getStock("potatoes"), 0);
+        Assert.assertEquals(10, storage.getStock("potatoes"), 0.0003f);
 
         storage.emptying();
-        Product koka_kola = new ProductPerLiter("koka_kola", 0.7);
-        storage.addProductPerLiter(koka_kola, 0.7);
-        Assert.assertEquals(0.7, storage.getStock("koka_kola"), 0);
+        Product vinegar = new ProductPerLiter("vinegar", 0.7);
+        storage.addProductPerLiter(vinegar, 0.7);
+        Assert.assertEquals(0.7, storage.getStock("vinegar"), 0.0003f);
     }
 
     @Test
-    public void test_getGetProduct() {
+    public void test_getGetProduct() throws ProductOutOfStockException {
 
-      /*  Product egg = new EnumerableProduct("egg", 20, 2.4);
+        Product egg = new EnumerableProduct("egg", 2.4);
 
-        storage.addProduct(egg);
-        storage.getProduct(egg);
+        storage.addEnumerableProduct(egg, 20);
+        Assert.assertEquals(20, storage.getStock("egg"), 0.0003f);
+        storage.getEnumerableProduct(egg, 19);
+        Assert.assertEquals(1, storage.getStock("egg"), 0.0003f);
 
-        Assert.assertEquals(20, storage.getStock("egg"), 0);
-        //storage.printStock();
         storage.emptying();
         Product potatoes = new ProductPerKilogram("potatoes", 5);
-        storage.addProduct(potatoes);
-        Assert.assertEquals(5, storage.getStock("potatoes"), 0);
-        //storage.printStock();
+        storage.addProductPerKilogram(potatoes, 10);
+        Assert.assertEquals(10, storage.getStock("potatoes"), 0.0003f);
+        storage.getProductPerKilogram(potatoes, 2);
+        Assert.assertEquals(8, storage.getStock("potatoes"), 0.0003f);
+
         storage.emptying();
-        Product koka_kola = new ProductPerLiter("koka_kola", 0.7);
-        storage.addProduct(koka_kola);
-        Assert.assertEquals(0.7, storage.getStock("koka_kola"), 0);*/
+        Product vinegar = new ProductPerLiter("vinegar", 2.45);
+        storage.addProductPerLiter(vinegar, 0.7);
+        Assert.assertEquals(0.7, storage.getStock("vinegar"), 0.0003f);
+        storage.getProductPerLiter(vinegar, 0.2);
+        Assert.assertEquals(0.5, storage.getStock("vinegar"), 0.0003f);
     }
 }

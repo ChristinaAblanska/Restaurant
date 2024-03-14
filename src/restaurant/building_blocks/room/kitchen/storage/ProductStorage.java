@@ -1,10 +1,12 @@
-package restaurant.building_blocks.room.kitchen;
+package restaurant.building_blocks.room.kitchen.storage;
 
 
-import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
-import restaurant.building_blocks.product.ProductPerKilogram;
-import restaurant.building_blocks.product.ProductPerLiter;
+import restaurant.building_blocks.exceptions.ProductOutOfStockException;
+import restaurant.building_blocks.room.kitchen.storage.shaft.EnumerableShaft;
+import restaurant.building_blocks.room.kitchen.storage.shaft.Shaft;
+import restaurant.building_blocks.room.kitchen.storage.shaft.ShaftPerKilogram;
+import restaurant.building_blocks.room.kitchen.storage.shaft.ShaftPerLiter;
 
 import java.util.HashMap;
 
@@ -21,11 +23,11 @@ public class ProductStorage {
         if (container.containsKey(productName)) {
             Shaft shaft = container.get(productName);
             if (shaft instanceof EnumerableShaft) {
-                return ((EnumerableShaft) shaft).getProductsCount();
+                return ((EnumerableShaft) shaft).getValue();
             } else if (shaft instanceof ShaftPerKilogram) {
-                return ((ShaftPerKilogram) shaft).getWeightInKilogram();
+                return ((ShaftPerKilogram) shaft).getValue();
             } else {
-                return ((ShaftPerLiter) shaft).getVolumeInLitres();
+                return ((ShaftPerLiter) shaft).getValue();
             }
         }
         return 0;
@@ -109,61 +111,44 @@ public class ProductStorage {
         this.container.clear();
     }
 
-    public abstract static class Shaft<T> {
-        private T value;
-
-        void add(T value) {
-            this.value = value;
-        }
-
-        public T getValue() {
-            return value;
-        }
-
-        public void setValue(T value) {
-            this.value = value;
+    public void getEnumerableProduct(Product product, int productsCount) throws ProductOutOfStockException {
+        if (container.containsKey(product.getName())) {
+            EnumerableShaft shaft = (EnumerableShaft) container.get(product.getName());
+            if (shaft.getValue() > 0) {
+                shaft.get(productsCount);
+            } else {
+                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+            }
+        } else {
+            throw new ProductOutOfStockException(product.getName() + " is out of Stock");
         }
     }
 
-    private static class EnumerableShaft extends Shaft<Integer> {
-        public EnumerableShaft() {
-            super.setValue(0);
-        }
-
-        public void add(int productCount) {
-            super.setValue(super.getValue() + productCount);
-        }
-
-        public int getProductsCount() {
-            return super.getValue();
-        }
-    }
-
-    private static class ShaftPerLiter extends Shaft<Double> {
-        public ShaftPerLiter() {
-            super.setValue(0.0);
-        }
-
-        public void add(double volumeInLitres) {
-            super.setValue(super.getValue() + volumeInLitres);
-        }
-
-        public double getVolumeInLitres() {
-            return super.getValue();
+    public void getProductPerKilogram(Product product, double weightInKilogram) throws ProductOutOfStockException {
+        if (container.containsKey(product.getName())) {
+            ShaftPerKilogram shaft = (ShaftPerKilogram) container.get(product.getName());
+            if (shaft.getValue() > 0) {
+                shaft.get(weightInKilogram);
+            } else {
+                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+            }
+        } else {
+            throw new ProductOutOfStockException(product.getName() + " is out of Stock");
         }
     }
 
-    private static class ShaftPerKilogram extends Shaft<Double> {
-        public ShaftPerKilogram() {
-            super.setValue(0.0);
-        }
-
-        public void add(double weightInKilogram) {
-            super.setValue(super.getValue() + weightInKilogram);
-        }
-
-        public double getWeightInKilogram() {
-            return super.getValue();
+    public void getProductPerLiter(Product product, double volumeInLitres) throws ProductOutOfStockException {
+        if (container.containsKey(product.getName())) {
+            ShaftPerLiter shaft = (ShaftPerLiter) container.get(product.getName());
+            if (shaft.getValue() > 0) {
+                shaft.get(volumeInLitres);
+            } else {
+                throw new ProductOutOfStockException(product.getName() + " is out of Stock");
+            }
+        } else {
+            throw new ProductOutOfStockException(product.getName() + " is out of Stock");
         }
     }
+
+
 }

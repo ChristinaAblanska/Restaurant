@@ -5,8 +5,8 @@ import restaurant.building_blocks.Order;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.Recipe;
 import restaurant.building_blocks.food.Meal;
-import restaurant.building_blocks.room.kitchen.ProductOutOfStockException;
-import restaurant.building_blocks.room.kitchen.ProductStorage;
+import restaurant.building_blocks.exceptions.ProductOutOfStockException;
+import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
 import java.util.ArrayList;
 import java.util.Map;
