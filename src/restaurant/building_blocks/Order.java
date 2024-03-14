@@ -16,16 +16,16 @@ public class Order {
     private static int orderIDcount = 10_000;
 
     public Order() {
-        this.meals = null;
-        this.beverages = null;
+        this.meals = new HashMap<>();
+        this.beverages = new HashMap<>();
         this.orderID = orderIDcount++;
     }
 
-    public Order(HashMap<Meal, Integer> meals, HashMap<Beverage, Integer> beverages) {
-        this.meals = meals;
-        this.beverages = beverages;
-        this.orderID = orderIDcount++;
-    }
+//    public Order(HashMap<Meal, Integer> meals, HashMap<Beverage, Integer> beverages) {
+//        this.meals = meals;
+//        this.beverages = beverages;
+//        this.orderID = orderIDcount++;
+//    }
 
     public HashMap<Meal, Integer> getMeals() {
         return meals;
@@ -35,16 +35,30 @@ public class Order {
         return beverages;
     }
 
-    public boolean addMeal(Meal meal, int count) {
-        int size = meals.size();
-        meals.put(meal, count);
-        return meals.size() == size + 1;
+    public int getOrderID() {
+        return orderIDcount;
     }
 
-    public boolean addDrink(Beverage beverage, int count) {
-        int size = beverages.size();
+    public void addMeal(Meal meal, int count) {
+        if (count == 0) return;
+        meals.put(meal, count);
+    }
+
+    public void addDrink(Beverage beverage, int count) {
+        if (count == 0) return;
         beverages.put(beverage, count);
-        return beverages.size() == size + 1;
+    }
+
+    public void adjustMealAmount(Meal meal, int count) {
+        if (meals.containsKey(meal)) {
+            meals.put(meal, count);
+        } else return;
+    }
+
+    public void adjustDrinkAmount(Beverage drink, int count) {
+        if (beverages.containsKey(drink)) {
+            beverages.put(drink, count);
+        } else return;
     }
 
     public double calculateTotalPrice() {
@@ -57,5 +71,4 @@ public class Order {
         }
         return price;
     }
-
 }

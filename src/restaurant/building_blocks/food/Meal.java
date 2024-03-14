@@ -30,7 +30,7 @@ public class Meal {
 
     private double calculatePriceProfit() {
         double ingredientPrice = recipe.calculatePrice();
-        double profit = ingredientPrice * 0.3; //Constant
+        double profit = ingredientPrice * 0.5; //Constant
         return ingredientPrice + profit;
     }
 
