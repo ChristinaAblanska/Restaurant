@@ -1,51 +1,74 @@
 package restaurant.building_blocks.room.kitchen;
 
 
-import restaurant.building_blocks.Product;
+import restaurant.building_blocks.product.EnumerableProduct;
+import restaurant.building_blocks.product.Product;
+import restaurant.building_blocks.product.ProductPerKilogram;
+import restaurant.building_blocks.product.ProductPerLiter;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ProductStorage {
 
-    private final HashMap<String, ProductStorage.Shaft> container;
+    private final HashMap<String, Shaft> container;
 
     public ProductStorage() {
         container = new HashMap<>();
     }
 
     public double getStock(String productName) {
+
         if (container.containsKey(productName)) {
             Shaft shaft = container.get(productName);
-            String formatted = String.format("%.1f", shaft.getQuantity());
-            return Double.parseDouble(formatted.replaceAll(",", "."));
+            if (shaft instanceof EnumerableShaft) {
+                return ((EnumerableShaft) shaft).getProductsCount();
+            } else if (shaft instanceof ShaftPerKilogram) {
+                return ((ShaftPerKilogram) shaft).getWeightInKilogram();
+            } else {
+                return ((ShaftPerLiter) shaft).getVolumeInLitres();
+            }
         }
         return 0;
     }
 
-    /** When we add  by Product.Unit.Брой we must initialize @param weight with
-     * value in unit of gram.
-     * @param product
-     * @param unit
-     * @param weight
-     * @param count   We put here a number > 1 if the Product that we want to add
-     *                        to the ProductStorage is composite.
-     * @implNote Example of composite product: addProduct(onion, Product.Unit.Kilogram, 1,20)-
-     * Here we have 1 Kilogram of onion composed of 20 pcs.
-     */
-    public void addProduct(Product product, Product.Unit unit, double weight, int count) {
-        double quantity = weight * unit.getValue() / product.getUnit().getValue();
+
+    public void addEnumerableProduct(Product product, int productsCount) {
+
         if (container.containsKey(product.getName())) {
-            Shaft shaft = container.get(product.getName());
-            shaft.add(quantity, count);
+            EnumerableShaft shaft = (EnumerableShaft) container.get(product.getName());
+            shaft.add(productsCount);
         } else {
-            Shaft newShaft = new Shaft(product.getUnit());
-            newShaft.add(quantity, count);
-            container.put(product.getName(), newShaft);
+            EnumerableShaft enumShaft = new EnumerableShaft();
+            enumShaft.add(productsCount);
+            container.put(product.getName(), enumShaft);
         }
     }
 
-    public void getProduct(Product product, Product.Unit unit, double quantity) throws ProductOutOfStockException {
+    public void addProductPerKilogram(Product product, double weightInKilogram) {
+
+        if (container.containsKey(product.getName())) {
+            ShaftPerKilogram shaft = (ShaftPerKilogram) container.get(product.getName());
+            shaft.add(weightInKilogram);
+        } else {
+            ShaftPerKilogram enumShaft = new ShaftPerKilogram();
+            enumShaft.add(weightInKilogram);
+            container.put(product.getName(), enumShaft);
+        }
+    }
+
+    public void addProductPerLiter(Product product, double volumeInLitres) {
+
+        if (container.containsKey(product.getName())) {
+            ShaftPerLiter shaft = (ShaftPerLiter) container.get(product.getName());
+            shaft.add(volumeInLitres);
+        } else {
+            ShaftPerLiter enumShaft = new ShaftPerLiter();
+            enumShaft.add(volumeInLitres);
+            container.put(product.getName(), enumShaft);
+        }
+    }
+
+/*    public void getProduct(Product product, Product.Unit unit, double quantity) throws ProductOutOfStockException {
 
         if (quantity > 0) {
             if (container.containsKey(product.getName())) {
@@ -71,65 +94,76 @@ public class ProductStorage {
                 throw new ProductOutOfStockException("Продукта е изчерпан");
             }
         }
-    }
+    }*/
 
-    public void printStock() {
+ /*   public void printStock() {
         for (Map.Entry<String, Shaft> record : container.entrySet()) {
             Shaft s = record.getValue();
             System.out.println(record.getKey() + " | тегло: "
                     + getStock(record.getKey()) + " " + "  Брой: "
                     + String.format("%.2f", s.getProductsCount()));
         }
-    }
+    }*/
 
     public void emptying() {
         this.container.clear();
     }
 
-    private static class Shaft {
-        private double quantity;
+    public abstract static class Shaft<T> {
+        private T value;
 
-        public Shaft(Product.Unit quantityUnit) {
-            this.quantityUnit = quantityUnit;
+        void add(T value) {
+            this.value = value;
         }
 
-        public Product.Unit getQuantityUnit() {
-            return quantityUnit;
+        public T getValue() {
+            return value;
         }
 
+        public void setValue(T value) {
+            this.value = value;
+        }
+    }
 
-        private Product.Unit quantityUnit;
-
-        public double getProductsCount() {
-            return productsCount;
+    private static class EnumerableShaft extends Shaft<Integer> {
+        public EnumerableShaft() {
+            super.setValue(0);
         }
 
-        private double productsCount;
-
-        public double getQuantity() {
-            return quantity;
+        public void add(int productCount) {
+            super.setValue(super.getValue() + productCount);
         }
 
-        public void add(double quantity, double productsCount) {
-            this.productsCount += productsCount;
-            this.quantity += quantity;
+        public int getProductsCount() {
+            return super.getValue();
+        }
+    }
+
+    private static class ShaftPerLiter extends Shaft<Double> {
+        public ShaftPerLiter() {
+            super.setValue(0.0);
         }
 
-        public void get(double quantity) {
-            double quantityForSingleProduct = (this.quantity / productsCount);
-            this.quantity -= quantity;
-
-            double productCountForGivenQuantity = quantity / quantityForSingleProduct;
-
-            productsCount -= productCountForGivenQuantity;
+        public void add(double volumeInLitres) {
+            super.setValue(super.getValue() + volumeInLitres);
         }
 
-        public void getPiece(double count) {
-            double quantityForSingleProduct = quantity / productsCount;
-            this.quantity -= quantityForSingleProduct * count;
-            String formatted = String.format("%.1f", quantity);
-            quantity = Double.parseDouble(formatted.replaceAll(",", "."));
-            productsCount -= count;
+        public double getVolumeInLitres() {
+            return super.getValue();
+        }
+    }
+
+    private static class ShaftPerKilogram extends Shaft<Double> {
+        public ShaftPerKilogram() {
+            super.setValue(0.0);
+        }
+
+        public void add(double weightInKilogram) {
+            super.setValue(super.getValue() + weightInKilogram);
+        }
+
+        public double getWeightInKilogram() {
+            return super.getValue();
         }
     }
 }

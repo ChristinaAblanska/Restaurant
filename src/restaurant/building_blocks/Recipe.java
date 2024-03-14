@@ -1,5 +1,7 @@
 package restaurant.building_blocks;
 
+import restaurant.building_blocks.product.Product;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,8 +25,8 @@ public class Recipe {
         double price = 0;
         Iterator<Map.Entry<Product, Integer>> iterator = ingredients.entrySet().iterator();
         while (iterator.hasNext()) {
-            double  pricePerUnit = iterator.next().getKey().getPricePerUnit();
-            price += iterator.next().getValue() *  pricePerUnit;
+           // double  pricePerUnit = iterator.next().getKey().getPricePerUnit();
+          //  price += iterator.next().getValue() *  pricePerUnit;
         }
         return price;
     }

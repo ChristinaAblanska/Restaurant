@@ -2,7 +2,7 @@ package restaurant.test.test_rooms.test_kitchen;
 
 import org.junit.Before;
 import org.junit.Test;
-import restaurant.building_blocks.Product;
+import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.room.kitchen.Kitchen;
 
 public class Test_Kitchen {
@@ -16,8 +16,6 @@ public class Test_Kitchen {
 
     @Test
     public void test_completeAnOrder()  {
-        Product лук = new Product("лук", Product.Unit.Грам,5);
-
 
     }
 }
