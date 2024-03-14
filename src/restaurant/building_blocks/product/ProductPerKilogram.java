@@ -1,14 +1,16 @@
 package restaurant.building_blocks.product;
 
 public class ProductPerKilogram extends Product {
-    private final double pricePerOneKilogram;
 
-    public ProductPerKilogram(String name, double pricePerKilogram) {
-        super(name);
-        this.pricePerOneKilogram = pricePerKilogram;
+    public ProductPerKilogram(String name, double pricePer_1_Kilogram) {
+        super(name, pricePer_1_Kilogram);
     }
 
-    public double getPricePerOneKilogram() {
-        return pricePerOneKilogram;
+    public double getPricePer_1_Kilogram() {
+        return price;
+    }
+
+    public double getPricePer_100_Gram() {
+        return price / 100;
     }
 }

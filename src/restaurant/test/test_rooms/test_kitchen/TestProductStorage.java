@@ -6,7 +6,7 @@ import org.junit.Test;
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.product.ProductPerKilogram;
-import restaurant.building_blocks.product.ProductPerLiter;
+import restaurant.building_blocks.product.ProductPerLitre;
 import restaurant.building_blocks.exceptions.ProductOutOfStockException;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
@@ -33,7 +33,7 @@ public class TestProductStorage {
         Assert.assertEquals(10, storage.getStock("potatoes"), 0.0003f);
 
         storage.emptying();
-        Product vinegar = new ProductPerLiter("vinegar", 0.7);
+        Product vinegar = new ProductPerLitre("vinegar", 0.7);
         storage.addProductPerLiter(vinegar, 0.7);
         Assert.assertEquals(0.7, storage.getStock("vinegar"), 0.0003f);
     }
@@ -56,7 +56,7 @@ public class TestProductStorage {
         Assert.assertEquals(8, storage.getStock("potatoes"), 0.0003f);
 
         storage.emptying();
-        Product vinegar = new ProductPerLiter("vinegar", 2.45);
+        Product vinegar = new ProductPerLitre("vinegar", 2.45);
         storage.addProductPerLiter(vinegar, 0.7);
         Assert.assertEquals(0.7, storage.getStock("vinegar"), 0.0003f);
         storage.getProductPerLiter(vinegar, 0.2);
@@ -84,7 +84,7 @@ public class TestProductStorage {
         });
 
         storage.emptying();
-        Product vinegar = new ProductPerLiter("vinegar", 2.45);
+        Product vinegar = new ProductPerLitre("vinegar", 2.45);
         storage.addProductPerLiter(vinegar, 0.7);
         storage.getProductPerLiter(vinegar, 0.7);
         Assert.assertThrows(ProductOutOfStockException.class, () -> {
@@ -100,7 +100,7 @@ public class TestProductStorage {
         Product potatoes = new ProductPerKilogram("potatoes", 5);
         storage.addProductPerKilogram(potatoes, 10);
 
-        Product vinegar = new ProductPerLiter("vinegar", 2.45);
+        Product vinegar = new ProductPerLitre("vinegar", 2.45);
         storage.addProductPerLiter(vinegar, 0.7);
 
         storage.printStock();
