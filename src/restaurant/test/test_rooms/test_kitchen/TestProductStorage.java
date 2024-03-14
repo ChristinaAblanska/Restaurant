@@ -11,7 +11,6 @@ import restaurant.building_blocks.exceptions.ProductOutOfStockException;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
 public class TestProductStorage {
-
     public ProductStorage storage;
 
     @Before
@@ -62,5 +61,48 @@ public class TestProductStorage {
         Assert.assertEquals(0.7, storage.getStock("vinegar"), 0.0003f);
         storage.getProductPerLiter(vinegar, 0.2);
         Assert.assertEquals(0.5, storage.getStock("vinegar"), 0.0003f);
+    }
+
+    @Test
+    public void test_ProductOutOfStockException() throws ProductOutOfStockException {
+
+        Product egg = new EnumerableProduct("egg", 2.4);
+
+        storage.addEnumerableProduct(egg, 20);
+        storage.getEnumerableProduct(egg, 20);
+
+        Assert.assertThrows(ProductOutOfStockException.class, () -> {
+            storage.getEnumerableProduct(egg, 1);
+        });
+
+        storage.emptying();
+        Product potatoes = new ProductPerKilogram("potatoes", 5);
+        storage.addProductPerKilogram(potatoes, 10);
+        storage.getProductPerKilogram(potatoes, 10);
+        Assert.assertThrows(ProductOutOfStockException.class, () -> {
+            storage.getProductPerKilogram(potatoes, 1);
+        });
+
+        storage.emptying();
+        Product vinegar = new ProductPerLiter("vinegar", 2.45);
+        storage.addProductPerLiter(vinegar, 0.7);
+        storage.getProductPerLiter(vinegar, 0.7);
+        Assert.assertThrows(ProductOutOfStockException.class, () -> {
+            storage.getProductPerLiter(vinegar, 0.1);
+        });
+    }
+    @Test
+    public void test_PrintStock() throws ProductOutOfStockException {
+
+        Product egg = new EnumerableProduct("egg", 2.4);
+        storage.addEnumerableProduct(egg, 20);
+
+        Product potatoes = new ProductPerKilogram("potatoes", 5);
+        storage.addProductPerKilogram(potatoes, 10);
+
+        Product vinegar = new ProductPerLiter("vinegar", 2.45);
+        storage.addProductPerLiter(vinegar, 0.7);
+
+        storage.printStock();
     }
 }

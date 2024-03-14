@@ -2,21 +2,21 @@ package restaurant.building_blocks.room.kitchen.storage.shaft;
 
 public class EnumerableShaft extends Shaft<Integer> {
     public EnumerableShaft() {
-        super.value = 0;
+        super.quantity = 0;
     }
 
     @Override
     public void add(Integer productCount) {
-        super.value += productCount;
+        super.quantity += productCount;
     }
 
     @Override
     public void get(Integer productCount) {
-        super.value -= productCount;
+        super.quantity -= productCount;
     }
 
     @Override
-    public Integer getValue() {
-        return super.value;
+    public Integer getQuantity() {
+        return super.quantity;
     }
 }
