@@ -27,7 +27,7 @@ public class TestWorkDay {
         workDay.start();
         while (workDay.isRun()) {
         }
-        Assert.assertEquals(28000, workDay.getTime(), 0.00003f);
+        Assert.assertEquals(8, workDay.getHour());
     }
 
     @Test
@@ -36,28 +36,28 @@ public class TestWorkDay {
         workDay.start();
         while (workDay.isRun()) {
 
-            if (workDay.getTime() == 1) {
+            if (workDay.getHour() == 1) {
                 Assert.assertEquals(2, workDay.getHourlyLoad(0));
             }
-            if (workDay.getTime() == 2) {
+            if (workDay.getHour() == 2) {
                 Assert.assertEquals(4, workDay.getHourlyLoad(1));
             }
-            if (workDay.getTime() == 3) {
+            if (workDay.getHour() == 3) {
                 Assert.assertEquals(6, workDay.getHourlyLoad(2));
             }
-            if (workDay.getTime() == 3) {
+            if (workDay.getHour() == 4) {
                 Assert.assertEquals(4, workDay.getHourlyLoad(3));
             }
-            if (workDay.getTime() == 3) {
+            if (workDay.getHour() == 5) {
                 Assert.assertEquals(8, workDay.getHourlyLoad(4));
             }
-            if (workDay.getTime() == 3) {
+            if (workDay.getHour() == 6) {
                 Assert.assertEquals(7, workDay.getHourlyLoad(5));
             }
-            if (workDay.getTime() == 3) {
+            if (workDay.getHour() == 7) {
                 Assert.assertEquals(6, workDay.getHourlyLoad(6));
             }
-            if (workDay.getTime() == 3) {
+            if (workDay.getHour() == 8) {
                 Assert.assertEquals(8, workDay.getHourlyLoad(7));
             }
         }

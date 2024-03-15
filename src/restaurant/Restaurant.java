@@ -1,7 +1,9 @@
 package restaurant;
 
-import restaurant.building_blocks.Table;
+import restaurant.building_blocks.Client;
 import restaurant.building_blocks.room.kitchen.Kitchen;
+
+import java.util.List;
 
 public class Restaurant {
     public static final Kitchen KITCHEN = new Kitchen();
@@ -37,6 +39,9 @@ public class Restaurant {
     }
 
     public void printKitchenStorageStock() {
+
+    }
+    public void inviteClients(List<Client> clients){
 
     }
 }

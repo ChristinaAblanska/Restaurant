@@ -1,12 +1,17 @@
 package restaurant;
 
+import restaurant.building_blocks.Client;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class WorkDay extends Thread {
 
     private final int workTimeInMilliseconds;
     private final int workDayInHours;
     private final Restaurant restaurant;
     private long workTimeStart;
-    private double localTimeInHour;
+    private double localTimeInMillis;
     int[] dailyWorkload;
 
     public WorkDay(Restaurant restaurant, int workDayInHours, int speedUpValue) {
@@ -32,12 +37,12 @@ public class WorkDay extends Thread {
             return false;
         }
 
-        localTimeInHour = (currentTime - workTimeStart);
+        localTimeInMillis = currentTime - workTimeStart;
         return true;
     }
 
-    public double getTime() {
-        return localTimeInHour;
+    public int getHour() {
+        return (int) (localTimeInMillis / 3600) + 1;
     }
 
     public void setDailyWorkload(int... workLoadValuesPerDay) {
@@ -56,6 +61,15 @@ public class WorkDay extends Thread {
 
     public int getHourlyLoad(int hour) {
         return dailyWorkload[hour];
+    }
+
+    public List<Client> generateClients() {
+        List<Client> clients = new ArrayList<>();
+        int load = dailyWorkload[getHour()-1];
+        for (int i = 0; i <load; i++) {
+            System.out.println("generate"+load+" clients");
+        }
+        return clients;
     }
 }
 
