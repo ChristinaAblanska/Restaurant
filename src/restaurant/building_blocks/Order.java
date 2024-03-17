@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
-    private HashMap<Meal, Integer> meals;
-    private HashMap<Beverage, Integer> beverages;
-    private int orderID;
+    public HashMap<Meal, Integer> meals;
+    public HashMap<Beverage, Integer> beverages;
+    public int orderID;
 
-    private static int orderIDcount = 10_000;
+    public static int orderIDcount = 10_000;
 
     public Order() {
         this.meals = new HashMap<>();

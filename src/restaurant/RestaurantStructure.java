@@ -8,7 +8,7 @@ public class RestaurantStructure {
     public static String name;
     public static RestaurantStructure restaurant;
 
-    private RestaurantStructure() {
+    public RestaurantStructure() {
 
     }
 

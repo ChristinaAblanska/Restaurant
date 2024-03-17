@@ -7,7 +7,7 @@ import restaurant.building_blocks.room.kitchen.Kitchen;
 
 public class Test_Kitchen {
 
-    private Kitchen kitchen;
+    public Kitchen kitchen;
 
     @Before
     public void setup() {

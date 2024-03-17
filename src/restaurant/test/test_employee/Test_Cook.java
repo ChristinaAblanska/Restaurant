@@ -44,7 +44,7 @@ public class Test_Cook {
         storage = new ProductStorage();
 
         storage.addProductPerKilogram(yogurt, 15);
-        storage.addEnumerableProduct(eggs, 3);
+        storage.addEnumerableProduct(eggs, 4);
         storage.addProductPerLiter(milk, 50);
         storage.addProductPerKilogram(cucumber, 20);
         storage.addProductPerKilogram(walnuts, 5);
@@ -99,7 +99,7 @@ public class Test_Cook {
         Assert.assertEquals(4.8, storage.getStock("Walnuts"), 0.0003f);
     }
 
-    // TODO
+//     TODO - ask Vanya
 //    @Test
 //    public void testThrowOutOfStockException() throws ProductOutOfStockException {
 //        cook = new Cook();
@@ -107,10 +107,13 @@ public class Test_Cook {
 //        order.addMeal(meal1, 2);
 //
 ////        cook.cookSingleMeal(meal1.getRecipe(), storage);
+////        System.out.println("1 " + storage.getStock("Egg"));
+////        cook.cookSingleMeal(meal1.getRecipe(), storage);
+////        System.out.println("2 " + storage.getStock("Egg"));
 //
-//        Assert.assertThrows(ProductOutOfStockException.class, () -> {
-//            cook.cookMeal(order, storage);
-//        });
+////        Assert.assertThrows(ProductOutOfStockException.class,  () -> {
+////            cook.cookMeals(order, storage);
+////        });
 //    }
 
     // Not adding correct values to the array

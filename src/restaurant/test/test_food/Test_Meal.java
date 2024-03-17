@@ -51,7 +51,6 @@ public class Test_Meal {
     public void testNewBlankMeal() {
         meal = new Meal();
         Assert.assertEquals("", meal.getName());
-        Assert.assertEquals(null, meal.getRecipe());
         Assert.assertEquals(0.0, meal.getPrice(), 0.0003f);
     }
 

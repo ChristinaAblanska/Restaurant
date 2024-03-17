@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ProductStorage {
 
-    private final HashMap<String, Shaft> container;
+    public final HashMap<String, Shaft> container;
 
     public ProductStorage() {
         container = new HashMap<>();

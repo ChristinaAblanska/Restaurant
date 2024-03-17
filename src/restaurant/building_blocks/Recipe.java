@@ -7,8 +7,8 @@ import restaurant.building_blocks.product.*;
 
 public class Recipe {
     // Type of product / required quantity
-    private final SingleRecipe ingredients;
-    private final double prepTime;
+    public final SingleRecipe ingredients;
+    public final double prepTime;
 
     public Recipe(SingleRecipe ingredients, double prepTime) {
         this.ingredients = ingredients;
@@ -16,7 +16,7 @@ public class Recipe {
     }
 
     public static class SingleRecipe extends HashMap<Product, Integer>{
-        private HashMap<Product, Integer> ingredients;
+        public HashMap<Product, Integer> ingredients;
     }
 
     public double calculatePrice(){

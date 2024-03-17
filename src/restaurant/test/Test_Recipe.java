@@ -11,6 +11,8 @@ import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
+import java.util.HashMap;
+
 public class Test_Recipe {
     public ProductStorage storage;
     public Recipe recipe;

@@ -3,10 +3,10 @@ package restaurant.building_blocks.food;
 import restaurant.building_blocks.Recipe;
 
 public class Meal {
-    private String name;
-    private final Recipe recipe;
+    public String name;
+    public final Recipe recipe;
     //price plus profit
-    private final double price;
+    public final double price;
 
     void consume() {
         System.out.println("The meal is consumed!");
@@ -14,7 +14,7 @@ public class Meal {
 
     public Meal() {
         this.name = "";
-        this.recipe = null;
+        this.recipe = new Recipe(new Recipe.SingleRecipe(), 0);
         this.price = 0;
     }
     public Meal(Recipe recipe) {
@@ -28,7 +28,7 @@ public class Meal {
         this.price = calculatePriceProfit();
     }
 
-    private double calculatePriceProfit() {
+    public double calculatePriceProfit() {
         double ingredientPrice = recipe.calculatePrice();
         double profit = ingredientPrice * 0.5; //Constant
         return ingredientPrice + profit;

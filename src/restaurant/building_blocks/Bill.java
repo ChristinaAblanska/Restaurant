@@ -5,7 +5,7 @@ import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
 
 public class Bill {
-    private Order order;
+    public Order order;
 
     public Bill(Order order) {
         this.order = order;
