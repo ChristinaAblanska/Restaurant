@@ -4,24 +4,30 @@ import restaurant.building_blocks.Client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class WorkDay extends Thread {
-
+    private static final int speedUpValue = Parameters.WORK_DAY_SPEEDUP_VALUE;
+    Random rand = new Random();
     private final int workTimeInMilliseconds;
-    private final int workDayInHours;
+    private final int workDayHours = Parameters.WORK_DAY_HOURS;
     private final Restaurant restaurant;
     private long workTimeStart;
-    private double localTimeInMillis;
-    int[] dailyWorkload;
 
-    public WorkDay(Restaurant restaurant, int workDayInHours, int speedUpValue) {
-        if (speedUpValue < 1) {
-            speedUpValue = 1;
-        }
-        this.workDayInHours = workDayInHours;
-        workTimeInMilliseconds = (((workDayInHours * 3600) / speedUpValue)) * 1000;
-        dailyWorkload = new int[workDayInHours];
+
+    private static double localTimeInMillis;
+
+    public WorkDay(Restaurant restaurant) {
+
+        workTimeInMilliseconds = (((workDayHours * 3600) / speedUpValue)) * 1000;
         this.restaurant = restaurant;
+    }
+
+    public static String millisToTime(double timeInMillis) {
+
+        return String.valueOf(millisToHour(timeInMillis)) + ":"
+                + String.valueOf(millisToMinutes(timeInMillis)) + ":"
+                + String.valueOf(millisToSeconds(timeInMillis));
     }
 
     @Override
@@ -41,35 +47,29 @@ public class WorkDay extends Thread {
         return true;
     }
 
-    public int getHour() {
-        return (int) (localTimeInMillis / 3600) + 1;
+    public static int millisToHour(double localTimeInMillis) {
+        // return (int) (localTimeInMillis / 3600) + 1;
+        return (int) ((localTimeInMillis * speedUpValue) / (1000 * 60 * 60)) % 24;
     }
 
-    public void setDailyWorkload(int... workLoadValuesPerDay) {
-        if (workLoadValuesPerDay.length == workDayInHours) {
-            for (int i = 0; i < workLoadValuesPerDay.length; i++) {
-                if (workLoadValuesPerDay[i] <= restaurant.getTableNumber()) {
-                    dailyWorkload[i] = workLoadValuesPerDay[i];
-                } else {
-                    //throw ...
-                }
-            }
-        } else {
-            //throw ...
-        }
+    public static int millisToMinutes(double localTimeInMillis) {
+        return (int) (localTimeInMillis * speedUpValue) / (1000 * 60) % 60;
     }
 
-    public int getHourlyLoad(int hour) {
-        return dailyWorkload[hour];
+    public static double millisToSeconds(double localTimeInMillis) {
+        return (int) (((localTimeInMillis * speedUpValue) / 1000) % 60);
     }
 
-    public List<Client> generateClients() {
-        List<Client> clients = new ArrayList<>();
-        int load = dailyWorkload[getHour()-1];
-        for (int i = 0; i <load; i++) {
-            System.out.println("generate"+load+" clients");
-        }
-        return clients;
+    public int getHourlyLoad() {
+        return Parameters.DAILY_WORKLOAD_HOURS[millisToHour(localTimeInMillis)];
+    }
+
+    public static String getLocalTimeAsString() {
+        return millisToTime(localTimeInMillis);
+    }
+
+    public double getLocalTimeMillis() {
+        return localTimeInMillis;
     }
 }
 

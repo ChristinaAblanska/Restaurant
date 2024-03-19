@@ -1,33 +1,34 @@
 package restaurant;
 
-import restaurant.building_blocks.Client;
+import restaurant.building_blocks.Table;
+import restaurant.building_blocks.employee.Waiter;
 import restaurant.building_blocks.room.kitchen.Kitchen;
 
-import java.util.List;
-
 public class Restaurant {
-    public static final Kitchen KITCHEN = new Kitchen();
+    private final int tableNumber;
+    private final Table[] tables;
+    private final int singleTableCapacity;
     public static double turnover;
     public static String name;
     public static Restaurant restaurant;
 
-    public int getTableNumber() {
-        return tableNumber;
-    }
+    public Restaurant(int tablesNumber, int singleTableCapacity, int waitersNumber) {
+        this.tableNumber = tablesNumber;
+        this.singleTableCapacity = singleTableCapacity;
+        this.tables = new Table[tablesNumber];
 
-    private final int tableNumber;
-    private final int tableCapacity;
 
-    public Restaurant(int tableNumber, int tableCapacity) {
-        this.tableNumber = tableNumber;
-        this.tableCapacity = tableCapacity;
-    }
-
-    public synchronized static Restaurant getInstance() {
-        if (restaurant == null) {
-            restaurant = new Restaurant(10,4);
+        for (int i = 0; i < tablesNumber; i++) {
+            tables[i] = new Table(singleTableCapacity, i + 1);
         }
-        return restaurant;
+        Kitchen kitchen = new Kitchen();
+
+        Thread[] waiters = new Thread[waitersNumber];
+        for (int i = 0; i < waitersNumber; i++) {
+            Thread t = new Thread(new Waiter(kitchen, tables));
+            t.start();
+            waiters[i] = t;
+        }
     }
 
     public static void printTurnover() {
@@ -41,7 +42,26 @@ public class Restaurant {
     public void printKitchenStorageStock() {
 
     }
-    public void inviteClients(List<Client> clients){
 
+    public int getOccupiedTablesNumber() {
+        int num = 0;
+        for (int i = 0; i < tableNumber; i++) {
+            if (tables[i].isOccupied()) {
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public synchronized int getSingleTableCapacity() {
+        return singleTableCapacity;
+    }
+
+    public synchronized Table[] getTables() {
+        return tables;
+    }
+
+    public int getTableNumber() {
+        return tableNumber;
     }
 }

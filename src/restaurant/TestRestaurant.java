@@ -2,6 +2,8 @@ package restaurant;
 
 import org.junit.Before;
 import org.junit.Test;
+import restaurant.building_blocks.Order;
+
 
 public class TestRestaurant {
 
@@ -9,25 +11,38 @@ public class TestRestaurant {
     private Restaurant shipka;
 
     @Before
-    public void setup() {
-        shipka = new Restaurant(10, 4);
+    public void setup() throws InterruptedException {
+        shipka = new Restaurant(10, 4, 1);
         //Here speed up the work day 1000 times.
         //In other words we set the work time per day to 28,8 seconds.
-        workDay = new WorkDay(shipka, 8, 1000);
+        workDay = new WorkDay(shipka);
 
-        workDay.setDailyWorkload(2, 4, 6, 4, 8, 7, 6, 8);
     }
 
     @Test
     public void test_restaurant_invite_clients() {
 
         workDay.start();
+        try {
+            workDay.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+        int groupNumber = 1;
         while (workDay.isRun()) {
+            //System.out.println(workDay.getHourlyLoad());
+            if (shipka.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
+                // System.out.println(workDay.getHourlyLoad());
 
-           // if(workDay.getHourlyLoad() )
-            shipka.inviteClients(workDay.generateClients());
-           // System.out.println(workDay.getHour());
+                RestaurantClientsGroup group = new RestaurantClientsGroup(groupNumber, shipka);
+                Thread t = new Thread(group);
+                t.start();
 
+                groupNumber++;
+            }
         }
     }
 }
