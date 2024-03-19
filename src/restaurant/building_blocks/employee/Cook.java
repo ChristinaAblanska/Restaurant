@@ -1,6 +1,8 @@
 
 package restaurant.building_blocks.employee;
 
+import restaurant.OrderStatus;
+import restaurant.WorkDay;
 import restaurant.building_blocks.Order;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.Recipe;
@@ -11,11 +13,20 @@ import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Cook extends Employee {
+public class Cook extends Employee implements Runnable {
 
-    public ArrayList<Meal> cookMeal(Order order, ProductStorage storage) throws ProductOutOfStockException {
+    private final Order order;
+    private final ProductStorage storage;
+
+    public Cook(Order order, ProductStorage storage) {
+        super();
+        this.order = order;
+        this.storage = storage;
+    }
+
+    public ArrayList<Meal> cookMeal() throws ProductOutOfStockException {
         ArrayList<Meal> cookedMeals = new ArrayList<>();
-        for(Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()) {
+        for (Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()) {
             Meal newMeal = cookMealsmall(meal.getKey().getRecipe(), storage);
             newMeal.setName(meal.getKey().getName());
             cookedMeals.add(newMeal);
@@ -32,5 +43,24 @@ public class Cook extends Employee {
             }*/
         }
         return new Meal(recipe);
+    }
+
+    @Override
+    public void run() {
+      /*  try {
+            cookMeal();
+        } catch (ProductOutOfStockException e) {
+            throw new RuntimeException(e);
+        }*/
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        order.setOrderStatus(OrderStatus.COMPLETED);
+        order.setCompleteTime(WorkDay.getLocalTimeAsString());
+        synchronized (order) {
+            order.notify();
+        }
     }
 }
