@@ -1,31 +1,50 @@
 package restaurant.building_blocks;
 
 
+import restaurant.OrderStatus;
 import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
-    public HashMap<Meal, Integer> meals;
-    public HashMap<Beverage, Integer> beverages;
-    public int orderID;
+    OrderStatus orderStatus;
+    private HashMap<Meal, Integer> meals;
+    private HashMap<Beverage, Integer> beverages;
+    private int orderID;
 
-    public static int orderIDcount = 10_000;
+    private static int orderIDcount = 10_000;
+    private String acceptTime;
+
+    public void setCompleteTime(String completeTime) {
+        this.completeTime = completeTime;
+    }
+
+    private String completeTime;
+
+    public double getAcceptTimeMillis() {
+        return acceptTimeMillis;
+    }
+
+    private double acceptTimeMillis;
+
+    public int getOrderID() {
+        return orderID;
+    }
 
     public Order() {
-        this.meals = new HashMap<>();
-        this.beverages = new HashMap<>();
+        this.orderStatus = OrderStatus.BLANK;
+        this.meals = new HashMap<>();;
+        this.beverages = new HashMap<>();;
         this.orderID = orderIDcount++;
     }
 
-//    public Order(HashMap<Meal, Integer> meals, HashMap<Beverage, Integer> beverages) {
-//        this.meals = meals;
-//        this.beverages = beverages;
-//        this.orderID = orderIDcount++;
-//    }
+    public Order(HashMap<Meal, Integer> meals, HashMap<Beverage, Integer> beverages) {
+        this.meals = meals;
+        this.beverages = beverages;
+        this.orderID = orderIDcount++;
+    }
 
     public HashMap<Meal, Integer> getMeals() {
         return meals;
@@ -35,18 +54,51 @@ public class Order {
         return beverages;
     }
 
-    public int getOrderID() {
-        return orderIDcount;
-    }
-
     public void addMeal(Meal meal, int count) {
+        if (this.orderStatus == OrderStatus.BLANK) {
+            this.orderStatus = OrderStatus.ACTIVE;
+        }
         if (count == 0) return;
         meals.put(meal, count);
     }
 
     public void addDrink(Beverage beverage, int count) {
+        if (this.orderStatus == OrderStatus.BLANK) {
+            this.orderStatus = OrderStatus.ACTIVE;
+        }
         if (count == 0) return;
         beverages.put(beverage, count);
+    }
+
+    public double calculateTotalPrice() {
+        double price = 0;
+        for (Map.Entry<Meal, Integer> meal : meals.entrySet()) {
+            price += (meal.getKey().getPrice() * meal.getValue());
+        }
+        for (Map.Entry<Beverage, Integer> drink : beverages.entrySet()) {
+            price += (drink.getKey().getPrice() * drink.getValue());
+        }
+        return price;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setAcceptTime(String acceptTime) {
+        this.acceptTime = acceptTime;
+    }
+
+    public String getCompleteTime() {
+        return completeTime;
+    }
+
+    public String getAcceptTime() {
+        return acceptTime;
     }
 
     public void adjustMealAmount(Meal meal, int count) {
@@ -59,16 +111,5 @@ public class Order {
         if (beverages.containsKey(drink)) {
             beverages.put(drink, count);
         } else return;
-    }
-
-    public double calculateTotalPrice() {
-        double price = 0;
-        for(Map.Entry<Meal, Integer> meal : meals.entrySet()){
-            price += (meal.getKey().getPrice() * meal.getValue());
-        }
-        for(Map.Entry<Beverage, Integer> drink : beverages.entrySet()){
-            price += (drink.getKey().getPrice() * drink.getValue());
-        }
-        return price;
     }
 }
