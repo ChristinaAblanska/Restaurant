@@ -15,7 +15,7 @@ public class TestRestaurant {
 
     @Before
     public void setup() throws InterruptedException {
-        shipka = new Restaurant(10, 4, 1, cleaningTime);
+        shipka = new Restaurant(10, 4, 2, cleaningTime);
         //Here speed up the work day 1000 times.
         //In other words we set the work time per day to 28,8 seconds.
         workDay = new WorkDay();

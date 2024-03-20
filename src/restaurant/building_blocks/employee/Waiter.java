@@ -7,18 +7,22 @@ import restaurant.building_blocks.room.kitchen.Kitchen;
 
 public class Waiter implements Runnable {
     private final Table[] tables;
+
+    public int getWaiterNumber() {
+        return waiterNumber;
+    }
+
+    private final int waiterNumber;
     private int tip;
 
     // private final TablesGroup tableGroup;
     private Kitchen kitchen;
 
 
-    public Waiter(Kitchen kitchen, Table[] tables) {
+    public Waiter(Kitchen kitchen, Table[] tables, int waiterNumber) {
         this.tables = tables;
-        // for (int i = 0; i < tables.length; i++) {
-        //   System.out.println(tables[i]);
-        // }
         this.kitchen = kitchen;
+        this.waiterNumber = waiterNumber;
     }
 
     public void run() {
@@ -32,6 +36,7 @@ public class Waiter implements Runnable {
         for (Table table : tables) {
             if (table.getOrder().getOrderStatus().equals(OrderStatus.ACTIVE)) {
                 table.getOrder().setOrderStatus(OrderStatus.IN_PROGRESS);
+                table.getOrder().setWaiter(this);
                 synchronized (table.getOrder()) {
                     table.getOrder().notify();
                 }

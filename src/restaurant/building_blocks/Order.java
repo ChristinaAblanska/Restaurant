@@ -2,6 +2,7 @@ package restaurant.building_blocks;
 
 
 import restaurant.OrderStatus;
+import restaurant.building_blocks.employee.Waiter;
 import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
 
@@ -16,6 +17,8 @@ public class Order {
 
     private static int orderIDcount = 10_000;
     private String acceptTime;
+
+    private Waiter waiter;
 
     public void setCompleteTime(String completeTime) {
         this.completeTime = completeTime;
@@ -96,6 +99,11 @@ public class Order {
                 ", orderID=" + orderID +
                 ", acceptTime='" + acceptTime + '\'' +
                 ", completeTime='" + completeTime + '\'' +
+                ", Waiter number='" + waiter.getWaiterNumber() + '\'' +
                 '}';
+    }
+
+    public void setWaiter(Waiter waiter) {
+        this.waiter = waiter;
     }
 }
