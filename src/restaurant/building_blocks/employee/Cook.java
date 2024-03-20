@@ -47,18 +47,23 @@ public class Cook extends Employee implements Runnable {
 
     @Override
     public void run() {
-      /*  try {
-            cookMeal();
-        } catch (ProductOutOfStockException e) {
-            throw new RuntimeException(e);
-        }*/
+
+        synchronized (order) {
+            while (!order.getOrderStatus().equals(OrderStatus.IN_PROGRESS)) {
+                try {
+                    order.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         order.setOrderStatus(OrderStatus.COMPLETED);
-        order.setCompleteTime(WorkDay.getLocalTimeAsString());
+        order.setCompleteTime(WorkDay.getTime().toString());
         synchronized (order) {
             order.notify();
         }

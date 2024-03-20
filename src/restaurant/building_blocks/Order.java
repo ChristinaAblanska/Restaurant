@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class Order {
     OrderStatus orderStatus;
-    private HashMap<Meal, Integer> meals;
-    private HashMap<Beverage, Integer> beverages;
+    private final HashMap<Meal, Integer> meals;
+    private final HashMap<Beverage, Integer> beverages;
     private int orderID;
 
     private static int orderIDcount = 10_000;
@@ -22,12 +22,6 @@ public class Order {
     }
 
     private String completeTime;
-
-    public double getAcceptTimeMillis() {
-        return acceptTimeMillis;
-    }
-
-    private double acceptTimeMillis;
 
     public Order() {
         this.orderStatus = OrderStatus.BLANK;
@@ -91,5 +85,17 @@ public class Order {
 
     public String getAcceptTime() {
         return acceptTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderStatus=" + orderStatus +
+                ", meals=" + meals +
+                ", beverages=" + beverages +
+                ", orderID=" + orderID +
+                ", acceptTime='" + acceptTime + '\'' +
+                ", completeTime='" + completeTime + '\'' +
+                '}';
     }
 }

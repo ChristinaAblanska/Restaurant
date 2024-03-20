@@ -8,30 +8,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RestaurantClientsGroup implements Runnable {
+public class ClientsGroup implements Runnable {
     Random RANDOM = new Random();
     private final int groupNumber;
-    private String incomingHour;
+    private final String incomingHour;
+    private String outComingHour;
     private Client[] clients;
     private Table table;
     private final Order order = new Order();
 
-    public RestaurantClientsGroup(int groupNumber, Restaurant restaurant) {
-        this.incomingHour = WorkDay.getLocalTimeAsString();
+    public ClientsGroup(int groupNumber, Restaurant restaurant) {
+        this.incomingHour = WorkDay.getTime().toString();
         this.groupNumber = groupNumber;
         createMembers(restaurant.getSingleTableCapacity());
         //set table randomly here
         setRandomFurniture(restaurant);
         order.setOrderStatus(OrderStatus.ACTIVE);
-        order.setAcceptTime(WorkDay.getLocalTimeAsString());
+        order.setAcceptTime( WorkDay.getTime().toString());
     }
+
     public void run() {
-        System.out.println(this);
+
         for (Client client : clients) {
             //order.addMeal(client.pickMeal(table.getMenu()), 1);
             //order.addDrink(client.pickDring(table.getMenu()), 1);
         }
+
         table.setOrder(order);
+
+        synchronized (order) {
+            while (!order.getOrderStatus().equals(OrderStatus.IN_PROGRESS)) {
+                try {
+                    order.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
         synchronized (order) {
             while (!order.getOrderStatus().equals(OrderStatus.COMPLETED)) {
                 try {
@@ -41,9 +55,8 @@ public class RestaurantClientsGroup implements Runnable {
                 }
             }
         }
-        //outComingTimeMillis =
-        System.out.println(this);
         table.setOccupied(false);
+        outComingHour =  WorkDay.getTime().toString();
     }
 
     public void setRandomFurniture(Restaurant restaurant) {
@@ -82,15 +95,14 @@ public class RestaurantClientsGroup implements Runnable {
 
     @Override
     public String toString() {
-        StringBuilder info = new StringBuilder();
-        info.append("Group Number:").append(groupNumber);
-        info.append("|Incoming Hour:").append(incomingHour);
-        info.append("|Order accept time:").append(order.getAcceptTime());
-        info.append("|Order complete time:").append(order.getCompleteTime());
-        info.append(" |Clients count:").append(clients.length);
-        info.append(" |Table Number:").append(table.getNumber());
-        info.append(" |Order status:").append(order.getOrderStatus());
 
-        return String.valueOf(info);
+        return "Group Number:" + groupNumber +
+                "|Incoming Hour:" + incomingHour +
+                "|Out coming Hour:" + outComingHour+
+                "|Order accept time:" + order.getAcceptTime() +
+                "|Order complete time:" + order.getCompleteTime() +
+                " |Clients count:" + clients.length +
+                " |Table Number:" + table.getNumber() +
+                " |Order status:" + order;
     }
 }

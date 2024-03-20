@@ -3,20 +3,23 @@ package restaurant.test;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import restaurant.Parameters;
 import restaurant.Restaurant;
+import restaurant.Time;
 import restaurant.WorkDay;
 
 public class TestWorkDay {
 
     private WorkDay workDay;
     private Restaurant shipka;
-
+    Time cleaningTime = new Time(Parameters.WORK_DAY_HOURS + Parameters.WORK_DAY_START_HOUR - 1
+            , Parameters.CLEANING_START_TIME_MINUTES_BEFORE_CLOSE);
     @Before
     public void setup() throws InterruptedException {
-        shipka = new Restaurant(10, 4, 1);
+        shipka = new Restaurant(10, 4, 1,cleaningTime);
         //Here speed up the work day 1000 times.
         //In other words we set the work time per day to 28,8 seconds.
-        workDay = new WorkDay(shipka);
+        workDay = new WorkDay();
     }
 
     @Test

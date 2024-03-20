@@ -11,23 +11,15 @@ public class WorkDay extends Thread {
     Random rand = new Random();
     private final int workTimeInMilliseconds;
     private final int workDayHours = Parameters.WORK_DAY_HOURS;
-    private final Restaurant restaurant;
+    private static int workDayStartHour = Parameters.WORK_DAY_START_HOUR;
     private long workTimeStart;
-
+    private static Time time;
 
     private static double localTimeInMillis;
 
-    public WorkDay(Restaurant restaurant) {
-
+    public WorkDay() {
         workTimeInMilliseconds = (((workDayHours * 3600) / speedUpValue)) * 1000;
-        this.restaurant = restaurant;
-    }
-
-    public static String millisToTime(double timeInMillis) {
-
-        return String.valueOf(millisToHour(timeInMillis)) + ":"
-                + String.valueOf(millisToMinutes(timeInMillis)) + ":"
-                + String.valueOf(millisToSeconds(timeInMillis));
+        time = new Time();
     }
 
     @Override
@@ -36,6 +28,7 @@ public class WorkDay extends Thread {
     }
 
     public boolean isRun() {
+
         double currentTime = System.currentTimeMillis();
         if ((currentTime - workTimeStart)
                 > workTimeInMilliseconds) {
@@ -44,19 +37,24 @@ public class WorkDay extends Thread {
         }
 
         localTimeInMillis = currentTime - workTimeStart;
+
+        time.set(millisToHour(localTimeInMillis) + workDayStartHour,
+                millisToMinutes(localTimeInMillis),
+                millisToSeconds(localTimeInMillis));
+
         return true;
     }
 
-    public static int millisToHour(double localTimeInMillis) {
+    private int millisToHour(double localTimeInMillis) {
         // return (int) (localTimeInMillis / 3600) + 1;
         return (int) ((localTimeInMillis * speedUpValue) / (1000 * 60 * 60)) % 24;
     }
 
-    public static int millisToMinutes(double localTimeInMillis) {
+    private int millisToMinutes(double localTimeInMillis) {
         return (int) (localTimeInMillis * speedUpValue) / (1000 * 60) % 60;
     }
 
-    public static double millisToSeconds(double localTimeInMillis) {
+    private int millisToSeconds(double localTimeInMillis) {
         return (int) (((localTimeInMillis * speedUpValue) / 1000) % 60);
     }
 
@@ -64,12 +62,8 @@ public class WorkDay extends Thread {
         return Parameters.DAILY_WORKLOAD_HOURS[millisToHour(localTimeInMillis)];
     }
 
-    public static String getLocalTimeAsString() {
-        return millisToTime(localTimeInMillis);
-    }
-
-    public double getLocalTimeMillis() {
-        return localTimeInMillis;
+    public static Time getTime() {
+        return time;
     }
 }
 

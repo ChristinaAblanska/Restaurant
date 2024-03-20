@@ -31,9 +31,11 @@ public class Waiter implements Runnable {
 
         for (Table table : tables) {
             if (table.getOrder().getOrderStatus().equals(OrderStatus.ACTIVE)) {
-                //System.out.println("deliver");
-
-                 kitchen.completeAnOrder(table.getOrder());
+                table.getOrder().setOrderStatus(OrderStatus.IN_PROGRESS);
+                synchronized (table.getOrder()) {
+                    table.getOrder().notify();
+                }
+                kitchen.completeAnOrder(table.getOrder());
             }
         }
     }
