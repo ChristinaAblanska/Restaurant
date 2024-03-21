@@ -1,6 +1,7 @@
 
 package restaurant.building_blocks.employee;
 
+import restaurant.OrderStatus;
 import restaurant.building_blocks.Order;
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
@@ -11,36 +12,32 @@ import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Cook extends Employee {
+public class Cook extends Employee  {
 
-    public void cookMeals(Order order, ProductStorage storage) throws ProductOutOfStockException {
+    private final Order order;
+    private final ProductStorage storage;
+
+    public Cook(Order order, ProductStorage storage) {
+        super();
+        this.order = order;
+        this.storage = storage;
+    }
+
+    public ArrayList<Meal> cookMeals() throws ProductOutOfStockException {
+        order.setOrderStatus(OrderStatus.IN_PROGRESS);
+        ArrayList<Meal> result = new ArrayList<>();
         for (Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()) {
             for (int i = 0; i < meal.getValue(); i++) {
                 Meal newMeal = cookSingleMeal(meal.getKey().getRecipe(), storage);
+                result.add(newMeal);
             }
         }
+        order.setOrderStatus(OrderStatus.COMPLETED);
+        return result;
     }
-
-    // Not adding correct values to the array
-//    public ArrayList<Meal> cookMeals(Order order, ProductStorage storage) throws ProductOutOfStockException {
-//        ArrayList<Meal> cookedMeals = new ArrayList<>();
-//        int count = 0;
-//        for (Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()) {
-//            for (int i = 0; i < meal.getValue(); i++) {
-//                Meal newMeal = cookSingleMeal(meal.getKey().getRecipe(), storage);
-////                newMeal.setName(meal.getKey().getName());
-//                cookedMeals.add(newMeal);
-//                count++;
-//                System.out.println("Meal cooked" + i + "\n");
-//            }
-//        }
-//        System.out.println(count);
-//        return cookedMeals;
-//    }
 
     public Meal cookSingleMeal(Recipe recipe, ProductStorage storage) throws ProductOutOfStockException {
         for (Map.Entry<Product, Integer> entry : recipe.getIngredients().entrySet()) {
@@ -67,4 +64,26 @@ public class Cook extends Employee {
         }
         return new Meal(recipe);
     }
+
+//    @Override
+//    public void run() {
+//        @Override
+//        public void run() {
+//      /*  try {
+//            cookMeal();
+//        } catch (ProductOutOfStockException e) {
+//            throw new RuntimeException(e);
+//        }*/
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            order.setOrderStatus(OrderStatus.COMPLETED);
+//            order.setCompleteTime(WorkDay.getLocalTimeAsString());
+//            synchronized (order) {
+//                order.notify();
+//            }
+//        }
+//    }
 }

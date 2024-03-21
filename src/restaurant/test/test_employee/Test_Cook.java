@@ -16,8 +16,6 @@ import restaurant.building_blocks.Order;
 import restaurant.building_blocks.employee.Cook;
 
 import java.util.ArrayList;
-import java.util.Optional;
-
 public class Test_Cook {
     public Cook cook;
     public Order order;
@@ -44,7 +42,7 @@ public class Test_Cook {
         storage = new ProductStorage();
 
         storage.addProductPerKilogram(yogurt, 15);
-        storage.addEnumerableProduct(eggs, 4);
+        storage.addEnumerableProduct(eggs, 50);
         storage.addProductPerLiter(milk, 50);
         storage.addProductPerKilogram(cucumber, 20);
         storage.addProductPerKilogram(walnuts, 5);
@@ -70,14 +68,18 @@ public class Test_Cook {
 
     @Test
     public void testCookSingleMealReturn() throws ProductOutOfStockException {
-        cook = new Cook();
+        Order order = new Order();
+        cook = new Cook(order, storage);
+        order.addMeal(meal1, 1);
         Meal newMeal = cook.cookSingleMeal(meal1.getRecipe(), storage);
         Assert.assertEquals(meal1.getRecipe(), newMeal.getRecipe());
     }
 
     @Test
     public void testCookSingleMealStorageUpdate() throws ProductOutOfStockException {
-        cook = new Cook();
+        Order order = new Order();
+        order.addMeal(meal1, 1);
+        cook = new Cook(order, storage);
         cook.cookSingleMeal(meal1.getRecipe(), storage);
         Assert.assertEquals(14.7, storage.getStock("Yogurt"), 0.0003f);
         Assert.assertEquals(47, storage.getStock("Egg"),0.0003f);
@@ -86,11 +88,11 @@ public class Test_Cook {
 
     @Test
     public void testCookMealStorageUpdate() throws ProductOutOfStockException {
-        cook = new Cook();
-        order = new Order();
+        Order order = new Order();
+        cook = new Cook(order, storage);
         order.addMeal(meal1, 2);
         order.addMeal(meal2, 2);
-        cook.cookMeals(order, storage);
+        cook.cookMeals();
 
         Assert.assertEquals(14.4, storage.getStock("Yogurt"), 0.0003f);
         Assert.assertEquals(44, storage.getStock("Egg"),0.0003f);
@@ -99,43 +101,22 @@ public class Test_Cook {
         Assert.assertEquals(4.8, storage.getStock("Walnuts"), 0.0003f);
     }
 
-//     TODO - ask Vanya
-//    @Test
-//    public void testThrowOutOfStockException() throws ProductOutOfStockException {
-//        cook = new Cook();
-//        order = new Order();
-//        order.addMeal(meal1, 2);
-//
-////        cook.cookSingleMeal(meal1.getRecipe(), storage);
-////        System.out.println("1 " + storage.getStock("Egg"));
-////        cook.cookSingleMeal(meal1.getRecipe(), storage);
-////        System.out.println("2 " + storage.getStock("Egg"));
-//
-////        Assert.assertThrows(ProductOutOfStockException.class,  () -> {
-////            cook.cookMeals(order, storage);
-////        });
-//    }
+    @Test
+    public void testCookMealReturnValue() throws ProductOutOfStockException {
+        Order order = new Order();
+        System.out.println(order.getOrderStatus());
+        cook = new Cook(order, storage);
+        order.addMeal(meal1, 2);
+        order.addMeal(meal2, 2);
+        System.out.println(order.getOrderStatus());
+        ArrayList<Meal> testResult = cook.cookMeals();
+        System.out.println(order.getOrderStatus());
 
-    // Not adding correct values to the array
-//    @Test
-//    public void testCookMealReturnValue() throws ProductOutOfStockException {
-//        cook = new Cook();
-//        order = new Order();
-//        order.addMeal(meal1, 2);
-//        order.addMeal(meal2, 2);
-//
-//        ArrayList<Meal> testResult = cook.cookMeals(order, storage);;
-//        testResult.add(meal1);
-//        testResult.add(meal1);
-//        testResult.add(meal2);
-//        testResult.add(meal2);
-//
-//        System.out.println(testResult.toString());
-////        Assert.assertEquals(4, testResult.size());
-////        Assert.assertEquals(recipe1, testResult.get(0).getRecipe());
-////        Assert.assertEquals(meal1.getRecipe(), testResult.get(1).getRecipe());
-////        Assert.assertEquals(meal2.getRecipe(), testResult.get(2).getRecipe());
-////        Assert.assertEquals(meal2.getRecipe(), testResult.get(3).getRecipe());
-//    }
+        Assert.assertEquals(4, testResult.size());
+        Assert.assertEquals(recipe1, testResult.get(0).getRecipe());
+        Assert.assertEquals(meal1.getRecipe(), testResult.get(1).getRecipe());
+        Assert.assertEquals(meal2.getRecipe(), testResult.get(2).getRecipe());
+        Assert.assertEquals(meal2.getRecipe(), testResult.get(3).getRecipe());
+    }
 
 }

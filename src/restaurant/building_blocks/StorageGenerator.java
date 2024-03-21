@@ -5,6 +5,7 @@ import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
+
 import java.util.Random;
 
 public class StorageGenerator {
@@ -78,9 +79,9 @@ public class StorageGenerator {
         storage.addProductPerKilogram(ham, generate.nextDouble(40) + 20);
         storage.addEnumerableProduct(eggs, (generate.nextInt(300) + 100));
 
-
         return storage;
     }
+
     public Product backingPowder = new ProductPerKilogram("backingPowder", 22.3);
     public Product bananas = new ProductPerKilogram("bananas", 4.7);
     public Product cookies = new ProductPerKilogram("cookies", 18.2);

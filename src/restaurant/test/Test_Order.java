@@ -14,8 +14,6 @@ import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 import restaurant.building_blocks.food.Meal;
 import restaurant.building_blocks.Order;
 
-import java.util.Optional;
-
 public class Test_Order {
     public Order order;
     public ProductStorage storage;
@@ -77,7 +75,10 @@ public class Test_Order {
     @Test
     public void testNewBlankOrder() {
         order = new Order();
-        Assert.assertEquals(10001, order.getOrderID());
+        Assert.assertEquals(10000, order.getOrderID());
+
+        Order order1 = new Order();
+        Assert.assertEquals(10001, order1.getOrderID());
     }
 
     @Test

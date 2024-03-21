@@ -1,12 +1,13 @@
 package restaurant.building_blocks.food;
 
+import restaurant.Main;
 import restaurant.building_blocks.Recipe;
 
 public class Meal {
-    public String name;
-    public final Recipe recipe;
+    private String name;
+    private final Recipe recipe;
     //price plus profit
-    public final double price;
+    private final double price;
 
     void consume() {
         System.out.println("The meal is consumed!");
@@ -30,8 +31,9 @@ public class Meal {
 
     public double calculatePriceProfit() {
         double ingredientPrice = recipe.calculatePrice();
-        double profit = ingredientPrice * 0.5; //Constant
-        return ingredientPrice + profit;
+        double profit = ingredientPrice * Main.PROFIT; // Constant profit
+//        double tips = (ingredientPrice + profit) * Main.TIPS; // Constant tips
+        return ingredientPrice + profit; // + tips;
     }
 
     public double getPrice() {
@@ -48,5 +50,11 @@ public class Meal {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(name).append(" - ").append(price);
+        return result.toString();
     }
 }

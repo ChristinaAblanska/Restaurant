@@ -1,76 +1,70 @@
 package restaurant.building_blocks;
 
-import restaurant.building_blocks.Recipe;
 import restaurant.building_blocks.Recipe.SingleRecipe;
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
-import restaurant.building_blocks.food.Meal;
 import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RecipeGenerator {
     public SingleRecipe ingredients;
 
     // Generating meals
 
-    public ArrayList<Meal> generateRecipes() {
-        ArrayList<Meal> result = new ArrayList<>();
-
-        Meal beansStew = new Meal("Боб", generateBeansStew());
-        Meal musaka = new Meal("Мусака", generateMusaka());
-        Meal kapama = new Meal("Капама", generateKapama());
-        Meal friedEggs = new Meal("Яйца по Панагюрски", generateFriedEggs());
-        Meal potatoeCake = new Meal("Пататник", generatePotatoCake());
-        Meal chickenRice = new Meal("Пиле с ориз", generateChickenRice());
-        Meal bakedCheese = new Meal("Сирене по Шопски", generateBakedCheese());
-        Meal stuffedPeppersInSause = new Meal("Пълнени чушки с бял сос", generateStuffedPeppers());
-        Meal beefSoup = new Meal("Шкембе чорба", generateBeefSoup());
-        Meal lentilSoup = new Meal("Леща чорба", generateLentilSoup());
-        Meal chickenSoup = new Meal("Пилешка супа", generateChickenSoup());
-        Meal shopskaSalad = new Meal("Шопска Салата", generateShopskaSalad());
-        Meal shepardsSalad = new Meal("Овчарска Салата", generateShepardSalad());
-        Meal cabbageAndCarrotsSalad = new Meal("Салата Зеле и моркови", generateCabbageCarrotSalad());
-        Meal greenSalad = new Meal("Зелена Салата", generateGreenSalad());
-        Meal tarator = new Meal("Таратор", generateTarator());
-        Meal tolumbichki = new Meal("Толумбички", generateTolumbichki());
-        Meal baklava = new Meal("Баклава", generateBaklava());
-        Meal pancake = new Meal("Палачинка с банан и шоколад", generatePancake());
-        Meal cookieCake = new Meal("Бисквитена торта", generateCookieCake());
-
-        result.add(beansStew);
-        result.add(musaka);
-        result.add(kapama);
-        result.add(friedEggs);
-        result.add(potatoeCake);
-        result.add(chickenRice);
-        result.add(bakedCheese);
-        result.add(stuffedPeppersInSause);
-        result.add(beefSoup);
-        result.add(lentilSoup);
-        result.add(chickenSoup);
-        result.add(shopskaSalad);
-        result.add(shepardsSalad);
-        result.add(cabbageAndCarrotsSalad);
-        result.add(greenSalad);
-        result.add(tarator);
-        result.add(tolumbichki);
-        result.add(baklava);
-        result.add(pancake);
-        result.add(cookieCake);
-
-        return result;
-    }
+//    public ArrayList<Meal> generateRecipes() {
+//        ArrayList<Meal> result = new ArrayList<>();
+//
+//        Meal beansStew = new Meal("Боб", generateBeansStew());
+//        Meal musaka = new Meal("Мусака", generateMusaka());
+//        Meal kapama = new Meal("Капама", generateKapama());
+//        Meal friedEggs = new Meal("Яйца по Панагюрски", generateFriedEggs());
+//        Meal potatoeCake = new Meal("Пататник", generatePotatoCake());
+//        Meal chickenRice = new Meal("Пиле с ориз", generateChickenRice());
+//        Meal bakedCheese = new Meal("Сирене по Шопски", generateBakedCheese());
+//        Meal stuffedPeppersInSause = new Meal("Пълнени чушки с бял сос", generateStuffedPeppers());
+//        Meal beefSoup = new Meal("Шкембе чорба", generateBeefSoup());
+//        Meal lentilSoup = new Meal("Леща чорба", generateLentilSoup());
+//        Meal chickenSoup = new Meal("Пилешка супа", generateChickenSoup());
+//        Meal shopskaSalad = new Meal("Шопска Салата", generateShopskaSalad());
+//        Meal shepardsSalad = new Meal("Овчарска Салата", generateShepardSalad());
+//        Meal cabbageAndCarrotsSalad = new Meal("Салата Зеле и моркови", generateCabbageCarrotSalad());
+//        Meal greenSalad = new Meal("Зелена Салата", generateGreenSalad());
+//        Meal tarator = new Meal("Таратор", generateTarator());
+//        Meal tolumbichki = new Meal("Толумбички", generateTolumbichki());
+//        Meal baklava = new Meal("Баклава", generateBaklava());
+//        Meal pancake = new Meal("Палачинка с банан и шоколад", generatePancake());
+//        Meal cookieCake = new Meal("Бисквитена торта", generateCookieCake());
+//
+//        result.add(beansStew);
+//        result.add(musaka);
+//        result.add(kapama);
+//        result.add(friedEggs);
+//        result.add(potatoeCake);
+//        result.add(chickenRice);
+//        result.add(bakedCheese);
+//        result.add(stuffedPeppersInSause);
+//        result.add(beefSoup);
+//        result.add(lentilSoup);
+//        result.add(chickenSoup);
+//        result.add(shopskaSalad);
+//        result.add(shepardsSalad);
+//        result.add(cabbageAndCarrotsSalad);
+//        result.add(greenSalad);
+//        result.add(tarator);
+//        result.add(tolumbichki);
+//        result.add(baklava);
+//        result.add(pancake);
+//        result.add(cookieCake);
+//
+//        return result;
+//    }
 
     // Adding products to the recipes
     public Recipe generateBeansStew() {
         ingredients = new SingleRecipe();
         ingredients.put(beans, 100);
-        ingredients.put(bacon, 88);
-        ingredients.put(onion, 38);
+        ingredients.put(bacon, 100);
+        ingredients.put(onion, 50);
         ingredients.put(carrots, 50);
         ingredients.put(tomatoes, 50);
         ingredients.put(flour, 7);
@@ -101,9 +95,9 @@ public class RecipeGenerator {
         ingredients = new SingleRecipe();
 
         ingredients.put(filoDough, 100);
-        ingredients.put(pistachio, 75);
-        ingredients.put(milk, 188);
-        ingredients.put(sugar, 188);
+        ingredients.put(pistachio, 50);
+        ingredients.put(milk, 120);
+        ingredients.put(sugar, 150);
         ingredients.put(butter, 13);
         ingredients.put(cocoa, 13);
         ingredients.put(chocolate, 25);
@@ -114,8 +108,8 @@ public class RecipeGenerator {
     public Recipe generateBeefSoup() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(beefStomach, 250);
-        ingredients.put(milk, 250);
+        ingredients.put(beefStomach, 150);
+        ingredients.put(milk, 150);
         ingredients.put(oil, 8);
         ingredients.put(butter, 8);
         ingredients.put(redPepper, 2);
@@ -130,10 +124,10 @@ public class RecipeGenerator {
     public Recipe generateCabbageCarrotSalad() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(cabbage, 125);
-        ingredients.put(carrots, 63);
-        ingredients.put(cucumber, 75);
-        ingredients.put(olives, 13);
+        ingredients.put(cabbage, 200);
+        ingredients.put(carrots, 100);
+        ingredients.put(cucumber, 90);
+        ingredients.put(olives, 20);
         ingredients.put(salt, 1);
         ingredients.put(vinegar, 3);
         ingredients.put(oil, 4);
@@ -157,7 +151,7 @@ public class RecipeGenerator {
     public Recipe generateChickenSoup() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(chicken, 75);
+        ingredients.put(chicken, 150);
         ingredients.put(onion, 38);
         ingredients.put(carrots, 38);
         ingredients.put(noodles, 25);
@@ -172,14 +166,14 @@ public class RecipeGenerator {
     public Recipe generateCookieCake() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(cookies, 225);
+        ingredients.put(cookies, 100);
         ingredients.put(eggs, 2);
-        ingredients.put(milk, 250);
+        ingredients.put(milk, 50);
         ingredients.put(flour, 23);
-        ingredients.put(sugar, 50);
+        ingredients.put(sugar, 20);
         ingredients.put(vanilla, 2);
         ingredients.put(butter, 25);
-        ingredients.put(chocolate, 75);
+        ingredients.put(chocolate, 50);
 
         return new Recipe(ingredients, 25);
     }
@@ -187,9 +181,9 @@ public class RecipeGenerator {
     public Recipe generateFriedEggs() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(eggs, 2);
+        ingredients.put(eggs, 3);
         ingredients.put(cheese, 50);
-        ingredients.put(yogurt, 100);
+        ingredients.put(yogurt, 150);
         ingredients.put(garlic, 15);
         ingredients.put(oil, 19);
         ingredients.put(redPepper, 4);
@@ -202,10 +196,10 @@ public class RecipeGenerator {
         ingredients = new SingleRecipe();
 
         ingredients.put(lettuce, 1);
-        ingredients.put(cucumber, 63);
-        ingredients.put(tomatoes, 38);
-        ingredients.put(broccoli, 75);
-        ingredients.put(olives, 13);
+        ingredients.put(cucumber, 50);
+        ingredients.put(tomatoes, 30);
+        ingredients.put(broccoli, 50);
+        ingredients.put(olives, 20);
         ingredients.put(oliveOil, 12);
         ingredients.put(vinegar, 8);
         ingredients.put(salt, 1);
@@ -216,13 +210,13 @@ public class RecipeGenerator {
     public Recipe generateKapama() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(pickledCabbage, 375);
-        ingredients.put(pork, 250);
-        ingredients.put(beef, 150);
+        ingredients.put(pickledCabbage, 200);
+        ingredients.put(pork, 100);
+        ingredients.put(beef, 100);
         ingredients.put(bacon, 50);
         ingredients.put(sausage, 100);
-        ingredients.put(chicken, 150);
-        ingredients.put(rice, 175);
+        ingredients.put(chicken, 100);
+        ingredients.put(rice, 100);
         ingredients.put(bayLeaf, 1);
         ingredients.put(blackPepper, 2);
         ingredients.put(beetRoot, 100);
@@ -233,7 +227,7 @@ public class RecipeGenerator {
     public Recipe generateLentilSoup() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(lentil, 63);
+        ingredients.put(lentil, 100);
         ingredients.put(peppers, 50);
         ingredients.put(carrots, 75);
         ingredients.put(onion, 38);
@@ -268,12 +262,12 @@ public class RecipeGenerator {
         ingredients = new SingleRecipe();
 
         ingredients.put(eggs, 1);
-        ingredients.put(bananas, 50);
-        ingredients.put(sugar, 8);
-        ingredients.put(flour, 5);
-        ingredients.put(butter, 3);
-        ingredients.put(milk, 5);
-        ingredients.put(chocolate, 13);
+        ingredients.put(bananas, 100);
+        ingredients.put(sugar, 20);
+        ingredients.put(flour, 50);
+        ingredients.put(butter, 10);
+        ingredients.put(milk, 20);
+        ingredients.put(chocolate, 50);
 
         return new Recipe(ingredients, 15);
     }
@@ -281,7 +275,7 @@ public class RecipeGenerator {
     public Recipe generatePotatoCake() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(potatoes, 375);
+        ingredients.put(potatoes, 200);
         ingredients.put(butter, 32);
         ingredients.put(onion, 50);
         ingredients.put(blackPepper, 1);
@@ -296,14 +290,14 @@ public class RecipeGenerator {
     public Recipe generateShepardSalad() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(cucumber, 75);
-        ingredients.put(tomatoes, 38);
-        ingredients.put(ham, 13);
+        ingredients.put(cucumber, 90);
+        ingredients.put(tomatoes, 90);
+        ingredients.put(ham, 40);
         ingredients.put(onion, 13);
         ingredients.put(mushrooms, 50);
         ingredients.put(corn, 13);
         ingredients.put(peppers, 13);
-        ingredients.put(yellowCheese, 13);
+        ingredients.put(yellowCheese, 50);
         ingredients.put(eggs, 1);
         ingredients.put(olives, 10);
         ingredients.put(cheese, 13);
@@ -364,7 +358,7 @@ public class RecipeGenerator {
     public Recipe generateTolumbichki() {
         ingredients = new SingleRecipe();
 
-        ingredients.put(cottageCheese, 50);
+        ingredients.put(cottageCheese, 150);
         ingredients.put(eggs, 1);
         ingredients.put(oil, 50);
         ingredients.put(backingPowder, 3);
