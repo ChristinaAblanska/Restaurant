@@ -8,7 +8,7 @@ public class Cleaner extends Employee {
 
     public void cleanRestaurant() {
         if (trigger == 0) {
-            Restaurant.history.addData("Clean restaurant,Time ="+ WorkDay.getTime());
+            Restaurant.history.addData("Clean restaurant time =" + WorkDay.getTime());
         }
         trigger = 1;
     }

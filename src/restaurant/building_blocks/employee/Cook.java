@@ -60,7 +60,7 @@ public class Cook extends Employee implements Runnable {
         for (Order order : tableOrder) {
             order.setOrderStatus(OrderStatus.COMPLETED);
         }
-        //hele must delay using the meal with maximum cook time
+        //here must delay using the meal with maximum cook time
         try {
             Thread.sleep(WorkDay.minutesToLocalTime(20));
         } catch (InterruptedException e) {

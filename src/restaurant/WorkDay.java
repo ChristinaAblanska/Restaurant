@@ -20,6 +20,9 @@ public class WorkDay extends Thread {
     public WorkDay() {
         workTimeInMilliseconds = (((workDayHours * 3600) / speedUpValue)) * 1000;
         time = new Time();
+        time.set(millisToHour(localTimeInMillis) + workDayStartHour,
+                millisToMinutes(localTimeInMillis),
+                millisToSeconds(localTimeInMillis));
     }
 
     public static int minutesToLocalTime(int minutes) {

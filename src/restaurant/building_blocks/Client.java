@@ -21,7 +21,6 @@ public class Client {
 
     private Order individualOrder;
 
-
     public Client(int clientNumber) {
         this.clientNumber = clientNumber;
     }
