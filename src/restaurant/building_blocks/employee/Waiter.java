@@ -34,13 +34,13 @@ public class Waiter implements Runnable {
     private void deliverOrdersToKitchen() {
 
         for (Table table : tables) {
-            if (table.getOrder().getOrderStatus().equals(OrderStatus.ACTIVE)) {
-                table.getOrder().setOrderStatus(OrderStatus.IN_PROGRESS);
-                table.getOrder().setWaiter(this);
-                synchronized (table.getOrder()) {
-                    table.getOrder().notify();
+            if (table.getTableOrder().getStatus().equals(OrderStatus.ACTIVE)) {
+                table.getTableOrder().setStatus(OrderStatus.IN_PROGRESS);
+                table.getTableOrder().setWaiter(this);
+                synchronized (table.getTableOrder()) {
+                    table.getTableOrder().notify();
                 }
-                kitchen.completeAnOrder(table.getOrder());
+                kitchen.completeAnOrder(table.getTableOrder());
             }
         }
     }

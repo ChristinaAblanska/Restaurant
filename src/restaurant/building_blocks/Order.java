@@ -5,6 +5,10 @@ import restaurant.OrderStatus;
 import restaurant.building_blocks.employee.Waiter;
 import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
+import restaurant.building_blocks.room.kitchen.storage.shaft.EnumerableShaft;
+import restaurant.building_blocks.room.kitchen.storage.shaft.Shaft;
+import restaurant.building_blocks.room.kitchen.storage.shaft.ShaftPerKilogram;
+import restaurant.building_blocks.room.kitchen.storage.shaft.ShaftPerLiter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +20,6 @@ public class Order {
     private int orderID;
 
     private static int orderIDcount = 10_000;
-    private String acceptTime;
-
-    private Waiter waiter;
 
     public void setCompleteTime(String completeTime) {
         this.completeTime = completeTime;
@@ -28,8 +29,8 @@ public class Order {
 
     public Order() {
         this.orderStatus = OrderStatus.BLANK;
-        this.meals = null;
-        this.beverages = null;
+        this.meals = new HashMap<>();
+        this.beverages = new HashMap<>();
         this.orderID = orderIDcount++;
     }
 
@@ -78,32 +79,21 @@ public class Order {
         return orderStatus;
     }
 
-    public void setAcceptTime(String acceptTime) {
-        this.acceptTime = acceptTime;
-    }
-
     public String getCompleteTime() {
         return completeTime;
     }
 
-    public String getAcceptTime() {
-        return acceptTime;
-    }
-
     @Override
     public String toString() {
-        return "Order{" +
-                "orderStatus=" + orderStatus +
-                ", meals=" + meals +
-                ", beverages=" + beverages +
-                ", orderID=" + orderID +
-                ", acceptTime='" + acceptTime + '\'' +
-                ", completeTime='" + completeTime + '\'' +
-                ", Waiter number='" + waiter.getWaiterNumber() + '\'' +
-                '}';
-    }
-
-    public void setWaiter(Waiter waiter) {
-        this.waiter = waiter;
+        StringBuilder data = new StringBuilder();
+        data.append("            Meals:").append("\n");
+        for (Map.Entry<Meal, Integer> record : meals.entrySet()) {
+            data.append("      ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
+        }
+        data.append("            Beverages:").append("\n");
+        for (Map.Entry<Beverage, Integer> record : beverages.entrySet()) {
+            data.append("      ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
+        }
+        return String.valueOf(data);
     }
 }

@@ -3,19 +3,17 @@ package restaurant;
 import restaurant.building_blocks.Client;
 import restaurant.building_blocks.Order;
 import restaurant.building_blocks.Table;
+import restaurant.building_blocks.TableOrder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ClientsGroup implements Runnable {
-    Random RANDOM = new Random();
+    public static Random RANDOM = new Random();
     private final int groupNumber;
-    private final String incomingHour;
+    private String incomingHour;
     private String outComingHour;
     private Client[] clients;
     private Table table;
-    private final Order order = new Order();
 
     public ClientsGroup(int groupNumber, Restaurant restaurant) {
         this.incomingHour = WorkDay.getTime().toString();
@@ -23,40 +21,47 @@ public class ClientsGroup implements Runnable {
         createMembers(restaurant.getSingleTableCapacity());
         //set table randomly here
         setRandomFurniture(restaurant);
-        order.setOrderStatus(OrderStatus.ACTIVE);
-        order.setAcceptTime( WorkDay.getTime().toString());
+
     }
 
     public void run() {
 
+        incomingHour = WorkDay.getTime().toString();
+
+        TableOrder tableOrder = table.getTableOrder();
         for (Client client : clients) {
+
+            Order individualOrder = new Order();
             //order.addMeal(client.pickMeal(table.getMenu()), 1);
             //order.addDrink(client.pickDring(table.getMenu()), 1);
+            tableOrder.add(individualOrder);
+            client.setIndividualOrder(individualOrder);
         }
 
-        table.setOrder(order);
+        tableOrder.setStatus(OrderStatus.ACTIVE);
 
-        synchronized (order) {
-            while (!order.getOrderStatus().equals(OrderStatus.IN_PROGRESS)) {
+        synchronized (tableOrder) {
+            while (!tableOrder.getStatus().equals(OrderStatus.IN_PROGRESS)) {
                 try {
-                    order.wait();
+                    tableOrder.wait();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
         }
 
-        synchronized (order) {
-            while (!order.getOrderStatus().equals(OrderStatus.COMPLETED)) {
+        synchronized (tableOrder) {
+            while (!tableOrder.getStatus().equals(OrderStatus.COMPLETED)) {
                 try {
-                    order.wait();
+                    tableOrder.wait();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
         }
+
         table.setOccupied(false);
-        outComingHour =  WorkDay.getTime().toString();
+        outComingHour = WorkDay.getTime().toString();
     }
 
     public void setRandomFurniture(Restaurant restaurant) {
@@ -95,14 +100,20 @@ public class ClientsGroup implements Runnable {
 
     @Override
     public String toString() {
+        StringBuilder data = new StringBuilder();
+        data.append("Group number:").append(groupNumber);
+        data.append(" | Incoming time:").append(incomingHour);
+        data.append(" | Outcoming time:").append(outComingHour);
+        data.append(" | Clients number:").append(clients.length);
+        data.append(" | Table number:").append(table.getNumber());
+        data.append("\n");
 
-        return "Group Number:" + groupNumber +
-                "|Incoming Hour:" + incomingHour +
-                "|Out coming Hour:" + outComingHour+
-                "|Order accept time:" + order.getAcceptTime() +
-                "|Order complete time:" + order.getCompleteTime() +
-                " |Clients count:" + clients.length +
-                " |Table Number:" + table.getNumber() +
-                " |Order status:" + order;
+        for (int i = 0; i < clients.length; i++) {
+            Client client = clients[i];
+            data.append("    Client :").append(client.getClientNumber()).append("\n")
+                    .append(client.getIndividualOrder().toString());
+        }
+        data.append("----------------------------------------------------------------------------------------------");
+        return String.valueOf(data);
     }
 }

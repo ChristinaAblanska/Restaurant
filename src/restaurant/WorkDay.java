@@ -22,6 +22,11 @@ public class WorkDay extends Thread {
         time = new Time();
     }
 
+    public static int minutesToLocalTime(int minutes) {
+
+        return (minutes * 60000) / speedUpValue;
+    }
+
     @Override
     public void start() {
         workTimeStart = System.currentTimeMillis();
