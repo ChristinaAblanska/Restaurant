@@ -3,12 +3,15 @@ package restaurant.test.test_rooms.test_kitchen;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import restaurant.building_blocks.StorageGenerator;
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
 import restaurant.building_blocks.exceptions.ProductOutOfStockException;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
+
+import java.util.Random;
 
 public class TestProductStorage {
     public ProductStorage storage;
@@ -105,5 +108,16 @@ public class TestProductStorage {
         storage.addProductPerLiter(vinegar, 0.7);
 
         storage.printStock();
+    }
+
+    @Test
+    public void testStorageGenerate() {
+        StorageGenerator generate = new StorageGenerator();
+        ProductStorage storage = generate.storageGenerator();
+
+        System.out.println(storage.getStock("ham"));
+        System.out.println(storage.getStock("eggs"));
+        System.out.println(storage.getStock("milk"));
+        System.out.println(storage.getStock("walnuts"));
     }
 }

@@ -1,8 +1,8 @@
 package restaurant.building_blocks.food;
 
 public class Beverage {
-    private String name;
-    private double price;
+    public String name;
+    public double price;
 
 
     public String getName() {

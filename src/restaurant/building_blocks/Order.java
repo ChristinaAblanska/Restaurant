@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class Order {
     OrderStatus orderStatus;
-    private final HashMap<Meal, Integer> meals;
-    private final HashMap<Beverage, Integer> beverages;
+    private HashMap<Meal, Integer> meals;
+    private HashMap<Beverage, Integer> beverages;
     private int orderID;
 
     private static int orderIDcount = 10_000;
@@ -95,5 +95,50 @@ public class Order {
             data.append("      ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
         }
         return String.valueOf(data);
+    }
+}
+
+    public String getCompleteTime() {
+        return completeTime;
+    }
+
+    public String getAcceptTime() {
+        return acceptTime;
+    }
+
+    public void adjustMealAmount(Meal meal, int count) {
+        if (meals.containsKey(meal)) {
+            meals.put(meal, count);
+        }
+    }
+
+    public void adjustDrinkAmount(Beverage drink, int count) {
+        if (beverages.containsKey(drink)) {
+            beverages.put(drink, count);
+        }
+    }
+
+    public String toString() {
+        // 38
+        StringBuilder result = new StringBuilder();
+        result.append("--------------- #").append(orderID).append(" ---------------\n")
+               .append("                                      \n");
+
+        for (Map.Entry<Meal, Integer> entry : meals.entrySet()) {
+            int count = 36 - (entry.getKey().getName().length()) - String.valueOf(entry.getValue()).length();
+            result.append(entry.getKey().getName()).append(" ".repeat(count))
+                    .append("x ").append(entry.getValue()).append("\n");
+        }
+        for (Map.Entry<Beverage, Integer> entry : beverages.entrySet()) {
+            int count = 36 - (entry.getKey().getName().length()) - String.valueOf(entry.getValue()).length();
+            result.append(entry.getKey().getName()).append(" ".repeat(count))
+                    .append("x ").append(entry.getValue()).append("\n");
+        }
+        result.append("\n--------------------------------------\n");
+        return result.toString();
+    }
+
+    public boolean isEmpty() {
+        return meals.isEmpty() && beverages.isEmpty();
     }
 }

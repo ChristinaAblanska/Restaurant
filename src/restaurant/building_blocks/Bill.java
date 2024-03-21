@@ -5,22 +5,74 @@ import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
 
 public class Bill {
-    private Order order;
+    public Order order;
+    private double totalSum;
 
     public Bill(Order order) {
         this.order = order;
+        this.totalSum = calculateTotal();
+    }
+
+    private double calculateTotal() {
+        double orderPrice = order.calculateTotalPrice();
+        double tips = orderPrice * 0.1;
+
+        return orderPrice - tips;
     }
 
     public void printBill(){
-        System.out.printf("%-30s%t%-3s%t%-5s%t%-5s%n", "DESCRIPTION", "QTY", "PRICE", "TOTAL");
-        for(Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()){
-            double total = (meal.getKey().getPrice() * meal.getValue());
-            System.out.printf("%-30s%t%-3d%t%-5.2f%t%-5.2f%n", meal.getKey().getName(), meal.getValue(), meal.getKey().getPrice(), total);
+        double total = 0.0;
+
+        StringBuilder result = new StringBuilder();
+        result.append("--------------- #").append(order.getOrderID()).append(" ---------------\n")
+                .append("                                      \n");
+
+        for (Map.Entry<Meal, Integer> entry : order.getMeals().entrySet()) {
+            double price = entry.getKey().getPrice();
+            int mealAmount = entry.getValue();
+            double totPrice = price * mealAmount;
+
+            int firstSpaceCount = 38 - (entry.getKey().getName().length() + String.format("%.2f", price).length());
+            int secondSpaceCount = 36 - (String.valueOf(mealAmount).length() + String.format("%.2f", totPrice).length());
+
+            result
+                    .append(entry.getKey().getName())
+                    .append(" ".repeat(firstSpaceCount))
+                    .append(String.format("%.2f", price))
+                    .append("\n")
+                    .append("x ")
+                    .append(mealAmount)
+                    .append(" ".repeat(secondSpaceCount))
+                    .append(String.format("%.2f", totPrice))
+                    .append("\n");
+
+            total += totPrice;
         }
-        for(Map.Entry<Beverage, Integer> drink : order.getDrinks().entrySet()){
-            double total = (drink.getKey().getPrice() * drink.getValue());
-            System.out.printf("%-30s%t%-3d%t%-5.2f%t%-5.2f%n", drink.getKey().getName(), drink.getValue(), drink.getKey().getPrice(), total);
+        for (Map.Entry<Beverage, Integer> entry : order.getDrinks().entrySet()) {
+            double price = entry.getKey().getPrice();
+            int drinksAmount = entry.getValue();
+            double totPrice = price * drinksAmount;
+
+            int firstSpaceCount = 38 - (entry.getKey().getName().length() + String.format("%.2f", price).length());
+            int secondSpaceCount = 36 - (String.valueOf(drinksAmount).length() + String.format("%.2f", totPrice).length());
+
+            result
+                    .append(entry.getKey().getName())
+                    .append(" ".repeat(firstSpaceCount))
+                    .append(String.format("%.2f", price))
+                    .append("\n")
+                    .append("x ")
+                    .append(drinksAmount)
+                    .append(" ".repeat(secondSpaceCount))
+                    .append(String.format("%.2f", totPrice))
+                    .append("\n");
+
+            total += totPrice;
         }
-        System.out.printf("                                 TOTAL: %.2f%n", order.calculateTotalPrice());
+        result.append("\n--------------------------------------\n");
+        result.append("TOTAL: ")
+                .append(" ".repeat(31 - String.format("%.2f", total).length()))
+                .append(String.format("%.2f", total));
+        System.out.println(result.toString());
     }
 }

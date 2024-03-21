@@ -1,6 +1,7 @@
 package restaurant.building_blocks.room.kitchen.storage;
 
 
+import restaurant.RestaurantStructure;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.exceptions.ProductOutOfStockException;
 import restaurant.building_blocks.room.kitchen.storage.shaft.EnumerableShaft;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class ProductStorage {
 
-    private final HashMap<String, Shaft> container;
+    public final HashMap<String, Shaft> container;
 
     public ProductStorage() {
         container = new HashMap<>();
@@ -44,6 +45,7 @@ public class ProductStorage {
             enumShaft.add(productsCount);
             container.put(product.getName(), enumShaft);
         }
+        updateRestaurantTurnover(product, productsCount);
     }
 
     public void addProductPerKilogram(Product product, double weightInKilogram) {
@@ -56,6 +58,7 @@ public class ProductStorage {
             enumShaft.add(weightInKilogram);
             container.put(product.getName(), enumShaft);
         }
+        updateRestaurantTurnover(product, weightInKilogram);
     }
 
     public void addProductPerLiter(Product product, double volumeInLitres) {
@@ -68,6 +71,7 @@ public class ProductStorage {
             enumShaft.add(volumeInLitres);
             container.put(product.getName(), enumShaft);
         }
+        updateRestaurantTurnover(product, volumeInLitres);
     }
 
     public void getEnumerableProduct(Product product, int productsCount) throws ProductOutOfStockException {
@@ -127,6 +131,16 @@ public class ProductStorage {
                 System.out.printf("%-10s | %-5.2f litres\n", record.getKey(), record.getValue().getQuantity());
             }
         }
+    }
+
+    private void updateRestaurantTurnover(Product product, double quantity) {
+        double spentMoney = quantity * product.getPrice();
+        RestaurantStructure.turnover -= spentMoney;
+    }
+
+    private void updateRestaurantTurnover(Product product, int quantity) {
+        double spentMoney = quantity * product.getPrice();
+        RestaurantStructure.turnover -= spentMoney;
     }
 
     public void emptying() {

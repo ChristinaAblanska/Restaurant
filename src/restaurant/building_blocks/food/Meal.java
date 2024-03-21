@@ -1,5 +1,6 @@
 package restaurant.building_blocks.food;
 
+import restaurant.Main;
 import restaurant.building_blocks.Recipe;
 
 public class Meal {
@@ -14,7 +15,7 @@ public class Meal {
 
     public Meal() {
         this.name = "";
-        this.recipe = null;
+        this.recipe = new Recipe(new Recipe.SingleRecipe(), 0);
         this.price = 0;
     }
     public Meal(Recipe recipe) {
@@ -28,10 +29,11 @@ public class Meal {
         this.price = calculatePriceProfit();
     }
 
-    private double calculatePriceProfit() {
+    public double calculatePriceProfit() {
         double ingredientPrice = recipe.calculatePrice();
-        double profit = ingredientPrice * 0.3; //Constant
-        return ingredientPrice + profit;
+        double profit = ingredientPrice * Main.PROFIT; // Constant profit
+//        double tips = (ingredientPrice + profit) * Main.TIPS; // Constant tips
+        return ingredientPrice + profit; // + tips;
     }
 
     public double getPrice() {
@@ -48,5 +50,11 @@ public class Meal {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(name).append(" - ").append(price);
+        return result.toString();
     }
 }
