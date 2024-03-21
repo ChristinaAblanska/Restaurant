@@ -1,25 +1,31 @@
 package restaurant;
 
+import restaurant.building_blocks.Owner;
 import restaurant.building_blocks.Table;
 import restaurant.building_blocks.employee.Cleaner;
 import restaurant.building_blocks.employee.Waiter;
 import restaurant.building_blocks.room.kitchen.Kitchen;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Restaurant {
+    public final String restaurantName;
     public static HistoryLog history = new HistoryLog();
     private final int tableNumber;
     private final Table[] tables;
     private Cleaner cleaner;
 
     private final int singleTableCapacity;
-    public static double turnover;
+    public static double turnover = 1000;
     public static String name;
     private Time cleaningTime;
 
-    public Restaurant(int tablesNumber, int singleTableCapacity, int waitersNumber, Time cleaningTime) {
+
+    private boolean isOpenRestaurant;
+    private Owner owner;
+
+    public Restaurant(String restaurantName, int tablesNumber, int singleTableCapacity, int waitersNumber, Time cleaningTime) {
+        this.restaurantName = restaurantName;
         this.tableNumber = tablesNumber;
         this.singleTableCapacity = singleTableCapacity;
         this.tables = new Table[tablesNumber];
@@ -48,7 +54,7 @@ public class Restaurant {
             c1++;
         }
 
-       // System.out.println(Arrays.toString(tablesGroup1));
+        // System.out.println(Arrays.toString(tablesGroup1));
         //System.out.println(Arrays.toString(tablesGroup2));
         Thread t = new Thread(new Waiter(kitchen, tablesGroup1, 1));
         t.start();
@@ -59,6 +65,7 @@ public class Restaurant {
         // waiters[1] = t1;
         //}
         cleaner = new Cleaner();
+        owner = new Owner(this);
     }
 
     public static void printTurnover() {
@@ -102,5 +109,23 @@ public class Restaurant {
 
     public Cleaner getCleaner() {
         return cleaner;
+    }
+
+    public boolean isOpenRestaurant() {
+        return isOpenRestaurant;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOpenRestaurant(boolean openRestaurant) {
+        isOpenRestaurant = openRestaurant;
+    }
+
+    @Override
+    public String toString() {
+        return "Welcome to restaurant "+restaurantName +
+                ".We have capacity of "+tableNumber+" dinner tables X "+singleTableCapacity+" seats each.";
     }
 }

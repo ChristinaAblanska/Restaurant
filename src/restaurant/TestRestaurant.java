@@ -15,7 +15,7 @@ public class TestRestaurant {
 
     @Before
     public void setup() throws InterruptedException {
-        shipka = new Restaurant(10, 4, 2, cleaningTime);
+        shipka = new Restaurant("Shipka", 10, 4, 2, cleaningTime);
         //Here speed up the work day 1000 times.
         //In other words we set the work time per day to 28,8 seconds.
         workDay = new WorkDay();
@@ -33,24 +33,32 @@ public class TestRestaurant {
 
         ArrayList<ClientsGroup> groupsArray = new ArrayList<>();
         int groupNumber = 1;
+
+         Restaurant.history.addData(shipka.toString());
+
+        shipka.getOwner().openRestaurant();
+        Restaurant.history.addData("Open restaurant time =" + WorkDay.getTime());
+        Restaurant.history.addData("Turnover in the beginning =" + Restaurant.turnover);
         while (workDay.isRun()) {
 
-            //clean the restaurant
-            if (shipka.isCleaningTime(WorkDay.getTime())) {
-                shipka.getCleaner().cleanRestaurant();
+            if (shipka.isOpenRestaurant()) {
+                //clean the restaurant
+                if (shipka.isCleaningTime(WorkDay.getTime())) {
+                    shipka.getCleaner().cleanRestaurant();
 
-            } else
-                //invite clients
-                if (shipka.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
+                } else
+                    //invite clients
+                    if (shipka.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
 
-                    ClientsGroup group = new ClientsGroup(groupNumber, shipka);
-                    groupsArray.add(group);
-                    Thread t = new Thread(group);
-                    t.start();
-                    groupNumber++;
-                }
+                        ClientsGroup group = new ClientsGroup(groupNumber, shipka);
+                        groupsArray.add(group);
+                        Thread t = new Thread(group);
+                        t.start();
+                        groupNumber++;
+                    }
+            }
         }
-
+        Restaurant.history.addData("Turnover in the end =" + Restaurant.turnover);
         for (ClientsGroup clientsGroup : groupsArray) {
             Restaurant.history.addData(clientsGroup.toString());
         }
