@@ -2,20 +2,24 @@ package restaurant.building_blocks;
 
 
 import restaurant.OrderStatus;
+import restaurant.building_blocks.employee.Waiter;
 import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
+import restaurant.building_blocks.room.kitchen.storage.shaft.EnumerableShaft;
+import restaurant.building_blocks.room.kitchen.storage.shaft.Shaft;
+import restaurant.building_blocks.room.kitchen.storage.shaft.ShaftPerKilogram;
+import restaurant.building_blocks.room.kitchen.storage.shaft.ShaftPerLiter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
     OrderStatus orderStatus;
-    private HashMap<Meal, Integer> meals;
-    private HashMap<Beverage, Integer> beverages;
+    private final HashMap<Meal, Integer> meals;
+    private final HashMap<Beverage, Integer> beverages;
     private int orderID;
 
     private static int orderIDcount = 10_000;
-    private String acceptTime;
 
     public void setCompleteTime(String completeTime) {
         this.completeTime = completeTime;
@@ -23,16 +27,10 @@ public class Order {
 
     private String completeTime;
 
-    public double getAcceptTimeMillis() {
-        return acceptTimeMillis;
-    }
-
-    private double acceptTimeMillis;
-
     public Order() {
         this.orderStatus = OrderStatus.BLANK;
-        this.meals = null;
-        this.beverages = null;
+        this.meals = new HashMap<>();
+        this.beverages = new HashMap<>();
         this.orderID = orderIDcount++;
     }
 
@@ -81,15 +79,21 @@ public class Order {
         return orderStatus;
     }
 
-    public void setAcceptTime(String acceptTime) {
-        this.acceptTime = acceptTime;
-    }
-
     public String getCompleteTime() {
         return completeTime;
     }
 
-    public String getAcceptTime() {
-        return acceptTime;
+    @Override
+    public String toString() {
+        StringBuilder data = new StringBuilder();
+        data.append("            Meals:").append("\n");
+        for (Map.Entry<Meal, Integer> record : meals.entrySet()) {
+            data.append("      ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
+        }
+        data.append("            Beverages:").append("\n");
+        for (Map.Entry<Beverage, Integer> record : beverages.entrySet()) {
+            data.append("      ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
+        }
+        return String.valueOf(data);
     }
 }

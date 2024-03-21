@@ -2,21 +2,23 @@ package restaurant;
 
 import org.junit.Before;
 import org.junit.Test;
-import restaurant.building_blocks.Order;
 
+import java.util.ArrayList;
 
 public class TestRestaurant {
 
     private WorkDay workDay;
     private Restaurant shipka;
 
+    Time cleaningTime = new Time(Parameters.WORK_DAY_HOURS + Parameters.WORK_DAY_START_HOUR - 1
+            , Parameters.CLEANING_START_TIME_MINUTES_BEFORE_CLOSE);
+
     @Before
     public void setup() throws InterruptedException {
-        shipka = new Restaurant(10, 4, 1);
+        shipka = new Restaurant(10, 4, 2, cleaningTime);
         //Here speed up the work day 1000 times.
         //In other words we set the work time per day to 28,8 seconds.
-        workDay = new WorkDay(shipka);
-
+        workDay = new WorkDay();
     }
 
     @Test
@@ -29,20 +31,29 @@ public class TestRestaurant {
             throw new RuntimeException(e);
         }
 
-
-
+        ArrayList<ClientsGroup> groupsArray = new ArrayList<>();
         int groupNumber = 1;
         while (workDay.isRun()) {
-            //System.out.println(workDay.getHourlyLoad());
-            if (shipka.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
-                // System.out.println(workDay.getHourlyLoad());
 
-                RestaurantClientsGroup group = new RestaurantClientsGroup(groupNumber, shipka);
-                Thread t = new Thread(group);
-                t.start();
+            //clean the restaurant
+            if (shipka.isCleaningTime(WorkDay.getTime())) {
+                shipka.getCleaner().cleanRestaurant();
 
-                groupNumber++;
-            }
+            } else
+                //invite clients
+                if (shipka.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
+
+                    ClientsGroup group = new ClientsGroup(groupNumber, shipka);
+                    groupsArray.add(group);
+                    Thread t = new Thread(group);
+                    t.start();
+                    groupNumber++;
+                }
         }
+
+        for (ClientsGroup clientsGroup : groupsArray) {
+            Restaurant.history.addData(clientsGroup.toString());
+        }
+        Restaurant.history.print();
     }
 }

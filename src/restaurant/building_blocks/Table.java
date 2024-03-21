@@ -1,5 +1,7 @@
 package restaurant.building_blocks;
 
+import restaurant.OrderStatus;
+
 public class Table {
 
     private final int capacity;
@@ -10,7 +12,15 @@ public class Table {
         return number;
     }
 
-    private Order order;
+    public TableOrder getTableOrder() {
+        return tableOrder;
+    }
+
+    public void setTableOrder(TableOrder tableOrder) {
+        this.tableOrder = tableOrder;
+    }
+
+    private TableOrder tableOrder;
     private final int number;
 
     public void setOccupied(boolean occupied) {
@@ -23,7 +33,8 @@ public class Table {
         this.number = number;
         // this.waiter = waiter;
         this.capacity = capacity;
-        order = new Order();
+        tableOrder = new TableOrder();
+        tableOrder.setStatus(OrderStatus.BLANK);
 
     }
 
@@ -32,25 +43,8 @@ public class Table {
     }
 
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     public Menu getMenu() {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return "Table{" +
-                "capacity=" + capacity +
-                ", order=" + order +
-                ", number=" + number +
-                ", isOccupied=" + isOccupied +
-                '}';
-    }
 }
