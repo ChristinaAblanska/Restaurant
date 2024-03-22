@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static final double PROFIT = 2.0;
-    public static final double TIPS = 0.01;
+    public static final double TIPS = 0.1;
     public static void main(String[] args) {
         System.out.println("Project 1 - Shipka Restaurant");
 
