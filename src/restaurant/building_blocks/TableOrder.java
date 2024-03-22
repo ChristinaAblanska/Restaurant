@@ -20,4 +20,8 @@ public class TableOrder extends ArrayList<Order> {
     public void setWaiter(Waiter waiter) {
         this.waiter = waiter;
     }
+
+    public Waiter getWaiter() {
+        return waiter;
+    }
 }

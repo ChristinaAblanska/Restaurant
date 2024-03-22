@@ -7,7 +7,6 @@ public class Owner {
 
     public Owner(Restaurant restaurant) {
         this.restaurant = restaurant;
-        restaurant = restaurant;
     }
 
     public void openRestaurant() {

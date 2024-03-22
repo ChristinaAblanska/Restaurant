@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import restaurant.building_blocks.TableOrder;
 import restaurant.building_blocks.exceptions.ProductOutOfStockException;
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
@@ -69,7 +70,9 @@ public class Test_Cook {
     @Test
     public void testCookSingleMealReturn() throws ProductOutOfStockException {
         Order order = new Order();
-        cook = new Cook(order, storage);
+        TableOrder tabOrder = new TableOrder();
+        tabOrder.add(order);
+        cook = new Cook(tabOrder, storage);
         order.addMeal(meal1, 1);
         Meal newMeal = cook.cookSingleMeal(meal1.getRecipe(), storage);
         Assert.assertEquals(meal1.getRecipe(), newMeal.getRecipe());
@@ -78,8 +81,9 @@ public class Test_Cook {
     @Test
     public void testCookSingleMealStorageUpdate() throws ProductOutOfStockException {
         Order order = new Order();
+        TableOrder tabOrder = new TableOrder();
         order.addMeal(meal1, 1);
-        cook = new Cook(order, storage);
+        cook = new Cook(tabOrder, storage);
         cook.cookSingleMeal(meal1.getRecipe(), storage);
         Assert.assertEquals(14.7, storage.getStock("Yogurt"), 0.0003f);
         Assert.assertEquals(47, storage.getStock("Egg"),0.0003f);
@@ -89,10 +93,11 @@ public class Test_Cook {
     @Test
     public void testCookMealStorageUpdate() throws ProductOutOfStockException {
         Order order = new Order();
-        cook = new Cook(order, storage);
+        TableOrder tabOrder = new TableOrder();
+        cook = new Cook(tabOrder, storage);
         order.addMeal(meal1, 2);
         order.addMeal(meal2, 2);
-        cook.cookMeals();
+        cook.cookMeals(order);
 
         Assert.assertEquals(14.4, storage.getStock("Yogurt"), 0.0003f);
         Assert.assertEquals(44, storage.getStock("Egg"),0.0003f);
@@ -104,12 +109,13 @@ public class Test_Cook {
     @Test
     public void testCookMealReturnValue() throws ProductOutOfStockException {
         Order order = new Order();
+        TableOrder tabOrder = new TableOrder();
         System.out.println(order.getOrderStatus());
-        cook = new Cook(order, storage);
+        cook = new Cook(tabOrder, storage);
         order.addMeal(meal1, 2);
         order.addMeal(meal2, 2);
         System.out.println(order.getOrderStatus());
-        ArrayList<Meal> testResult = cook.cookMeals();
+        ArrayList<Meal> testResult = cook.cookMeals(order);
         System.out.println(order.getOrderStatus());
 
         Assert.assertEquals(4, testResult.size());

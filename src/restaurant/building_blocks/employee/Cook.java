@@ -28,12 +28,14 @@ public class Cook extends Employee implements Runnable {
         this.storage = storage;
     }
 
-   public ArrayList<Meal> cookMeal() throws ProductOutOfStockException {
-        ArrayList<Meal> cookedMeals = new ArrayList<>();
+    public ArrayList<Meal> cookMeals(Order order) throws ProductOutOfStockException {
+        order.setOrderStatus(OrderStatus.IN_PROGRESS);
+        ArrayList<Meal> result = new ArrayList<>();
         for (Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()) {
-            Meal newMeal = cookMealsmall(meal.getKey().getRecipe(), storage);
-            newMeal.setName(meal.getKey().getName());
-            cookedMeals.add(newMeal);
+            for (int i = 0; i < meal.getValue(); i++) {
+                Meal newMeal = cookSingleMeal(meal.getKey().getRecipe(), storage);
+                result.add(newMeal);
+            }
         }
         order.setOrderStatus(OrderStatus.COMPLETED);
         return result;

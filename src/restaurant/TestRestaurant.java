@@ -15,7 +15,7 @@ public class TestRestaurant {
 
     @Before
     public void setup() throws InterruptedException {
-        shipka = new Restaurant("Shipka", 10, 4, 2, cleaningTime);
+        shipka = new Restaurant("Shipka", 10, 4, cleaningTime);
         //Here speed up the work day 1000 times.
         //In other words we set the work time per day to 28,8 seconds.
         workDay = new WorkDay();
@@ -34,11 +34,11 @@ public class TestRestaurant {
         ArrayList<ClientsGroup> groupsArray = new ArrayList<>();
         int groupNumber = 1;
 
-         Restaurant.history.addData(shipka.toString());
+        WorkDay.history.addData(shipka.toString());
 
         shipka.getOwner().openRestaurant();
-        Restaurant.history.addData("Open restaurant time =" + WorkDay.getTime());
-        Restaurant.history.addData("Turnover in the beginning =" + Restaurant.turnover);
+        WorkDay.history.addData("Open restaurant time =" + WorkDay.getTime());
+        WorkDay.history.addData("Turnover in the beginning =" + Restaurant.turnover);
         while (workDay.isRun()) {
 
             if (shipka.isOpenRestaurant()) {
@@ -50,7 +50,7 @@ public class TestRestaurant {
                     //invite clients
                     if (shipka.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
 
-                        ClientsGroup group = new ClientsGroup(groupNumber, shipka);
+                        ClientsGroup group = new ClientsGroup(groupNumber, shipka.getTables());
                         groupsArray.add(group);
                         Thread t = new Thread(group);
                         t.start();
@@ -58,10 +58,10 @@ public class TestRestaurant {
                     }
             }
         }
-        Restaurant.history.addData("Turnover in the end =" + Restaurant.turnover);
+        WorkDay.history.addData("Turnover in the end =" + Restaurant.turnover);
         for (ClientsGroup clientsGroup : groupsArray) {
-            Restaurant.history.addData(clientsGroup.toString());
+            WorkDay.history.addData(clientsGroup.toString());
         }
-        Restaurant.history.print();
+        WorkDay.history.print();
     }
 }

@@ -1,23 +1,17 @@
 package restaurant.building_blocks;
 
-
 import restaurant.OrderStatus;
-import restaurant.building_blocks.employee.Waiter;
 import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
-import restaurant.building_blocks.room.kitchen.storage.shaft.EnumerableShaft;
-import restaurant.building_blocks.room.kitchen.storage.shaft.Shaft;
-import restaurant.building_blocks.room.kitchen.storage.shaft.ShaftPerKilogram;
-import restaurant.building_blocks.room.kitchen.storage.shaft.ShaftPerLiter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
     OrderStatus orderStatus;
-    private HashMap<Meal, Integer> meals;
-    private HashMap<Beverage, Integer> beverages;
-    private int orderID;
+    private final HashMap<Meal, Integer> meals;
+    private final HashMap<Beverage, Integer> beverages;
+    private final int orderID;
 
     private static int orderIDcount = 10_000;
 
@@ -31,7 +25,7 @@ public class Order {
         this.orderStatus = OrderStatus.BLANK;
         this.meals = new HashMap<>();
         this.beverages = new HashMap<>();
-        this.orderID = orderIDcount++;
+        orderID = orderIDcount++;
     }
 
     public Order(HashMap<Meal, Integer> meals, HashMap<Beverage, Integer> beverages) {
@@ -79,11 +73,6 @@ public class Order {
         return orderStatus;
     }
 
-    public String getCompleteTime() {
-        return completeTime;
-    }
-
-    @Override
     public String toString() {
         StringBuilder data = new StringBuilder();
         data.append("            Meals:").append("\n");
@@ -96,14 +85,9 @@ public class Order {
         }
         return String.valueOf(data);
     }
-}
 
     public String getCompleteTime() {
         return completeTime;
-    }
-
-    public String getAcceptTime() {
-        return acceptTime;
     }
 
     public void adjustMealAmount(Meal meal, int count) {
@@ -118,11 +102,11 @@ public class Order {
         }
     }
 
-    public String toString() {
+    public String toString1() {
         // 38
         StringBuilder result = new StringBuilder();
         result.append("--------------- #").append(orderID).append(" ---------------\n")
-               .append("                                      \n");
+                .append("                                      \n");
 
         for (Map.Entry<Meal, Integer> entry : meals.entrySet()) {
             int count = 36 - (entry.getKey().getName().length()) - String.valueOf(entry.getValue()).length();
@@ -140,5 +124,9 @@ public class Order {
 
     public boolean isEmpty() {
         return meals.isEmpty() && beverages.isEmpty();
+    }
+
+    public int getOrderID() {
+        return orderID;
     }
 }

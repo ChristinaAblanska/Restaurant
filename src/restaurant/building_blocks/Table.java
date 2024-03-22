@@ -5,8 +5,6 @@ import restaurant.OrderStatus;
 public class Table {
 
     private final int capacity;
-    //private Thread waiter;
-
 
     public int getNumber() {
         return number;
@@ -14,10 +12,6 @@ public class Table {
 
     public TableOrder getTableOrder() {
         return tableOrder;
-    }
-
-    public void setTableOrder(TableOrder tableOrder) {
-        this.tableOrder = tableOrder;
     }
 
     private TableOrder tableOrder;
@@ -31,11 +25,9 @@ public class Table {
 
     public Table(int capacity, int number) {
         this.number = number;
-        // this.waiter = waiter;
         this.capacity = capacity;
         tableOrder = new TableOrder();
         tableOrder.setStatus(OrderStatus.BLANK);
-
     }
 
     public synchronized boolean isOccupied() {
@@ -45,6 +37,10 @@ public class Table {
 
     public Menu getMenu() {
         return null;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
 }

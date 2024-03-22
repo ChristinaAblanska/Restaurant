@@ -15,13 +15,10 @@ public class ClientsGroup implements Runnable {
     private Client[] clients;
     private Table table;
 
-    public ClientsGroup(int groupNumber, Restaurant restaurant) {
-        this.incomingHour = WorkDay.getTime().toString();
+    public ClientsGroup(int groupNumber, Table[] tables) {
         this.groupNumber = groupNumber;
-        createMembers(restaurant.getSingleTableCapacity());
-        //set table randomly here
-        setRandomFurniture(restaurant);
-
+        setRandomTable(tables);
+        createRandomAmmoundOfClients(table.getCapacity());
     }
 
     public void run() {
@@ -64,8 +61,8 @@ public class ClientsGroup implements Runnable {
         outComingHour = WorkDay.getTime().toString();
     }
 
-    public void setRandomFurniture(Restaurant restaurant) {
-        List<Table> freeTables = pickAllFreeTables(restaurant.getTables());
+    public void setRandomTable(Table[] tables) {
+        List<Table> freeTables = pickAllFreeTables(tables);
         if (!freeTables.isEmpty()) {
             int number = 0;
             if (freeTables.size() > 1) {
@@ -87,7 +84,7 @@ public class ClientsGroup implements Runnable {
         return freeTables;
     }
 
-    public void createMembers(int clientsNumber) {
+    public void createRandomAmmoundOfClients(int clientsNumber) {
         int num = RANDOM.nextInt(0, clientsNumber + 1);
         if (num == 0) {
             num = 1;
@@ -106,6 +103,7 @@ public class ClientsGroup implements Runnable {
         data.append(" | Outcoming time:").append(outComingHour);
         data.append(" | Clients number:").append(clients.length);
         data.append(" | Table number:").append(table.getNumber());
+        data.append(" | Waiter:").append(table.getTableOrder().getWaiter().getWaiterNumber());
         data.append("\n");
 
         for (int i = 0; i < clients.length; i++) {
