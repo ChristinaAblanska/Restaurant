@@ -1,7 +1,7 @@
 package restaurant.building_blocks.room.kitchen.storage;
 
 
-import restaurant.RestaurantStructure;
+import restaurant.Restaurant;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.exceptions.ProductOutOfStockException;
 import restaurant.building_blocks.room.kitchen.storage.shaft.EnumerableShaft;
@@ -135,12 +135,12 @@ public class ProductStorage {
 
     private void updateRestaurantTurnover(Product product, double quantity) {
         double spentMoney = quantity * product.getPrice();
-        RestaurantStructure.turnover -= spentMoney;
+        Restaurant.turnover -= spentMoney;
     }
 
     private void updateRestaurantTurnover(Product product, int quantity) {
         double spentMoney = quantity * product.getPrice();
-        RestaurantStructure.turnover -= spentMoney;
+        Restaurant.turnover -= spentMoney;
     }
 
     public void emptying() {
