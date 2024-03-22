@@ -6,6 +6,8 @@ import restaurant.building_blocks.room.Room;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
 public class Kitchen extends Room {
+
+
     private ProductStorage storage;
 
     public Kitchen() {
@@ -14,8 +16,16 @@ public class Kitchen extends Room {
 
     public synchronized void completeAnOrder(TableOrder order) {
         //System.out.println("add order")
-        Cook cook = new Cook(order,storage);
+        Cook cook = new Cook(order, storage);
         Thread t = new Thread(cook);
         t.start();
+    }
+
+    public void setStorage(ProductStorage storage) {
+        this.storage = storage;
+    }
+
+    public ProductStorage getStorage() {
+        return storage;
     }
 }

@@ -3,6 +3,9 @@ package restaurant.building_blocks;
 import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
 
+import java.util.List;
+import java.util.Random;
+
 public class Client {
 
     //Клиентите може да поръчват по няколко неща, може да оставят или да не оставят бакшиши.
@@ -32,12 +35,16 @@ public class Client {
         return clientNumber;
     }
 
-    public Meal pickMeal(Object menu) {
-        return null;
+    public Meal pickRandomMeal(Random rand, RestaurantMenu menu) {
+        List<Meal> meals = menu.getMeals();
+        int target = rand.nextInt(0, meals.size());
+        return meals.get(target);
     }
 
-    public Beverage pickDring(Object menu) {
-        return null;
+    public Beverage pickRandomDrink(Random rand, RestaurantMenu menu) {
+        List<Beverage> beverages = menu.getBeverages();
+        int target = rand.nextInt(0, beverages.size());
+        return beverages.get(target);
     }
 
 }

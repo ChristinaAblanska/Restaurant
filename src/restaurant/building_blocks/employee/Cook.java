@@ -2,8 +2,7 @@
 package restaurant.building_blocks.employee;
 
 import restaurant.OrderStatus;
-import restaurant.OrderStatus;
-import restaurant.WorkDay;
+import restaurant.simulation.WorkDay;
 import restaurant.building_blocks.Order;
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.TableOrder;
@@ -28,16 +27,22 @@ public class Cook extends Employee implements Runnable {
         this.storage = storage;
     }
 
-    public ArrayList<Meal> cookMeals(Order order) throws ProductOutOfStockException {
+    public ArrayList<Meal> cookMeals(Order order) {
         order.setOrderStatus(OrderStatus.IN_PROGRESS);
         ArrayList<Meal> result = new ArrayList<>();
         for (Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()) {
             for (int i = 0; i < meal.getValue(); i++) {
-                Meal newMeal = cookSingleMeal(meal.getKey().getRecipe(), storage);
+                Meal newMeal = null;
+                try {
+                    newMeal = cookSingleMeal(meal.getKey().getRecipe(), storage);
+                    order.setOrderStatus(OrderStatus.COMPLETED);
+                } catch (ProductOutOfStockException e) {
+                    order.setOrderStatus(OrderStatus.REVOKE);
+                    throw new RuntimeException(e);
+                }
                 result.add(newMeal);
             }
         }
-        order.setOrderStatus(OrderStatus.COMPLETED);
         return result;
     }
 
@@ -48,19 +53,19 @@ public class Cook extends Employee implements Runnable {
                 try {
                     storage.getProductPerGram(entry.getKey(), entry.getValue());
                 } catch (ProductOutOfStockException e) {
-                    System.out.println("Недостатъчна наличност!");
+                    throw new ProductOutOfStockException("Product out of stock! "+entry.getKey().getName());
                 }
             } else if (entry.getKey() instanceof ProductPerLitre) {
                 try {
                     storage.getProductPerMilliliter(entry.getKey(), entry.getValue());
                 } catch (ProductOutOfStockException e) {
-                    System.out.println("Недостатъчна наличност!");
+                    throw new ProductOutOfStockException("Product out of stock! "+entry.getKey().getName());
                 }
             } else if (entry.getKey() instanceof EnumerableProduct) {
                 try {
                     storage.getEnumerableProduct(entry.getKey(), entry.getValue());
                 } catch (ProductOutOfStockException e) {
-                    System.out.println("Недостатъчна наличност!");
+                    throw new ProductOutOfStockException("Product out of stock! "+entry.getKey().getName());
                 }
             }
         }
@@ -79,9 +84,11 @@ public class Cook extends Employee implements Runnable {
                 }
             }
         }
+
         for (Order order : tableOrder) {
-            order.setOrderStatus(OrderStatus.COMPLETED);
+            cookMeals(order);
         }
+
         //here must delay using the meal with maximum cook time
         try {
             Thread.sleep(WorkDay.minutesToLocalTime(20));

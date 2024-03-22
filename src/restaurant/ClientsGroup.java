@@ -2,8 +2,9 @@ package restaurant;
 
 import restaurant.building_blocks.Client;
 import restaurant.building_blocks.Order;
-import restaurant.building_blocks.Table;
+import restaurant.building_blocks.table.Table;
 import restaurant.building_blocks.TableOrder;
+import restaurant.simulation.WorkDay;
 
 import java.util.*;
 
@@ -29,8 +30,17 @@ public class ClientsGroup implements Runnable {
         for (Client client : clients) {
 
             Order individualOrder = new Order();
-            //order.addMeal(client.pickMeal(table.getMenu()), 1);
-            //order.addDrink(client.pickDring(table.getMenu()), 1);
+
+            //Pick random number of meals
+            int numberOfMeals = RANDOM.nextInt(1, 4);
+            for (int i = 0; i < numberOfMeals + 1; i++) {
+                int numberOfMeal = RANDOM.nextInt(1, 3);
+                individualOrder.addMeal(client.pickRandomMeal(RANDOM, table.getMenu()), numberOfMeal);
+            }
+
+            int numberOfDrinks = RANDOM.nextInt(1, 4);
+            individualOrder.addDrink(client.pickRandomDrink(RANDOM, table.getMenu()), numberOfDrinks);
+
             tableOrder.add(individualOrder);
             client.setIndividualOrder(individualOrder);
         }
@@ -57,6 +67,14 @@ public class ClientsGroup implements Runnable {
             }
         }
 
+
+     /*   for (Order order : tableOrder) {
+            if (order.getOrderStatus().equals(OrderStatus.REVOKE)) {
+
+                //System.out.println(this);
+            }
+        }*/
+        tableOrder.setStatus(OrderStatus.BLANK);
         table.setOccupied(false);
         outComingHour = WorkDay.getTime().toString();
     }
@@ -108,7 +126,7 @@ public class ClientsGroup implements Runnable {
 
         for (int i = 0; i < clients.length; i++) {
             Client client = clients[i];
-            data.append("    Client :").append(client.getClientNumber()).append("\n")
+            data.append("    Client :").append(client.getClientNumber()).append(" >>").append(client.getIndividualOrder().getOrderStatus()).append("\n")
                     .append(client.getIndividualOrder().toString());
         }
         data.append("----------------------------------------------------------------------------------------------");

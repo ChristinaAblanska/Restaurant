@@ -27,4 +27,12 @@ public class Beverage {
     void consume() {
         System.out.println("The drink is consumed!");
     }
+
+    @Override
+    public String toString() {
+        return "Beverage{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

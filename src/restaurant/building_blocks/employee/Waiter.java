@@ -1,8 +1,7 @@
 package restaurant.building_blocks.employee;
 
 import restaurant.OrderStatus;
-import restaurant.building_blocks.Order;
-import restaurant.building_blocks.Table;
+import restaurant.building_blocks.table.Table;
 import restaurant.building_blocks.room.kitchen.Kitchen;
 
 public class Waiter implements Runnable {

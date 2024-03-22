@@ -1,4 +1,4 @@
-package restaurant;
+package restaurant.simulation;
 
 public class HistoryLog {
     private final StringBuilder data = new StringBuilder();

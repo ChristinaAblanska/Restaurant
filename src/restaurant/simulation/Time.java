@@ -1,4 +1,4 @@
-package restaurant;
+package restaurant.simulation;
 
 public class Time {
 

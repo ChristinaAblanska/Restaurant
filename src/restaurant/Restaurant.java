@@ -1,12 +1,12 @@
 package restaurant;
 
 import restaurant.building_blocks.Owner;
-import restaurant.building_blocks.Table;
+import restaurant.building_blocks.RestaurantMenu;
+import restaurant.building_blocks.table.Table;
 import restaurant.building_blocks.employee.Cleaner;
 import restaurant.building_blocks.employee.Waiter;
 import restaurant.building_blocks.room.kitchen.Kitchen;
-
-import java.util.Arrays;
+import restaurant.simulation.Time;
 
 /**
  * This class represent a restaurant.We have fixed number of two waiters.
@@ -18,10 +18,10 @@ public class Restaurant {
     private final Table[] tables;
     private final Cleaner cleaner;
     private final Owner owner;
-    public static double turnover = 1000;
+    public static double turnover = 20000;
     private final Time cleaningTime;
     private boolean isOpenRestaurant;
-
+    private final Kitchen kitchen;
 
     public Restaurant(String restaurantName, int tablesNumber, int singleTableCapacity, Time cleaningTime) {
         this.restaurantName = restaurantName;
@@ -29,11 +29,12 @@ public class Restaurant {
         this.cleaningTime = cleaningTime;
         cleaner = new Cleaner();
         owner = new Owner(this);
+        kitchen = new Kitchen();
 
         for (int i = 0; i < tablesNumber; i++) {
-            tables[i] = new Table(singleTableCapacity, i + 1);
+            tables[i] = new Table(new RestaurantMenu(), singleTableCapacity, i + 1);
         }
-        Kitchen kitchen = new Kitchen();
+
 
         Table[] tablesGroup1 = new Table[tables.length / 2];
         Table[] tablesGroup2 = new Table[tables.length / 2];
@@ -65,8 +66,8 @@ public class Restaurant {
 
     }
 
-    public void printKitchenStorageStock() {
-
+    public String getKitchenStorageStock() {
+        return kitchen.getStorage().toString();
     }
 
     public int getOccupiedTablesNumber() {
@@ -102,6 +103,10 @@ public class Restaurant {
 
     public void setOpenRestaurant(boolean openRestaurant) {
         isOpenRestaurant = openRestaurant;
+    }
+
+    public Kitchen getKitchen() {
+        return kitchen;
     }
 
     @Override

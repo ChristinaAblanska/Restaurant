@@ -133,6 +133,22 @@ public class ProductStorage {
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuilder data = new StringBuilder();
+        for (Map.Entry<String, Shaft> record : container.entrySet()) {
+            if (record.getValue() instanceof EnumerableShaft) {
+                data.append(String.format("%-10s | %-5d pieces\n", record.getKey(), record.getValue().getQuantity()));
+            } else if (record.getValue() instanceof ShaftPerKilogram) {
+                data.append(String.format("%-10s | %-5.2f kilos\n", record.getKey(), record.getValue().getQuantity()));
+            } else if (record.getValue() instanceof ShaftPerLiter) {
+                data.append(String.format("%-10s | %-5.2f litres\n", record.getKey(), record.getValue().getQuantity()));
+            }
+        }
+        data.append("Count of products = ").append(container.size());
+        return String.valueOf(data);
+    }
+
     private void updateRestaurantTurnover(Product product, double quantity) {
         double spentMoney = quantity * product.getPrice();
         Restaurant.turnover -= spentMoney;

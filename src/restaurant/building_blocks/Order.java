@@ -65,26 +65,6 @@ public class Order {
         return price;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public String toString() {
-        StringBuilder data = new StringBuilder();
-        data.append("            Meals:").append("\n");
-        for (Map.Entry<Meal, Integer> record : meals.entrySet()) {
-            data.append("      ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
-        }
-        data.append("            Beverages:").append("\n");
-        for (Map.Entry<Beverage, Integer> record : beverages.entrySet()) {
-            data.append("      ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
-        }
-        return String.valueOf(data);
-    }
 
     public String getCompleteTime() {
         return completeTime;
@@ -120,6 +100,30 @@ public class Order {
         }
         result.append("\n--------------------------------------\n");
         return result.toString();
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public String toString() {
+        StringBuilder data = new StringBuilder();
+        data.append("            Meals:").append("\n");
+        for (Map.Entry<Meal, Integer> record : meals.entrySet()) {
+            data.append("                 ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
+        }
+        data.append("\n");
+        data.append("            Beverages:").append("\n");
+
+        for (Map.Entry<Beverage, Integer> record : beverages.entrySet()) {
+            data.append("                 ").append(record.getKey().getName()).append("-").append(record.getValue()).append(" pcs.").append("\n");
+        }
+
+        return String.valueOf(data);
     }
 
     public boolean isEmpty() {

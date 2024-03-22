@@ -1,28 +1,23 @@
-package restaurant;
+package restaurant.simulation;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import restaurant.ClientsGroup;
+import restaurant.Restaurant;
 
 import java.util.ArrayList;
 
-public class TestRestaurant {
+public class RestaurantSimulator {
 
-    private WorkDay workDay;
-    private Restaurant shipka;
+    private final WorkDay workDay;
+    private final Restaurant restaurant;
 
-    Time cleaningTime = new Time(Parameters.WORK_DAY_HOURS + Parameters.WORK_DAY_START_HOUR - 1
-            , Parameters.CLEANING_START_TIME_MINUTES_BEFORE_CLOSE);
 
-    @Before
-    public void setup() throws InterruptedException {
-        shipka = new Restaurant("Shipka", 10, 4, cleaningTime);
-        //Here speed up the work day 1000 times.
-        //In other words we set the work time per day to 28,8 seconds.
+    public RestaurantSimulator(Restaurant restaurant) {
+        this.restaurant = restaurant;
         workDay = new WorkDay();
     }
 
-    @Test
-    public void test_restaurant_invite_clients() {
+    public void startSimulation() {
 
         workDay.start();
         try {
@@ -34,23 +29,24 @@ public class TestRestaurant {
         ArrayList<ClientsGroup> groupsArray = new ArrayList<>();
         int groupNumber = 1;
 
-        WorkDay.history.addData(shipka.toString());
+        WorkDay.history.addData(restaurant.toString());
 
-        shipka.getOwner().openRestaurant();
+        restaurant.getOwner().openRestaurant();
         WorkDay.history.addData("Open restaurant time =" + WorkDay.getTime());
         WorkDay.history.addData("Turnover in the beginning =" + Restaurant.turnover);
+        WorkDay.history.addData("Storage at the beginning of the day :\n" + restaurant.getKitchenStorageStock());
         while (workDay.isRun()) {
 
-            if (shipka.isOpenRestaurant()) {
+            if (restaurant.isOpenRestaurant()) {
                 //clean the restaurant
-                if (shipka.isCleaningTime(WorkDay.getTime())) {
-                    shipka.getCleaner().cleanRestaurant();
+                if (restaurant.isCleaningTime(WorkDay.getTime())) {
+                    restaurant.getCleaner().cleanRestaurant();
 
                 } else
                     //invite clients
-                    if (shipka.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
+                    if (restaurant.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
 
-                        ClientsGroup group = new ClientsGroup(groupNumber, shipka.getTables());
+                        ClientsGroup group = new ClientsGroup(groupNumber, restaurant.getTables());
                         groupsArray.add(group);
                         Thread t = new Thread(group);
                         t.start();
@@ -59,6 +55,7 @@ public class TestRestaurant {
             }
         }
         WorkDay.history.addData("Turnover in the end =" + Restaurant.turnover);
+        WorkDay.history.addData("Storage at the end of thr day :\n" + restaurant.getKitchenStorageStock());
         for (ClientsGroup clientsGroup : groupsArray) {
             WorkDay.history.addData(clientsGroup.toString());
         }

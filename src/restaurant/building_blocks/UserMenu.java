@@ -2,7 +2,7 @@ package restaurant.building_blocks;
 
 import restaurant.building_blocks.food.Meal;
 
-public class Menu {
+public class UserMenu {
     //Задължително меню, което да има поне 10 ястия/напитки.
     //Ястията са с определен грамаж и количествата са ограничени. Напитките също да са ограничени.
     private static final RecipeGenerator recipeGenerator = new RecipeGenerator();

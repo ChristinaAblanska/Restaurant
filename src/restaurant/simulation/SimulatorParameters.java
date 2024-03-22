@@ -1,6 +1,6 @@
-package restaurant;
+package restaurant.simulation;
 
-public class Parameters {
+public class SimulatorParameters {
     public static final int WORK_DAY_SPEEDUP_VALUE = 1000;
     public static final int WORK_DAY_START_HOUR = 9;
     //Reject to invite clients and start to clean the restaurant.

@@ -15,7 +15,7 @@ public class InterActiveMenu {
 
     public void interactWithTheMenu(Scanner scan) {
         int choice = 0;
-        Menu menu = new Menu();
+        UserMenu menu = new UserMenu();
 
         menu.showMainActionMenu();
         choice = Integer.parseInt(scan.nextLine());
@@ -103,7 +103,7 @@ public class InterActiveMenu {
         return id;
     }
 
-    private Order createNewOrder(Menu menu, Scanner scan) {
+    private Order createNewOrder(UserMenu menu, Scanner scan) {
         Order order = new Order();
         int choice = 1;
         RecipeGenerator recipeGenerator = new RecipeGenerator();
@@ -151,7 +151,7 @@ public class InterActiveMenu {
         return order;
     }
 
-    private void orderSalad(Order order, Scanner scan, RecipeGenerator recipeGenerator, Menu menu) {
+    private void orderSalad(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
         choice = Integer.parseInt(scan.nextLine());
 
@@ -186,7 +186,7 @@ public class InterActiveMenu {
         return;
     }
 
-    private void orderSoup(Order order, Scanner scan, RecipeGenerator recipeGenerator, Menu menu) {
+    private void orderSoup(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
         choice = Integer.parseInt(scan.nextLine());
 
@@ -220,7 +220,7 @@ public class InterActiveMenu {
         }
     }
 
-    private void orderPreCourse(Order order, Scanner scan, RecipeGenerator recipeGenerator, Menu menu) {
+    private void orderPreCourse(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
         choice = Integer.parseInt(scan.nextLine());
 
@@ -254,7 +254,7 @@ public class InterActiveMenu {
         }
     }
 
-    private void orderMainCourse(Order order, Scanner scan, RecipeGenerator recipeGenerator, Menu menu) {
+    private void orderMainCourse(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
         choice = Integer.parseInt(scan.nextLine());
 
@@ -288,7 +288,7 @@ public class InterActiveMenu {
         }
     }
 
-    private void orderDesserts(Order order, Scanner scan, RecipeGenerator recipeGenerator, Menu menu) {
+    private void orderDesserts(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
         choice = Integer.parseInt(scan.nextLine());
 
@@ -322,7 +322,7 @@ public class InterActiveMenu {
         }
     }
 
-    private void orderBeverages(Order order, Scanner scan, Menu menu) {
+    private void orderBeverages(Order order, Scanner scan, UserMenu menu) {
         int choice = 1;
         choice = Integer.parseInt(scan.nextLine());
 

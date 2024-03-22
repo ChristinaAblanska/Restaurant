@@ -1,7 +1,6 @@
 package restaurant.building_blocks.employee;
 
-import restaurant.Restaurant;
-import restaurant.WorkDay;
+import restaurant.simulation.WorkDay;
 
 public class Cleaner extends Employee {
     int trigger;

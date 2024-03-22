@@ -54,7 +54,7 @@ public class Meal {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(name).append(" - ").append(price);
+        result.append(name).append(" - ").append(String.format("%.2f",price)+" lv.");
         return result.toString();
     }
 }
