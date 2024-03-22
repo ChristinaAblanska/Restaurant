@@ -76,6 +76,10 @@ public class StorageGenerator {
     public Product ham = new ProductPerKilogram("ham", 18.9);
     public Product eggs = new EnumerableProduct("eggs", 0.5);
 
+    // for Compliment ONLY
+    public Product raspberries = new ProductPerKilogram("Raspberries", 21.2);
+    public Product whiteChocolate = new ProductPerKilogram("White Chocolate", 12.7);
+
 
     public ProductStorage storageGenerator() {
         ProductStorage storage = new ProductStorage();
@@ -146,6 +150,10 @@ public class StorageGenerator {
         storage.addProductPerKilogram(chocolate, generate.nextDouble(20) + 10);
         storage.addProductPerKilogram(ham, generate.nextDouble(40) + 20);
         storage.addEnumerableProduct(eggs, (generate.nextInt(300) + 10000));
+
+        // for Compliment ONLY
+        storage.addProductPerKilogram(raspberries, 15);
+        storage.addProductPerKilogram(whiteChocolate, 10);
 
         return storage;
     }

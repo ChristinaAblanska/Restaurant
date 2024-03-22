@@ -272,6 +272,7 @@ public class RecipeGenerator {
         return new Recipe(ingredients, 15);
     }
 
+
     public Recipe generatePotatoCake() {
         ingredients = new SingleRecipe();
 
@@ -437,5 +438,27 @@ public class RecipeGenerator {
     public Product chocolate = new ProductPerKilogram("chocolate", 15.7);
     public Product ham = new ProductPerKilogram("ham", 18.9);
     public Product eggs = new EnumerableProduct("eggs", 0.5);
+
+
+
+
+    // Compliment from the restaurant when there are no available products to prepare a certain meal
+    public Recipe generateCompliment_RaspberryBites() {
+        ingredients = new SingleRecipe();
+
+        ingredients.put(raspberries, 100);
+        ingredients.put(sugar, 20);
+        ingredients.put(flour, 50);
+        ingredients.put(butter, 10);
+        ingredients.put(milk, 20);
+        ingredients.put(whiteChocolate, 50);
+
+        return new Recipe(ingredients, 15);
+    }
+
+
+    // for Compliment ONLY
+    public Product raspberries = new ProductPerKilogram("Raspberries", 21.2);
+    public Product whiteChocolate = new ProductPerKilogram("White Chocolate", 12.7);
 
 }
