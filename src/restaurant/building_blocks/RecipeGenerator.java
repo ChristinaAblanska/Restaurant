@@ -9,56 +9,6 @@ import restaurant.building_blocks.product.ProductPerLitre;
 public class RecipeGenerator {
     public SingleRecipe ingredients;
 
-    // Generating meals
-
-//    public ArrayList<Meal> generateRecipes() {
-//        ArrayList<Meal> result = new ArrayList<>();
-//
-//        Meal beansStew = new Meal("Боб", generateBeansStew());
-//        Meal musaka = new Meal("Мусака", generateMusaka());
-//        Meal kapama = new Meal("Капама", generateKapama());
-//        Meal friedEggs = new Meal("Яйца по Панагюрски", generateFriedEggs());
-//        Meal potatoeCake = new Meal("Пататник", generatePotatoCake());
-//        Meal chickenRice = new Meal("Пиле с ориз", generateChickenRice());
-//        Meal bakedCheese = new Meal("Сирене по Шопски", generateBakedCheese());
-//        Meal stuffedPeppersInSause = new Meal("Пълнени чушки с бял сос", generateStuffedPeppers());
-//        Meal beefSoup = new Meal("Шкембе чорба", generateBeefSoup());
-//        Meal lentilSoup = new Meal("Леща чорба", generateLentilSoup());
-//        Meal chickenSoup = new Meal("Пилешка супа", generateChickenSoup());
-//        Meal shopskaSalad = new Meal("Шопска Салата", generateShopskaSalad());
-//        Meal shepardsSalad = new Meal("Овчарска Салата", generateShepardSalad());
-//        Meal cabbageAndCarrotsSalad = new Meal("Салата Зеле и моркови", generateCabbageCarrotSalad());
-//        Meal greenSalad = new Meal("Зелена Салата", generateGreenSalad());
-//        Meal tarator = new Meal("Таратор", generateTarator());
-//        Meal tolumbichki = new Meal("Толумбички", generateTolumbichki());
-//        Meal baklava = new Meal("Баклава", generateBaklava());
-//        Meal pancake = new Meal("Палачинка с банан и шоколад", generatePancake());
-//        Meal cookieCake = new Meal("Бисквитена торта", generateCookieCake());
-//
-//        result.add(beansStew);
-//        result.add(musaka);
-//        result.add(kapama);
-//        result.add(friedEggs);
-//        result.add(potatoeCake);
-//        result.add(chickenRice);
-//        result.add(bakedCheese);
-//        result.add(stuffedPeppersInSause);
-//        result.add(beefSoup);
-//        result.add(lentilSoup);
-//        result.add(chickenSoup);
-//        result.add(shopskaSalad);
-//        result.add(shepardsSalad);
-//        result.add(cabbageAndCarrotsSalad);
-//        result.add(greenSalad);
-//        result.add(tarator);
-//        result.add(tolumbichki);
-//        result.add(baklava);
-//        result.add(pancake);
-//        result.add(cookieCake);
-//
-//        return result;
-//    }
-
     // Adding products to the recipes
     public Recipe generateBeansStew() {
         ingredients = new SingleRecipe();
