@@ -24,4 +24,5 @@ public class TableOrder extends ArrayList<Order> {
     public Waiter getWaiter() {
         return waiter;
     }
+
 }

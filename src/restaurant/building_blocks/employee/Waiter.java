@@ -12,7 +12,11 @@ public class Waiter implements Runnable {
     }
 
     private final int waiterNumber;
-    private int tip;
+    private double tip = 0.0;
+
+    public Table[] getTables() {
+        return tables;
+    }
 
     // private final TablesGroup tableGroup;
     private Kitchen kitchen;
@@ -42,5 +46,9 @@ public class Waiter implements Runnable {
                 kitchen.completeAnOrder(table.getTableOrder());
             }
         }
+    }
+
+    public void updateTips(double tips) {
+        this.tip += tips;
     }
 }

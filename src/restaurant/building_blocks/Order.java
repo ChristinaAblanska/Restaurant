@@ -3,6 +3,7 @@ package restaurant.building_blocks;
 import restaurant.OrderStatus;
 import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
+import restaurant.building_blocks.product.Product;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +37,56 @@ public class Order {
 
     public HashMap<Meal, Integer> getMeals() {
         return meals;
+    }
+
+    public boolean containsMeal (String name) {
+        boolean result = false;
+
+        for (Map.Entry<Meal, Integer> entry : meals.entrySet()) {
+            if (entry.getKey().getName().equalsIgnoreCase(name)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public Meal getMeal(String name) {
+        Meal meal = new Meal();
+
+        for (Map.Entry<Meal, Integer> entry : meals.entrySet()) {
+            if (entry.getKey().getName().equalsIgnoreCase(name)) {
+                meal = entry.getKey();
+                break;
+            }
+        }
+
+        return meal;
+    }
+
+    public Beverage getBeverage(String name) {
+        Beverage beverage = new Beverage(name, 0.0);
+
+        for (Map.Entry<Beverage, Integer> entry : beverages.entrySet()) {
+            if (entry.getKey().getName().equalsIgnoreCase(name)) {
+                beverage = entry.getKey();
+                break;
+            }
+        }
+
+        return beverage;
+    }
+
+    public boolean containsBeverage (String name) {
+        boolean result = false;
+
+        for (Map.Entry<Beverage, Integer> entry : beverages.entrySet()) {
+            if (entry.getKey().getName().equalsIgnoreCase(name)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     public HashMap<Beverage, Integer> getDrinks() {
@@ -114,13 +165,27 @@ public class Order {
         StringBuilder data = new StringBuilder();
         data.append("            Meals:").append("\n");
         for (Map.Entry<Meal, Integer> record : meals.entrySet()) {
-            data.append("                 ").append(record.getKey()).append("-").append(record.getValue()).append(" pcs.").append("\n");
+            double price = Math.round(record.getKey().getPrice() * 100.0) / 100.0;
+            int count1 = 36 - (record.getKey().getName().length());
+            int count2 = 10 - String.valueOf(price).length();
+            int count3 = 6 - String.valueOf(record.getValue()).length();
+            data.append("                 | ")
+                    .append(record.getKey().getName()).append(" ".repeat(count1)).append(" | ")
+                    .append(" ".repeat(count2)).append(price).append(" lv | ")
+                    .append(" ".repeat(count3)).append(record.getValue()).append(" pcs |").append("\n");
         }
         data.append("\n");
-        data.append("            Beverages:").append("\n");
+        data.append("        Beverages:").append("\n");
 
         for (Map.Entry<Beverage, Integer> record : beverages.entrySet()) {
-            data.append("                 ").append(record.getKey().getName()).append("-").append(record.getValue()).append(" pcs.").append("\n");
+            double price = Math.round(record.getKey().getPrice() * 100.0) / 100.0;
+            int count1 = 36 - (record.getKey().getName().length());
+            int count2 = 10 - String.valueOf(price).length();
+            int count3 = 6 - String.valueOf(record.getValue()).length();
+            data.append("                 | ")
+                    .append(record.getKey().getName()).append(" ".repeat(count1)).append(" | ")
+                    .append(" ".repeat(count2)).append(price).append(" lv | ")
+                    .append(" ".repeat(count3)).append(record.getValue()).append(" pcs |").append("\n");
         }
 
         return String.valueOf(data);
