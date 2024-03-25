@@ -28,6 +28,7 @@ public class TableOrder extends ArrayList<Order> implements Cloneable {
         return waiter;
     }
 
+
     @Override
     public String toString() {
         StringBuilder data = new StringBuilder();

@@ -7,9 +7,10 @@ import restaurant.building_blocks.food.Beverage;
 import java.util.Scanner;
 
 public class InterActiveMenu {
+    private int numberOfClients = 0;
     private static final OrdersQueue ordersQueue = new OrdersQueue();
 
-    public static OrdersQueue getOrdersQueue() {
+    public OrdersQueue getOrdersQueue() {
         return ordersQueue;
     }
 
@@ -18,8 +19,8 @@ public class InterActiveMenu {
         UserMenu menu = new UserMenu();
 
         menu.showMainActionMenu();
-        choice = Integer.parseInt(scan.nextLine());
-//        choice = getChoice(scan);
+//        choice = Integer.parseInt(scan.nextLine());
+        choice = getChoice(scan);
 
         while (choice > 0 && choice <= 6) {
             switch (choice) {
@@ -32,21 +33,23 @@ public class InterActiveMenu {
                         ordersQueue.addOrder(order);
                     }
                     break;
-                // Update and order by id
+                // Update an order by id
                 case 2:
                     int idToUpdate = getOrderId(scan);
                     if (ordersQueue.getOrderQueue().isEmpty()) {
                         System.out.println("No orders to update!\n");
                         break;
                     } else {
-                        System.out.println(ordersQueue.getOrder(idToUpdate).toString());
-                        ordersQueue.removeOrder(idToUpdate);
-                        menu.showNewOrderSubMenu();
-                        Order newOrder = createNewOrder(menu, scan);
-                        if (!newOrder.isEmpty()) {
-                            newOrder.setOrderStatus(OrderStatus.ACTIVE);
-                            ordersQueue.addOrder(newOrder);
-                        }
+                        System.out.println(ordersQueue.getOrder(idToUpdate).toString1());
+                        updateAmount(ordersQueue.getOrder(idToUpdate), scan);
+                        System.out.println(ordersQueue.getOrder(idToUpdate).toString1());
+//                        ordersQueue.removeOrder(idToUpdate);
+//                        menu.showNewOrderSubMenu();
+//                        Order newOrder = createNewOrder(menu, scan);
+//                        if (!newOrder.isEmpty()) {
+//                            newOrder.setOrderStatus(OrderStatus.ACTIVE);
+//                            ordersQueue.addOrder(newOrder);
+//                        }
                     }
                     break;
                 // Revoke an order by id
@@ -70,37 +73,108 @@ public class InterActiveMenu {
                     break;
                 // Print Order
                 case 5:
-                    int idToPrint= getOrderId(scan);
-                    Order orderToPrint = ordersQueue.getOrder(idToPrint);
-                    Bill bill = new Bill(orderToPrint);
-                    bill.printBill();
+                    int idToPrint = getOrderId(scan);
+                    if (ordersQueue.containsOrder(idToPrint)) {
+                        Order orderToPrint = ordersQueue.getOrder(idToPrint);
+                        Bill bill = new Bill(orderToPrint);
+                        bill.printBill();
+                    } else {
+                        System.out.println("Order #" + idToPrint + " does not exist!\n");
+                    }
+                    break;
                 default:
                     return;
             }
             menu.showMainActionMenu();
-            choice = Integer.parseInt(scan.nextLine());
-//            choice = getChoice(scan);
+//            choice = Integer.parseInt(scan.nextLine());
+            choice = getChoice(scan);
         }
     }
 
-//    private int getChoice(Scanner scan) {
-//        int choice = Integer.parseInt(String.valueOf(scan.next().charAt(0)));
-//        while (choice < 0 || choice > 7) {
-//            System.out.println("Invalid Input!");
-//            choice = Integer.parseInt(String.valueOf(scan.next().charAt(0)));
-//        }
-//        return choice;
-//    }
+
+    private void updateAmount(Order order, Scanner scan) {
+        System.out.println("------- MEAL - 1 / DRINK - 2 -------");
+        System.out.println("------------ FINISH - 3 ------------\n");
+        int choice = getChoice(scan);
+
+        while (choice > 0 && choice <= 3) {
+            System.out.println("What to update: ");
+            switch (choice) {
+                case 1:
+                    String name = scan.nextLine();
+                    while (!order.containsMeal(name)) {
+                        System.out.println("Invalid Input!");
+                        name = scan.nextLine();
+                    }
+
+                    System.out.println("Change amount to: ");
+                    String count = scan.nextLine();
+                    while (!count.matches("\\d")) {
+                        System.out.println("Invalid Input!");
+                        count = scan.nextLine();
+                    }
+
+                    order.getMeals().put(order.getMeal(name), Integer.parseInt(count));
+                    break;
+
+                case 2:
+                    String nameBev = scan.nextLine();
+                    while (!order.containsBeverage(nameBev)) {
+                        System.out.println("Invalid Input!");
+                        nameBev = scan.nextLine();
+                    }
+
+                    System.out.println("Change amount to: ");
+                    String countBev = scan.nextLine();
+                    while (!countBev.matches("\\d")) {
+                        System.out.println("Invalid Input!");
+                        countBev = scan.nextLine();
+                    }
+
+                    order.getDrinks().put(order.getBeverage(nameBev), Integer.parseInt(countBev));
+                    break;
+                case 3:
+                    return;
+            }
+
+            System.out.println("------- MEAL - 1 / DRINK - 2 -------");
+            System.out.println("------------ FINISH - 3 ------------\n");
+            choice = getChoice(scan);
+        }
+    }
+
+
+    private int getChoice(Scanner scan) {
+        String choice;
+        do {
+            choice = scan.nextLine();
+            if (choice.matches("\\d")) {
+                break;
+            } else {
+                System.out.println("Invalid Input!");
+            }
+        } while (!(scan.hasNextInt()) || !choice.matches("\\d"));
+        return Integer.parseInt(choice);
+    }
 
     private int getOrderId(Scanner scan) {
-        int id = 0;
+//        int id = 0;
+//        System.out.println("Enter id: ");
+//        id = Integer.parseInt(scan.nextLine());
+//        while (id < 10000 || id > 19999) {
+//            System.out.println("Invalid input! Please try again!");
+//            id = Integer.parseInt(scan.nextLine());
+//        }
+//        return id;
+
+        String id;
         System.out.println("Enter id: ");
-        id = Integer.parseInt(scan.nextLine());
-        while (id < 10000 || id > 19999) {
+        id = scan.nextLine();
+        while (!id.matches("[1]\\d\\d\\d\\d")) {
             System.out.println("Invalid input! Please try again!");
-            id = Integer.parseInt(scan.nextLine());
+            id = scan.nextLine();
         }
-        return id;
+        return Integer.parseInt(id);
     }
 
     private Order createNewOrder(UserMenu menu, Scanner scan) {
@@ -108,7 +182,8 @@ public class InterActiveMenu {
         int choice = 1;
         RecipeGenerator recipeGenerator = new RecipeGenerator();
 
-        choice = Integer.parseInt(scan.nextLine());
+//        choice = Integer.parseInt(scan.nextLine());
+        choice = getChoice(scan);
 
         while (choice > 0 && choice <= 7) {
             switch (choice) {
@@ -143,17 +218,19 @@ public class InterActiveMenu {
                     menu.showNewOrderSubMenu();
                     break;
                 case 7:
-                    System.out.println(order.toString());
+                    System.out.println(order.toString1());
                     return order;
             }
-            choice = Integer.parseInt(scan.nextLine());
+//            choice = Integer.parseInt(scan.nextLine());
+            choice = getChoice(scan);
         }
         return order;
     }
 
     private void orderSalad(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
-        choice = Integer.parseInt(scan.nextLine());
+//        choice = Integer.parseInt(scan.nextLine());
+        choice = getChoice(scan);
 
         while (choice > 0 && choice < 5) {
             switch (choice) {
@@ -181,14 +258,16 @@ public class InterActiveMenu {
                     return;
             }
             menu.showSalads();
-            choice = Integer.parseInt(scan.nextLine());
+//            choice = Integer.parseInt(scan.nextLine());
+            choice = getChoice(scan);
         }
         return;
     }
 
     private void orderSoup(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
-        choice = Integer.parseInt(scan.nextLine());
+//        choice = Integer.parseInt(scan.nextLine());
+        choice = getChoice(scan);
 
         while (choice > 0 && choice < 5) {
             switch (choice) {
@@ -222,7 +301,8 @@ public class InterActiveMenu {
 
     private void orderPreCourse(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
-        choice = Integer.parseInt(scan.nextLine());
+//        choice = Integer.parseInt(scan.nextLine());
+        choice = getChoice(scan);
 
         while (choice > 0 && choice < 5) {
             switch (choice) {
@@ -250,13 +330,15 @@ public class InterActiveMenu {
                     return;
             }
             menu.showPreCourse();
-            choice = Integer.parseInt(scan.nextLine());
+//            choice = Integer.parseInt(scan.nextLine());
+            choice = getChoice(scan);
         }
     }
 
     private void orderMainCourse(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
-        choice = Integer.parseInt(scan.nextLine());
+//        choice = Integer.parseInt(scan.nextLine());
+        choice = getChoice(scan);
 
         while (choice > 0 && choice < 5) {
             switch (choice) {
@@ -284,13 +366,15 @@ public class InterActiveMenu {
                     return;
             }
             menu.showMainCourse();
-            choice = Integer.parseInt(scan.nextLine());
+//            choice = Integer.parseInt(scan.nextLine());
+            choice = getChoice(scan);
         }
     }
 
     private void orderDesserts(Order order, Scanner scan, RecipeGenerator recipeGenerator, UserMenu menu) {
         int choice = 1;
-        choice = Integer.parseInt(scan.nextLine());
+//        choice = Integer.parseInt(scan.nextLine());
+        choice = getChoice(scan);
 
         while (choice > 0 && choice < 5) {
             switch (choice) {
@@ -318,13 +402,15 @@ public class InterActiveMenu {
                     return;
             }
             menu.showDesserts();
-            choice = Integer.parseInt(scan.nextLine());
+//            choice = Integer.parseInt(scan.nextLine());
+            choice = getChoice(scan);
         }
     }
 
     private void orderBeverages(Order order, Scanner scan, UserMenu menu) {
         int choice = 1;
-        choice = Integer.parseInt(scan.nextLine());
+//        choice = Integer.parseInt(scan.nextLine());
+        choice = getChoice(scan);
 
         while (choice > 0 && choice < 5) {
             switch (choice) {
@@ -352,7 +438,8 @@ public class InterActiveMenu {
                     return;
             }
             menu.showBeverages();
-            choice = Integer.parseInt(scan.nextLine());
+//            choice = Integer.parseInt(scan.nextLine());
+            choice = getChoice(scan);
         }
     }
 
@@ -365,5 +452,14 @@ public class InterActiveMenu {
             amount = Integer.parseInt(scan.nextLine());
         }
         return amount;
+
+//        String amount;
+//        System.out.println("Enter amount of " + name + ": ");
+//        amount = scan.nextLine();
+//        while (!amount.matches("\\d") || !amount.matches("\\d\\d")) {
+//            System.out.println("Invalid input! Please try again!");
+//            amount = scan.nextLine();
+//        }
+//        return Math.abs(Integer.parseInt(amount));
     }
 }

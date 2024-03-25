@@ -1,5 +1,6 @@
 package restaurant;
 
+import restaurant.building_blocks.OrdersQueue;
 import restaurant.building_blocks.Owner;
 import restaurant.building_blocks.RestaurantMenu;
 import restaurant.building_blocks.employee.Manager;
@@ -23,7 +24,7 @@ public class Restaurant {
     private final Table[] tables;
     private final Cleaner cleaner;
     private final Owner owner;
-    public static double turnover = 40000;
+    public static double turnover = 100000;
     private final Time cleaningTime;
     private boolean isOpenRestaurant;
     private final Kitchen kitchen;
@@ -135,6 +136,16 @@ public class Restaurant {
     public String toString() {
         return "Welcome to restaurant " + restaurantName +
                 ".We have capacity of " + tables.length + " dinner tables X " + tables[0].getCapacity() + " seats each.";
+    }
+
+    public void updateTurnover(OrdersQueue ordersQueue) {
+        for (int i = 0; i < ordersQueue.getSze(); i++) {
+            this.turnover += ordersQueue.getOrderElement(i).calculateTotalPrice();
+        }
+    }
+
+    public double getTurnover() {
+        return this.turnover;
     }
 
     public Manager getManager() {

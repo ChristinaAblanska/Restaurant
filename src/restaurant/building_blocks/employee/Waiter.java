@@ -22,7 +22,11 @@ public class Waiter extends Employee implements Runnable {
     private final int reactionTimeInMinutes;
 
     private final int waiterNumber;
-    private int tip;
+    private double tip = 0.0;
+
+    public Table[] getTables() {
+        return tables;
+    }
 
     // private final TablesGroup tableGroup;
     private final Kitchen kitchen;
@@ -66,5 +70,9 @@ public class Waiter extends Employee implements Runnable {
                 kitchen.completeAnOrder(table.getTableOrder());
             }
         }
+    }
+
+    public void updateTips(double tips) {
+        this.tip += tips;
     }
 }

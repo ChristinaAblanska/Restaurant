@@ -51,4 +51,11 @@ public class OrdersQueue {
         return resultOrder;
     }
 
+    public int getSze() {
+        return orders.size();
+    }
+
+    public Order getOrderElement(int i) {
+        return orders.get(i);
+    }
 }

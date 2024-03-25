@@ -1,10 +1,14 @@
 package restaurant;
 
 import restaurant.building_blocks.StorageGenerator;
+import restaurant.building_blocks.*;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 import restaurant.simulation.RestaurantSimulator;
 import restaurant.simulation.SimulatorParameters;
 import restaurant.simulation.Time;
+import restaurant.interaction.RestaurantMenuInteraction;
+
+import java.util.Scanner;
 
 public class Main {
     public static final double PROFIT = 2.0;
@@ -30,6 +34,11 @@ public class Main {
 
         RestaurantSimulator simulator = new RestaurantSimulator(shipka);
         simulator.startSimulation();
+
+        // Menu Interaction
+//        RestaurantMenuInteraction interaction = new RestaurantMenuInteraction(shipka);
+//        interaction.go();
+
 
     }
 }
