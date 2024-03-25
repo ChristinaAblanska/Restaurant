@@ -48,10 +48,9 @@ public class OrdersQueue {
         Order resultOrder = new Order();
         for (Order order : orders) {
             if (order.getOrderID() == id) {
-                resultOrder = order;
-                break;
+                return order;
             }
-        }
+    }
         return resultOrder;
     }
 
