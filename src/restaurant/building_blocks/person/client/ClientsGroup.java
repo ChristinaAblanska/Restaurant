@@ -41,6 +41,7 @@ public class ClientsGroup implements Runnable {
 
             tableOrder.add(individualOrder);
             client.setIndividualOrder(individualOrder);
+            backupTableOrder = new TableOrder();
         }
     }
 
@@ -74,14 +75,17 @@ public class ClientsGroup implements Runnable {
             }
         }
         backupTableOrder = tableOrder.clone();
+
         //Get the price for every client bill to form the total bill for the table.
         Bill bill;
         double totalBillPrice = 0;
-        for (Order order : tableOrder) {
+        for (Order order : backupTableOrder) {
             bill = new Bill(order);
             totalBillPrice += bill.getTotalSum();
         }
+
         Restaurant.turnover += totalBillPrice;
+
         table.releaseDinnerTable();
         outComingHour = WorkDay.getTime().toString();
     }

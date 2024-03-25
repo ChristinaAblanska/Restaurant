@@ -1,6 +1,7 @@
 package restaurant.simulation;
 
 
+import restaurant.building_blocks.order.Order;
 import restaurant.building_blocks.person.client.ClientsGroup;
 import restaurant.Restaurant;
 import restaurant.building_blocks.order.TableOrder;
@@ -33,7 +34,7 @@ public class RestaurantSimulator {
         int groupNumber = 1;
 
         WorkDay.historyAsString.addData(restaurant.toString());
-        List<ClientsGroup> clients = new ArrayList<>();
+        List<ClientsGroup> groups = new ArrayList<>();
 
         restaurant.getManager().openRestaurant();
 
@@ -56,7 +57,7 @@ public class RestaurantSimulator {
                     if (restaurant.getOccupiedTablesNumber() < workDay.getHourlyLoad()) {
 
                         ClientsGroup gr = new ClientsGroup(groupNumber, restaurant);
-                        clients.add(gr);
+                        groups.add(gr);
                         executor.submit(gr);
 
                         groupNumber++;
@@ -75,12 +76,23 @@ public class RestaurantSimulator {
 
         WorkDay.historyAsString.addData("Turnover in the end =" + Restaurant.turnover);
 
-        for (ClientsGroup group : clients) {
+
+        double totalBillPrice = 0;
+
+       /* for (ClientsGroup group : groups) {
+            TableOrder ord = group.getTableOrder();
+            for (Order order : ord) {
+                totalBillPrice += order.calculateTotalPrice();
+            }
+        }*/
+        //System.out.println("totalBillPrice =" + totalBillPrice);
+
+        for (ClientsGroup group : groups) {
             WorkDay.historyAsString.addData(group.toString());
         }
         //Get the most ordered mails
 
-        for (ClientsGroup group : clients) {
+        for (ClientsGroup group : groups) {
             TableOrder t_o = group.getTableOrder();
 
             WorkDay.historyAsString.addData(group.toString());
