@@ -19,9 +19,9 @@ public class Main_Test {
         Restaurant shipka = new Restaurant("Shipka", 10, 4, SimulatorParameters.CLEANING_START_TIME);
         shipka.getKitchen().setStorage(storage);
 
-
-        RestaurantSimulator simulator = new RestaurantSimulator(shipka);
-        simulator.startSimulation();
+//
+//        RestaurantSimulator simulator = new RestaurantSimulator(shipka);
+//        simulator.startSimulation();
 
         // Menu Interaction
         Scanner scan = new Scanner(System.in);

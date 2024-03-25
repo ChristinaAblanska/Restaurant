@@ -7,7 +7,7 @@ import java.util.*;
 public class OrdersQueue {
     private ArrayList<Order> orders;
 
-    public OrdersQueue () {
+    public OrdersQueue() {
         orders = new ArrayList<>();
     }
 
@@ -23,9 +23,11 @@ public class OrdersQueue {
         boolean result = false;
         for (Order order : orders) {
             if (order.getOrderID() == id) {
-                orders.remove(order);
-                result = true;
-                break;
+                if (order.orderStatus == OrderStatus.ACTIVE || order.orderStatus == OrderStatus.BLANK) {
+                    orders.remove(order);
+                    result = true;
+                    break;
+                }
             }
         }
         return result;

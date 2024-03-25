@@ -230,5 +230,17 @@ public class Console {
         }
         return num;
     }
+
+
+    public static int readInteger(Scanner scan, String message) {
+        String id;
+        System.out.println(message);
+        id = scan.nextLine();
+        while (!id.matches("\\d")) {
+            System.out.println("Invalid input! Please try again!");
+            id = scan.nextLine();
+        }
+        return Integer.parseInt(id);
+    }
 }
 
