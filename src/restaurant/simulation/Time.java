@@ -1,6 +1,6 @@
 package restaurant.simulation;
 
-public class Time {
+public class Time implements Comparable {
 
     private int hour;
     private int min;
@@ -35,5 +35,18 @@ public class Time {
     @Override
     public String toString() {
         return hour + ":" + min;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Time time = (Time) o;
+        if (time.getHour() == this.hour && time.getMin() == this.min) {
+            return 0;
+        }
+        if (time.getHour() > this.hour && time.getMin() > this.min) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }

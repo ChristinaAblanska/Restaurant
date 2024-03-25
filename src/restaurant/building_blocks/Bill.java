@@ -1,11 +1,14 @@
 package restaurant.building_blocks;
 
 import java.util.Map;
+
 import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.food.Meal;
 
 public class Bill {
     public Order order;
+
+
     private double totalSum;
 
     public Bill(Order order) {
@@ -20,7 +23,11 @@ public class Bill {
         return orderPrice - tips;
     }
 
-    public void printBill(){
+    public double getTotalSum() {
+        return totalSum;
+    }
+
+    public void printBill() {
         double total = 0.0;
 
         StringBuilder result = new StringBuilder();

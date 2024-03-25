@@ -11,13 +11,11 @@ import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 
-import java.util.HashMap;
-
 public class Test_Recipe {
     public ProductStorage storage;
     public Recipe recipe;
 
-    public Recipe.SingleRecipe ingredients;
+    public Recipe.Ingredients ingredients;
 
     public Product yogurt = new ProductPerKilogram("Yogurt",5);
     public Product cucumber = new ProductPerKilogram("Cucmber", 1);
@@ -39,12 +37,12 @@ public class Test_Recipe {
 
     @Before
     public void singleRecipeSetup() {
-        ingredients = new Recipe.SingleRecipe();
+        ingredients = new Recipe.Ingredients();
     }
 
     @Before
     public void recipeSetup() {
-        recipe = new Recipe(ingredients, 15);
+        recipe = new Recipe(ingredients, 15,"");
     }
 
     @Test
@@ -63,7 +61,7 @@ public class Test_Recipe {
 
     @Test
     public void testRecipeGetters(){
-        recipe = new Recipe(ingredients, 15);
+        recipe = new Recipe(ingredients, 15,"");
         recipe.getIngredients().put(yogurt, 200);
         ingredients.put(yogurt, 200);
         Assert.assertEquals(ingredients, recipe.getIngredients());
@@ -72,7 +70,7 @@ public class Test_Recipe {
 
     @Test
     public void testCalculatePrice() {
-        recipe = new Recipe(ingredients, 15);
+        recipe = new Recipe(ingredients, 15,"");
         recipe.getIngredients().put(eggs, 2); // per piece
         recipe.getIngredients().put(yogurt, 200); // per gram/ml
         recipe.getIngredients().put(milk, 50); // per gram/ml
@@ -82,7 +80,7 @@ public class Test_Recipe {
 
     @Test
     public void testAddIngredientToRecipe() {
-        recipe = new Recipe(ingredients, 15);
+        recipe = new Recipe(ingredients, 15,"");
         ingredients.put(yogurt, 200);
         recipe.addIngredient(yogurt, 200);
         Assert.assertEquals(ingredients, recipe.getIngredients());

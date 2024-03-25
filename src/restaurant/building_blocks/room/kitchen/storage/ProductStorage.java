@@ -2,6 +2,7 @@ package restaurant.building_blocks.room.kitchen.storage;
 
 
 import restaurant.Restaurant;
+import restaurant.building_blocks.food.Beverage;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.exceptions.ProductOutOfStockException;
 import restaurant.building_blocks.room.kitchen.storage.shaft.EnumerableShaft;
@@ -13,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductStorage {
+    //The parameters of this HashMap is the name of the product and the shaft containing
+    //the quantity of the product.
 
     public final HashMap<String, Shaft> container;
 
@@ -162,4 +165,5 @@ public class ProductStorage {
     public void emptying() {
         this.container.clear();
     }
+
 }

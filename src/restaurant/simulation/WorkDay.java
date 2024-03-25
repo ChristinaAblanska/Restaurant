@@ -1,7 +1,7 @@
 package restaurant.simulation;
 
 public class WorkDay extends Thread {
-    public static HistoryLog history = new HistoryLog();
+    public static HistoryLog historyAsString = new HistoryLog();
     private final int workTimeInMilliseconds;
     private long workTimeStart;
     private static Time time;
@@ -15,8 +15,14 @@ public class WorkDay extends Thread {
                 millisToSeconds(localTimeInMillis));
     }
 
-    public static int minutesToLocalTime(int minutes) {
+    public static int minutesToLocalMinutes(int minutes) {
         return (minutes * 60000) / SimulatorParameters.WORK_DAY_SPEEDUP_VALUE;
+    }
+
+    public static Time minutesToTime(int minutes) {
+        int h = minutes / 60;
+        int m = minutes % 60;
+        return new Time(h, m);
     }
 
     @Override

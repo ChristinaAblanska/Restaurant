@@ -1,9 +1,7 @@
 package restaurant;
 
-import restaurant.building_blocks.Client;
-import restaurant.building_blocks.Order;
+import restaurant.building_blocks.*;
 import restaurant.building_blocks.table.Table;
-import restaurant.building_blocks.TableOrder;
 import restaurant.simulation.WorkDay;
 
 import java.util.*;
@@ -15,36 +13,35 @@ public class ClientsGroup implements Runnable {
     private String outComingHour;
     private Client[] clients;
     private Table table;
+    private final TableOrder tableOrder;
+    private TableOrder backupTableOrder;
 
-    public ClientsGroup(int groupNumber, Table[] tables) {
+    public ClientsGroup(int groupNumber, Restaurant restaurant) {
         this.groupNumber = groupNumber;
-        setRandomTable(tables);
+        setRandomTable(restaurant.getTables());
         createRandomAmmoundOfClients(table.getCapacity());
+        tableOrder = table.getTableOrder();
+        Order individualOrder;
+        for (Client client : clients) {
+
+            individualOrder = new Order();
+            //order at least 5 meals
+            int mealsCount = RANDOM.nextInt(1, 6);
+            for (int i = 0; i < mealsCount; i++) {
+                int numberOfTheMeal = RANDOM.nextInt(1, 3);
+                individualOrder.addMeal(client.pickRandomMeal(RANDOM, table.getMenu()), numberOfTheMeal);
+            }
+            int beverageCount = RANDOM.nextInt(1, 6);
+            individualOrder.addDrink(client.pickRandomDrink(RANDOM, table.getMenu()), beverageCount);
+
+            tableOrder.add(individualOrder);
+            client.setIndividualOrder(individualOrder);
+        }
     }
 
     public void run() {
 
         incomingHour = WorkDay.getTime().toString();
-
-        TableOrder tableOrder = table.getTableOrder();
-        for (Client client : clients) {
-
-            Order individualOrder = new Order();
-
-            //Pick random number of meals
-            int numberOfMeals = RANDOM.nextInt(1, 4);
-            for (int i = 0; i < numberOfMeals + 1; i++) {
-                int numberOfMeal = RANDOM.nextInt(1, 3);
-                individualOrder.addMeal(client.pickRandomMeal(RANDOM, table.getMenu()), numberOfMeal);
-            }
-
-            int numberOfDrinks = RANDOM.nextInt(1, 4);
-            individualOrder.addDrink(client.pickRandomDrink(RANDOM, table.getMenu()), numberOfDrinks);
-
-            tableOrder.add(individualOrder);
-            client.setIndividualOrder(individualOrder);
-        }
-
         tableOrder.setStatus(OrderStatus.ACTIVE);
 
         synchronized (tableOrder) {
@@ -66,16 +63,21 @@ public class ClientsGroup implements Runnable {
                 }
             }
         }
-
-
-     /*   for (Order order : tableOrder) {
-            if (order.getOrderStatus().equals(OrderStatus.REVOKE)) {
-
-                //System.out.println(this);
+        for (Order ord : tableOrder) {
+            if (ord.getOrderStatus().equals(OrderStatus.REVOKE_BY_KITCHEN)) {
+                ord.setOrderStatus(OrderStatus.COMPLIMENTS);
             }
-        }*/
-        tableOrder.setStatus(OrderStatus.BLANK);
-        table.setOccupied(false);
+        }
+        backupTableOrder = tableOrder.clone();
+        //Get the price for every client bill to form the total bill for the table.
+        Bill bill;
+        double totalBillPrice = 0;
+        for (Order order : tableOrder) {
+            bill = new Bill(order);
+            totalBillPrice += bill.getTotalSum();
+        }
+        Restaurant.turnover += totalBillPrice;
+        table.releaseDinnerTable();
         outComingHour = WorkDay.getTime().toString();
     }
 
@@ -113,6 +115,10 @@ public class ClientsGroup implements Runnable {
         }
     }
 
+    public TableOrder getTableOrder() {
+        return backupTableOrder;
+    }
+
     @Override
     public String toString() {
         StringBuilder data = new StringBuilder();
@@ -124,8 +130,7 @@ public class ClientsGroup implements Runnable {
         data.append(" | Waiter:").append(table.getTableOrder().getWaiter().getWaiterNumber());
         data.append("\n");
 
-        for (int i = 0; i < clients.length; i++) {
-            Client client = clients[i];
+        for (Client client : clients) {
             data.append("    Client :").append(client.getClientNumber()).append(" >>").append(client.getIndividualOrder().getOrderStatus()).append("\n")
                     .append(client.getIndividualOrder().toString());
         }

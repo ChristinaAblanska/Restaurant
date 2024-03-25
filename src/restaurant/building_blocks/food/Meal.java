@@ -15,7 +15,7 @@ public class Meal {
 
     public Meal() {
         this.name = "";
-        this.recipe = new Recipe(new Recipe.SingleRecipe(), 0);
+        this.recipe = new Recipe(new Recipe.Ingredients(), 0,"");
         this.price = 0;
     }
     public Meal(Recipe recipe) {

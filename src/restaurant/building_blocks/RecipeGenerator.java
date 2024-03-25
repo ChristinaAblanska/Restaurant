@@ -1,13 +1,13 @@
 package restaurant.building_blocks;
 
-import restaurant.building_blocks.Recipe.SingleRecipe;
+import restaurant.building_blocks.Recipe.Ingredients;
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
 
 public class RecipeGenerator {
-    public SingleRecipe ingredients;
+    public Ingredients ingredients;
 
     // Generating meals
 
@@ -61,7 +61,7 @@ public class RecipeGenerator {
 
     // Adding products to the recipes
     public Recipe generateBeansStew() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
         ingredients.put(beans, 100);
         ingredients.put(bacon, 100);
         ingredients.put(onion, 50);
@@ -74,11 +74,11 @@ public class RecipeGenerator {
         ingredients.put(salt, 1);
         ingredients.put(blackPepper, 1);
 
-        return new Recipe(ingredients, 35);
+        return new Recipe(ingredients, 35, "BeansSte");
     }
 
     public Recipe generateBakedCheese() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(cheese, 150);
         ingredients.put(eggs, 1);
@@ -88,11 +88,11 @@ public class RecipeGenerator {
         ingredients.put(savory, 3);
         ingredients.put(redPepper, 5);
 
-        return new Recipe(ingredients, 15);
+        return new Recipe(ingredients, 15, "BakedCheese");
     }
 
     public Recipe generateBaklava() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(filoDough, 100);
         ingredients.put(pistachio, 50);
@@ -102,11 +102,11 @@ public class RecipeGenerator {
         ingredients.put(cocoa, 13);
         ingredients.put(chocolate, 25);
 
-        return new Recipe(ingredients, 25);
+        return new Recipe(ingredients, 25, "Baklava");
     }
 
     public Recipe generateBeefSoup() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(beefStomach, 150);
         ingredients.put(milk, 150);
@@ -118,11 +118,11 @@ public class RecipeGenerator {
         ingredients.put(vinegar, 25);
         ingredients.put(redPepper, 3);
 
-        return new Recipe(ingredients, 15);
+        return new Recipe(ingredients, 15, "BeefSoup");
     }
 
     public Recipe generateCabbageCarrotSalad() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(cabbage, 200);
         ingredients.put(carrots, 100);
@@ -132,11 +132,11 @@ public class RecipeGenerator {
         ingredients.put(vinegar, 3);
         ingredients.put(oil, 4);
 
-        return new Recipe(ingredients, 10);
+        return new Recipe(ingredients, 10, "CarrotSalad");
     }
 
     public Recipe generateChickenRice() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(rice, 125);
         ingredients.put(chicken, 150);
@@ -145,11 +145,11 @@ public class RecipeGenerator {
         ingredients.put(carrots, 50);
         ingredients.put(onion, 38);
 
-        return new Recipe(ingredients, 25);
+        return new Recipe(ingredients, 25, "ChickenRice");
     }
 
     public Recipe generateChickenSoup() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(chicken, 150);
         ingredients.put(onion, 38);
@@ -160,11 +160,11 @@ public class RecipeGenerator {
         ingredients.put(parsley, 5);
         ingredients.put(bread, 50);
 
-        return new Recipe(ingredients, 15);
+        return new Recipe(ingredients, 15, "ChickenSoup");
     }
 
     public Recipe generateCookieCake() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(cookies, 100);
         ingredients.put(eggs, 2);
@@ -175,11 +175,11 @@ public class RecipeGenerator {
         ingredients.put(butter, 25);
         ingredients.put(chocolate, 50);
 
-        return new Recipe(ingredients, 25);
+        return new Recipe(ingredients, 25, "CookieCake");
     }
 
     public Recipe generateFriedEggs() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(eggs, 3);
         ingredients.put(cheese, 50);
@@ -189,11 +189,11 @@ public class RecipeGenerator {
         ingredients.put(redPepper, 4);
         ingredients.put(vinegar, 4);
 
-        return new Recipe(ingredients, 15);
+        return new Recipe(ingredients, 15, "FriedEggs");
     }
 
     public Recipe generateGreenSalad() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(lettuce, 1);
         ingredients.put(cucumber, 50);
@@ -204,11 +204,11 @@ public class RecipeGenerator {
         ingredients.put(vinegar, 8);
         ingredients.put(salt, 1);
 
-        return new Recipe(ingredients, 10);
+        return new Recipe(ingredients, 10, "GreenSalad");
     }
 
     public Recipe generateKapama() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(pickledCabbage, 200);
         ingredients.put(pork, 100);
@@ -221,11 +221,11 @@ public class RecipeGenerator {
         ingredients.put(blackPepper, 2);
         ingredients.put(beetRoot, 100);
 
-        return new Recipe(ingredients, 45);
+        return new Recipe(ingredients, 45, "Kapama");
     }
 
     public Recipe generateLentilSoup() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(lentil, 100);
         ingredients.put(peppers, 50);
@@ -239,11 +239,11 @@ public class RecipeGenerator {
         ingredients.put(redPepper, 4);
         ingredients.put(oil, 2);
 
-        return new Recipe(ingredients, 15);
+        return new Recipe(ingredients, 15, "LentilSoup");
     }
 
     public Recipe generateMusaka() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(potatoes, 250);
         ingredients.put(onion, 38);
@@ -255,11 +255,11 @@ public class RecipeGenerator {
         ingredients.put(oil, 8);
         ingredients.put(salt, 2);
 
-        return new Recipe(ingredients, 35);
+        return new Recipe(ingredients, 35, "Musaka");
     }
 
     public Recipe generatePancake() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(eggs, 1);
         ingredients.put(bananas, 100);
@@ -269,12 +269,12 @@ public class RecipeGenerator {
         ingredients.put(milk, 20);
         ingredients.put(chocolate, 50);
 
-        return new Recipe(ingredients, 15);
+        return new Recipe(ingredients, 15, "Pancake");
     }
 
 
     public Recipe generatePotatoCake() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(potatoes, 200);
         ingredients.put(butter, 32);
@@ -285,11 +285,11 @@ public class RecipeGenerator {
         ingredients.put(cheese, 50);
         ingredients.put(yogurt, 50);
 
-        return new Recipe(ingredients, 20);
+        return new Recipe(ingredients, 20, "PotatoCake");
     }
 
     public Recipe generateShepardSalad() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(cucumber, 90);
         ingredients.put(tomatoes, 90);
@@ -303,11 +303,11 @@ public class RecipeGenerator {
         ingredients.put(olives, 10);
         ingredients.put(cheese, 13);
 
-        return new Recipe(ingredients, 10);
+        return new Recipe(ingredients, 10, "ShepardSalad");
     }
 
     public Recipe generateShopskaSalad() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(tomatoes, 75);
         ingredients.put(cucumber, 75);
@@ -317,11 +317,11 @@ public class RecipeGenerator {
         ingredients.put(vinegar, 3);
         ingredients.put(soySause, 3);
 
-        return new Recipe(ingredients, 5);
+        return new Recipe(ingredients, 5, "ShopskaSalad");
     }
 
     public Recipe generateStuffedPeppers() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(mincedMeat, 150);
         ingredients.put(peppers, 200);
@@ -338,13 +338,15 @@ public class RecipeGenerator {
         ingredients.put(flour, 15);
         ingredients.put(yogurt, 25);
 
-        return new Recipe(ingredients, 25);
+        return new Recipe(ingredients, 25, "StuffedPeppers");
     }
 
-    public Recipe generateTarator() {
-        ingredients = new SingleRecipe();
 
-        ingredients.put(yogurt, 100);
+    public Recipe generateTarator() {
+        ingredients = new Ingredients();
+
+        Product yogurt1 = yogurt;
+        ingredients.put(yogurt1, 100);
         ingredients.put(water, 50);
         ingredients.put(cucumber, 75);
         ingredients.put(garlic, 12);
@@ -353,11 +355,11 @@ public class RecipeGenerator {
         ingredients.put(oil, 8);
         ingredients.put(dill, 8);
 
-        return new Recipe(ingredients, 10);
+        return new Recipe(ingredients, 10, "Tarator");
     }
 
     public Recipe generateTolumbichki() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(cottageCheese, 150);
         ingredients.put(eggs, 1);
@@ -368,12 +370,11 @@ public class RecipeGenerator {
         ingredients.put(sugar, 125);
         ingredients.put(lemonZest, 3);
 
-        return new Recipe(ingredients, 30);
+        return new Recipe(ingredients, 30, "Tolumbichki");
     }
 
 
-
-// Products
+    // Products
     public Product backingPowder = new ProductPerKilogram("backingPowder", 22.3);
     public Product bananas = new ProductPerKilogram("bananas", 4.7);
     public Product cookies = new ProductPerKilogram("cookies", 18.2);
@@ -440,11 +441,9 @@ public class RecipeGenerator {
     public Product eggs = new EnumerableProduct("eggs", 0.5);
 
 
-
-
     // Compliment from the restaurant when there are no available products to prepare a certain meal
     public Recipe generateCompliment_RaspberryBites() {
-        ingredients = new SingleRecipe();
+        ingredients = new Ingredients();
 
         ingredients.put(raspberries, 100);
         ingredients.put(sugar, 20);
@@ -453,7 +452,7 @@ public class RecipeGenerator {
         ingredients.put(milk, 20);
         ingredients.put(whiteChocolate, 50);
 
-        return new Recipe(ingredients, 15);
+        return new Recipe(ingredients, 15, "Compliment_RaspberryBites");
     }
 
 
