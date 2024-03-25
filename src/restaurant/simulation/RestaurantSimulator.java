@@ -1,9 +1,9 @@
 package restaurant.simulation;
 
 
-import restaurant.ClientsGroup;
+import restaurant.building_blocks.person.client.ClientsGroup;
 import restaurant.Restaurant;
-import restaurant.building_blocks.TableOrder;
+import restaurant.building_blocks.order.TableOrder;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import restaurant.building_blocks.product.EnumerableProduct;
 import restaurant.building_blocks.product.Product;
-import restaurant.building_blocks.Recipe;
+import restaurant.building_blocks.recipe.Recipe;
 import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
-import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
+import restaurant.building_blocks.kitchen.storage.ProductStorage;
 import restaurant.building_blocks.food.Meal;
 
 public class Test_Meal {

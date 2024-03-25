@@ -1,7 +1,7 @@
 package restaurant.building_blocks.food;
 
 import restaurant.Main;
-import restaurant.building_blocks.Recipe;
+import restaurant.building_blocks.recipe.Recipe;
 
 public class Meal {
     private String name;

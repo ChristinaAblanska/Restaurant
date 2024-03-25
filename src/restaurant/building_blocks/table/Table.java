@@ -1,8 +1,8 @@
 package restaurant.building_blocks.table;
 
-import restaurant.OrderStatus;
-import restaurant.building_blocks.RestaurantMenu;
-import restaurant.building_blocks.TableOrder;
+import restaurant.building_blocks.order.OrderStatus;
+import restaurant.building_blocks.menu.RestaurantMenu;
+import restaurant.building_blocks.order.TableOrder;
 
 public class Table {
     private final RestaurantMenu menu;

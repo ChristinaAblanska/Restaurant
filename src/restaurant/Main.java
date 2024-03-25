@@ -1,12 +1,10 @@
 package restaurant;
 
-import restaurant.building_blocks.StorageGenerator;
-import restaurant.building_blocks.*;
-import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
+import restaurant.building_blocks.kitchen.storage.StorageGenerator;
+import restaurant.building_blocks.kitchen.storage.ProductStorage;
+import restaurant.interaction.RestaurantMenuInteraction;
 import restaurant.simulation.RestaurantSimulator;
 import restaurant.simulation.SimulatorParameters;
-import restaurant.simulation.Time;
-import restaurant.interaction.RestaurantMenuInteraction;
 
 import java.util.Scanner;
 
@@ -36,8 +34,8 @@ public class Main {
         simulator.startSimulation();
 
         // Menu Interaction
-//        RestaurantMenuInteraction interaction = new RestaurantMenuInteraction(shipka);
-//        interaction.go();
+        RestaurantMenuInteraction interaction = new RestaurantMenuInteraction(shipka, new Scanner(System.in));
+        interaction.go();
 
 
     }

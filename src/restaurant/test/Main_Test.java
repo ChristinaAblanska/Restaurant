@@ -1,12 +1,11 @@
 package restaurant.test;
 
 import restaurant.Restaurant;
-import restaurant.building_blocks.StorageGenerator;
-import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
+import restaurant.building_blocks.kitchen.storage.StorageGenerator;
+import restaurant.building_blocks.kitchen.storage.ProductStorage;
 import restaurant.interaction.RestaurantMenuInteraction;
 import restaurant.simulation.RestaurantSimulator;
 import restaurant.simulation.SimulatorParameters;
-import restaurant.simulation.Time;
 
 import java.util.Scanner;
 

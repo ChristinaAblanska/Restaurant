@@ -1,13 +1,13 @@
 package restaurant;
 
-import restaurant.building_blocks.OrdersQueue;
-import restaurant.building_blocks.Owner;
-import restaurant.building_blocks.RestaurantMenu;
-import restaurant.building_blocks.employee.Manager;
+import restaurant.building_blocks.order.OrdersQueue;
+import restaurant.building_blocks.person.Owner;
+import restaurant.building_blocks.menu.RestaurantMenu;
+import restaurant.building_blocks.person.employee.Manager;
 import restaurant.building_blocks.table.Table;
-import restaurant.building_blocks.employee.Cleaner;
-import restaurant.building_blocks.employee.Waiter;
-import restaurant.building_blocks.room.kitchen.Kitchen;
+import restaurant.building_blocks.person.employee.Cleaner;
+import restaurant.building_blocks.person.employee.Waiter;
+import restaurant.building_blocks.kitchen.Kitchen;
 import restaurant.simulation.Time;
 
 /**

@@ -2,18 +2,18 @@ package restaurant.interaction;
 
 import restaurant.Main;
 import restaurant.Restaurant;
-import restaurant.building_blocks.InterActiveMenu;
-import restaurant.building_blocks.OrdersQueue;
-import restaurant.building_blocks.RestaurantMenu;
-import restaurant.building_blocks.TableOrder;
-import restaurant.building_blocks.employee.Cook;
-import restaurant.building_blocks.employee.Waiter;
+import restaurant.building_blocks.menu.InterActiveMenu;
+import restaurant.building_blocks.order.OrdersQueue;
+import restaurant.building_blocks.menu.RestaurantMenu;
+import restaurant.building_blocks.order.TableOrder;
+import restaurant.building_blocks.person.employee.Cook;
+import restaurant.building_blocks.person.employee.Waiter;
 import restaurant.building_blocks.food.Meal;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.product.ProductPerKilogram;
 import restaurant.building_blocks.product.ProductPerLitre;
 import restaurant.building_blocks.table.Table;
-import restaurant.building_blocks.Order;
+import restaurant.building_blocks.order.Order;
 
 import java.util.*;
 
