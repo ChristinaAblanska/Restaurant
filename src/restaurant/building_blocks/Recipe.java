@@ -2,24 +2,31 @@ package restaurant.building_blocks;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import restaurant.building_blocks.product.*;
 
 
 public class Recipe {
     // Type of product / required quantity
-    public final SingleRecipe ingredients;
+    public final Ingredients ingredients;
     public final double prepTime;
+    private String name;
 
-    public Recipe(SingleRecipe ingredients, double prepTime) {
+    public Recipe(Ingredients ingredients, double prepTime, String name) {
         this.ingredients = ingredients;
         this.prepTime = prepTime;
+        this.name = name;
     }
 
-    public static class SingleRecipe extends HashMap<Product, Integer>{
+    public String getName() {
+        return name;
+    }
+
+    public static class Ingredients extends HashMap<Product, Integer> {
         public HashMap<Product, Integer> ingredients;
     }
 
-    public double calculatePrice(){
+    public double calculatePrice() {
         double price = 0;
         for (Map.Entry<Product, Integer> ingredient : this.ingredients.entrySet()) {
             double pricePerUnit = 0.0;
@@ -35,7 +42,7 @@ public class Recipe {
         ingredients.put(product, quantity);
     }
 
-    public SingleRecipe getIngredients() {
+    public Ingredients getIngredients() {
         return ingredients;
     }
 

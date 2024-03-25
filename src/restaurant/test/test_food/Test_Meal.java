@@ -17,7 +17,7 @@ public class Test_Meal {
     public Recipe recipe;
 
     Meal meal;
-    public Recipe.SingleRecipe ingredients = new Recipe.SingleRecipe();
+    public Recipe.Ingredients ingredients = new Recipe.Ingredients();
 
     public Product yogurt = new ProductPerKilogram("Yogurt", 5);
     public Product cucumber = new ProductPerKilogram("Cucmber", 1);
@@ -41,7 +41,7 @@ public class Test_Meal {
 
     @Before
     public void recipeSetup() {
-        recipe = new Recipe(ingredients, 15);
+        recipe = new Recipe(ingredients, 15,"");
         recipe.addIngredient(yogurt, 500);
         recipe.addIngredient(eggs, 3);
         recipe.addIngredient(milk, 700);

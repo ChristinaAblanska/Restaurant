@@ -33,7 +33,7 @@ public class RestaurantMenuInteraction {
         Table table1 = new Table(menu, 4, new Random().nextInt(3) + 1);
         Table table2 = new Table(menu, 4, new Random().nextInt(8) + 4);
         this.tables = new Table[]{table1, table2};
-        this.waiter = new Waiter(restaurant.getKitchen(), tables, new Random().nextInt(3) + 1);
+        this.waiter = new Waiter(restaurant.getKitchen(), tables, new Random().nextInt(3) + 1,2200,1);
         this.scan = scan;
     }
 
@@ -48,7 +48,7 @@ public class RestaurantMenuInteraction {
         // Stock Before Cooking
         HashMap<Product, Double> stockBefore = getStock(products);
 
-        Cook cook = new Cook(tables[0].getTableOrder(), restaurant.getKitchen().getStorage());
+        Cook cook = new Cook(tables[0].getTableOrder(), restaurant.getKitchen().getStorage(),2500);
         for (int i = 0; i < interactWithClient.getOrdersQueue().getSze(); i++) {
             ArrayList<Meal> result = cook.cookMeals(interactWithClient.getOrdersQueue().getOrderElement(i));
         }

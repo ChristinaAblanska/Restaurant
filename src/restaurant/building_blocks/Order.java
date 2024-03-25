@@ -16,12 +16,6 @@ public class Order {
 
     private static int orderIDcount = 10_000;
 
-    public void setCompleteTime(String completeTime) {
-        this.completeTime = completeTime;
-    }
-
-    private String completeTime;
-
     public Order() {
         this.orderStatus = OrderStatus.BLANK;
         this.meals = new HashMap<>();
@@ -116,11 +110,6 @@ public class Order {
         return price;
     }
 
-
-    public String getCompleteTime() {
-        return completeTime;
-    }
-
     public void adjustMealAmount(Meal meal, int count) {
         if (meals.containsKey(meal)) {
             meals.put(meal, count);
@@ -197,5 +186,9 @@ public class Order {
 
     public int getOrderID() {
         return orderID;
+    }
+
+    public HashMap<Beverage, Integer> getBeverages() {
+        return beverages;
     }
 }

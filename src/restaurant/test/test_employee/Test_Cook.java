@@ -15,8 +15,10 @@ import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 import restaurant.building_blocks.food.Meal;
 import restaurant.building_blocks.Order;
 import restaurant.building_blocks.employee.Cook;
+import restaurant.simulation.Time;
 
 import java.util.ArrayList;
+
 public class Test_Cook {
     public Cook cook;
     public Order order;
@@ -26,8 +28,8 @@ public class Test_Cook {
 
     public Meal meal1;
     public Meal meal2;
-    public Recipe.SingleRecipe ingredients1 = new Recipe.SingleRecipe();
-    public Recipe.SingleRecipe ingredients2 = new Recipe.SingleRecipe();
+    public Recipe.Ingredients ingredients1 = new Recipe.Ingredients();
+    public Recipe.Ingredients ingredients2 = new Recipe.Ingredients();
 
     public Product yogurt = new ProductPerKilogram("Yogurt", 5);
     public Product eggs = new EnumerableProduct("Egg", 0.5);
@@ -51,12 +53,12 @@ public class Test_Cook {
 
     @Before
     public void recipeSetup() {
-        recipe1 = new Recipe(ingredients1, 15);
+        recipe1 = new Recipe(ingredients1, 15, "");
         recipe1.addIngredient(yogurt, 300);
         recipe1.addIngredient(eggs, 3);
         recipe1.addIngredient(milk, 700);
 
-        recipe2 = new Recipe(ingredients2, 10);
+        recipe2 = new Recipe(ingredients2, 10, "");
         recipe2.addIngredient(cucumber, 300);
         recipe2.addIngredient(walnuts, 100);
     }
@@ -72,7 +74,7 @@ public class Test_Cook {
         Order order = new Order();
         TableOrder tabOrder = new TableOrder();
         tabOrder.add(order);
-        cook = new Cook(tabOrder, storage);
+        cook = new Cook(tabOrder, storage, 2300);
         order.addMeal(meal1, 1);
         Meal newMeal = cook.cookSingleMeal(meal1.getRecipe(), storage);
         Assert.assertEquals(meal1.getRecipe(), newMeal.getRecipe());
@@ -83,10 +85,10 @@ public class Test_Cook {
         Order order = new Order();
         TableOrder tabOrder = new TableOrder();
         order.addMeal(meal1, 1);
-        cook = new Cook(tabOrder, storage);
+        cook = new Cook(tabOrder, storage, 2300);
         cook.cookSingleMeal(meal1.getRecipe(), storage);
         Assert.assertEquals(14.7, storage.getStock("Yogurt"), 0.0003f);
-        Assert.assertEquals(47, storage.getStock("Egg"),0.0003f);
+        Assert.assertEquals(47, storage.getStock("Egg"), 0.0003f);
         Assert.assertEquals(49.3, storage.getStock("Milk"), 0.0003f);
     }
 
@@ -94,13 +96,13 @@ public class Test_Cook {
     public void testCookMealStorageUpdate() throws ProductOutOfStockException {
         Order order = new Order();
         TableOrder tabOrder = new TableOrder();
-        cook = new Cook(tabOrder, storage);
+        cook = new Cook(tabOrder, storage, 2300);
         order.addMeal(meal1, 2);
         order.addMeal(meal2, 2);
         cook.cookMeals(order);
 
         Assert.assertEquals(14.4, storage.getStock("Yogurt"), 0.0003f);
-        Assert.assertEquals(44, storage.getStock("Egg"),0.0003f);
+        Assert.assertEquals(44, storage.getStock("Egg"), 0.0003f);
         Assert.assertEquals(48.6, storage.getStock("Milk"), 0.0003f);
         Assert.assertEquals(19.4, storage.getStock("Cucumber"), 0.0003f);
         Assert.assertEquals(4.8, storage.getStock("Walnuts"), 0.0003f);
@@ -111,7 +113,7 @@ public class Test_Cook {
         Order order = new Order();
         TableOrder tabOrder = new TableOrder();
         System.out.println(order.getOrderStatus());
-        cook = new Cook(tabOrder, storage);
+        cook = new Cook(tabOrder, storage, 2300);
         order.addMeal(meal1, 2);
         order.addMeal(meal2, 2);
         System.out.println(order.getOrderStatus());

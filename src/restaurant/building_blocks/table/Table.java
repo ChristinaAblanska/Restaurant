@@ -2,15 +2,13 @@ package restaurant.building_blocks.table;
 
 import restaurant.OrderStatus;
 import restaurant.building_blocks.RestaurantMenu;
-import restaurant.building_blocks.UserMenu;
 import restaurant.building_blocks.TableOrder;
 
 public class Table {
     private final RestaurantMenu menu;
     private final int capacity;
-    private final TableOrder tableOrder;
+    private TableOrder tableOrder;
     private final int number;
-
     private boolean isOccupied;
 
     public Table(RestaurantMenu menu, int capacity, int number) {
@@ -47,4 +45,9 @@ public class Table {
     }
 
 
+    public void releaseDinnerTable() {
+        tableOrder.truncate();
+        tableOrder.setStatus(OrderStatus.BLANK);
+        setOccupied(false);
+    }
 }

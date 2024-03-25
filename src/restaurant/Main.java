@@ -1,5 +1,6 @@
 package restaurant;
 
+import restaurant.building_blocks.StorageGenerator;
 import restaurant.building_blocks.*;
 import restaurant.building_blocks.room.kitchen.storage.ProductStorage;
 import restaurant.simulation.RestaurantSimulator;
@@ -23,11 +24,12 @@ public class Main {
 
         ProductStorage storage = new StorageGenerator().storageGenerator();
 
-        Time cleaningTime = new Time(SimulatorParameters.WORK_DAY_HOURS
-                + SimulatorParameters.WORK_DAY_START_HOUR - 1
-                , SimulatorParameters.CLEANING_START_TIME_MINUTES_BEFORE_CLOSE);
 
-        Restaurant shipka = new Restaurant("Shipka", 10, 4, cleaningTime);
+        Restaurant shipka = new Restaurant("Shipka",
+                10,
+                4,
+                SimulatorParameters.CLEANING_START_TIME);
+
         shipka.getKitchen().setStorage(storage);
 
         RestaurantSimulator simulator = new RestaurantSimulator(shipka);
@@ -39,6 +41,4 @@ public class Main {
 
 
     }
-
-
 }

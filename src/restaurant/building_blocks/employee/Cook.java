@@ -22,12 +22,14 @@ public class Cook extends Employee implements Runnable {
     private final TableOrder tableOrder;
     private final ProductStorage storage;
 
-    public Cook(TableOrder tableOrder, ProductStorage storage) {
+    public Cook(TableOrder tableOrder, ProductStorage storage, double salary) {
         this.tableOrder = tableOrder;
         this.storage = storage;
+        this.salary = salary;
     }
 
     public ArrayList<Meal> cookMeals(Order order) {
+
         order.setOrderStatus(OrderStatus.IN_PROGRESS);
         ArrayList<Meal> result = new ArrayList<>();
         for (Map.Entry<Meal, Integer> meal : order.getMeals().entrySet()) {
@@ -37,8 +39,8 @@ public class Cook extends Employee implements Runnable {
                     newMeal = cookSingleMeal(meal.getKey().getRecipe(), storage);
                     order.setOrderStatus(OrderStatus.COMPLETED);
                 } catch (ProductOutOfStockException e) {
-                    order.setOrderStatus(OrderStatus.REVOKE);
-                    throw new RuntimeException(e);
+                    order.setOrderStatus(OrderStatus.REVOKE_BY_KITCHEN);
+                    //throw new RuntimeException(e);
                 }
                 result.add(newMeal);
             }
@@ -53,19 +55,19 @@ public class Cook extends Employee implements Runnable {
                 try {
                     storage.getProductPerGram(entry.getKey(), entry.getValue());
                 } catch (ProductOutOfStockException e) {
-                    throw new ProductOutOfStockException("Product out of stock! "+entry.getKey().getName());
+                    throw new ProductOutOfStockException("Product out of stock! " + entry.getKey().getName());
                 }
             } else if (entry.getKey() instanceof ProductPerLitre) {
                 try {
                     storage.getProductPerMilliliter(entry.getKey(), entry.getValue());
                 } catch (ProductOutOfStockException e) {
-                    throw new ProductOutOfStockException("Product out of stock! "+entry.getKey().getName());
+                    throw new ProductOutOfStockException("Product out of stock! " + entry.getKey().getName());
                 }
             } else if (entry.getKey() instanceof EnumerableProduct) {
                 try {
                     storage.getEnumerableProduct(entry.getKey(), entry.getValue());
                 } catch (ProductOutOfStockException e) {
-                    throw new ProductOutOfStockException("Product out of stock! "+entry.getKey().getName());
+                    throw new ProductOutOfStockException("Product out of stock! " + entry.getKey().getName());
                 }
             }
         }
@@ -91,7 +93,7 @@ public class Cook extends Employee implements Runnable {
 
         //here must delay using the meal with maximum cook time
         try {
-            Thread.sleep(WorkDay.minutesToLocalTime(20));
+            Thread.sleep(WorkDay.minutesToLocalMinutes(tableOrder.getTotalCookTime()));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

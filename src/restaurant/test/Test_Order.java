@@ -25,8 +25,8 @@ public class Test_Order {
 
     public Meal meal1;
     public Meal meal2;
-    public Recipe.SingleRecipe ingredients1 = new Recipe.SingleRecipe();
-    public Recipe.SingleRecipe ingredients2 = new Recipe.SingleRecipe();
+    public Recipe.Ingredients ingredients1 = new Recipe.Ingredients();
+    public Recipe.Ingredients ingredients2 = new Recipe.Ingredients();
 
     public Product yogurt = new ProductPerKilogram("Yogurt", 5);
     public Product eggs = new EnumerableProduct("Egg", 0.5);
@@ -50,12 +50,12 @@ public class Test_Order {
 
     @Before
     public void recipeSetup() {
-        recipe1 = new Recipe(ingredients1, 15);
+        recipe1 = new Recipe(ingredients1, 15,"");
         recipe1.addIngredient(yogurt, 500);
         recipe1.addIngredient(eggs, 3);
         recipe1.addIngredient(milk, 700);
 
-        recipe2 = new Recipe(ingredients2, 10);
+        recipe2 = new Recipe(ingredients2, 10,"");
         recipe2.addIngredient(cucumber, 300);
         recipe2.addIngredient(walnuts, 100);
     }

@@ -80,13 +80,17 @@ public class StorageGenerator {
     public Product raspberries = new ProductPerKilogram("Raspberries", 21.2);
     public Product whiteChocolate = new ProductPerKilogram("White Chocolate", 12.7);
 
+    public Product Juice = new EnumerableProduct("Juice", 4.40);
+    public Product Lemonade = new EnumerableProduct("Lemonade", 5.80);
+    public Product SoftDrink = new EnumerableProduct("Soft Drink", 3.20);
+    public Product Beer = new EnumerableProduct("Beer", 6.20);
 
     public ProductStorage storageGenerator() {
         ProductStorage storage = new ProductStorage();
         Random generate = new Random();
 
 
-        storage.addProductPerKilogram(backingPowder, generate.nextDouble( 4) + 1);
+        storage.addProductPerKilogram(backingPowder, generate.nextDouble(4) + 1);
         storage.addProductPerKilogram(bananas, generate.nextDouble(20) + 10);
         storage.addProductPerKilogram(cookies, generate.nextDouble(20) + 10);
         storage.addProductPerKilogram(beans, generate.nextDouble(20) + 10);
@@ -94,44 +98,44 @@ public class StorageGenerator {
         storage.addProductPerKilogram(broccoli, generate.nextDouble(40) + 20);
         storage.addProductPerLiter(broth, generate.nextDouble(20) + 10);
         storage.addProductPerKilogram(vanilla, generate.nextDouble(5) + 2);
-        storage.addProductPerLiter(water, generate.nextDouble(120) + 500);
-        storage.addProductPerKilogram(mushrooms, generate.nextDouble(40) + 200);
-        storage.addProductPerKilogram(bayLeaf, generate.nextDouble(5) + 20);
-        storage.addProductPerKilogram(mint, generate.nextDouble(5) + 20);
-        storage.addProductPerKilogram(tomatoes, generate.nextDouble(50) + 300);
-        storage.addProductPerKilogram(sugar, generate.nextDouble(40) + 200);
-        storage.addProductPerKilogram(cabbage, generate.nextDouble(40) + 200);
-        storage.addProductPerLiter(oliveOil, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(cottageCheese, generate.nextDouble(40) + 200);
-        storage.addProductPerKilogram(mincedMeat, generate.nextDouble(400) + 200);
-        storage.addProductPerKilogram(cocoa, generate.nextDouble(5) + 20);
-        storage.addProductPerKilogram(potatoes, generate.nextDouble(50) + 300);
-        storage.addProductPerKilogram(yellowCheese, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(pickledCabbage, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(yogurt, generate.nextDouble(40) + 0);
-        storage.addProductPerKilogram(dill, generate.nextDouble(5) + 20);
-        storage.addProductPerKilogram(filoDough, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(cucumber, generate.nextDouble(50) + 300);
-        storage.addProductPerKilogram(bread, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(lentil, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(lemonZest, generate.nextDouble(5) + 20);
-        storage.addProductPerKilogram(onion, generate.nextDouble(40) + 200);
-        storage.addProductPerKilogram(chilliePepper, generate.nextDouble(40) + 200);
-        storage.addProductPerKilogram(parsley, generate.nextDouble(5) + 20);
-        storage.addEnumerableProduct(lettuce, (generate.nextInt(70) + 100));
-        storage.addProductPerKilogram(olives, generate.nextDouble(40) + 200);
-        storage.addProductPerKilogram(butter, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(carrots, generate.nextDouble(40) + 200);
-        storage.addProductPerLiter(oil, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(walnuts, generate.nextDouble(20) + 100);
-        storage.addProductPerKilogram(rice, generate.nextDouble(20) + 100);
-        storage.addProductPerLiter(vinegar, generate.nextDouble(5) + 20);
-        storage.addProductPerKilogram(chicken, generate.nextDouble(40) + 200);
-        storage.addProductPerKilogram(greenOnion, generate.nextDouble(20) + 100);
-        storage.addProductPerLiter(milk, generate.nextDouble(20) + 100);
+        storage.addProductPerLiter(water, generate.nextDouble(120) + 50);
+        storage.addProductPerKilogram(mushrooms, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(bayLeaf, generate.nextDouble(5) + 2);
+        storage.addProductPerKilogram(mint, generate.nextDouble(5) + 2);
+        storage.addProductPerKilogram(tomatoes, generate.nextDouble(50) + 30);
+        storage.addProductPerKilogram(sugar, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(cabbage, generate.nextDouble(40) + 20);
+        storage.addProductPerLiter(oliveOil, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(cottageCheese, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(mincedMeat, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(cocoa, generate.nextDouble(5) + 2);
+        storage.addProductPerKilogram(potatoes, generate.nextDouble(50) + 30);
+        storage.addProductPerKilogram(yellowCheese, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(pickledCabbage, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(yogurt, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(dill, generate.nextDouble(5) + 2);
+        storage.addProductPerKilogram(filoDough, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(cucumber, generate.nextDouble(50) + 30);
+        storage.addProductPerKilogram(bread, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(lentil, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(lemonZest, generate.nextDouble(5) + 2);
+        storage.addProductPerKilogram(onion, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(chilliePepper, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(parsley, generate.nextDouble(5) + 2);
+        storage.addEnumerableProduct(lettuce, (generate.nextInt(70) + 30));
+        storage.addProductPerKilogram(olives, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(butter, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(carrots, generate.nextDouble(40) + 20);
+        storage.addProductPerLiter(oil, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(walnuts, generate.nextDouble(20) + 10);
+        storage.addProductPerKilogram(rice, generate.nextDouble(20) + 10);
+        storage.addProductPerLiter(vinegar, generate.nextDouble(5) + 2);
+        storage.addProductPerKilogram(chicken, generate.nextDouble(40) + 20);
+        storage.addProductPerKilogram(greenOnion, generate.nextDouble(20) + 10);
+        storage.addProductPerLiter(milk, generate.nextDouble(20) + 10);
         storage.addProductPerKilogram(pork, generate.nextDouble(40) + 20);
         storage.addProductPerKilogram(cheese, generate.nextDouble(20) + 10);
-        storage.addProductPerKilogram(bacon, generate.nextDouble(20) + 100);
+        storage.addProductPerKilogram(bacon, generate.nextDouble(20) + 10);
         storage.addProductPerLiter(soySause, generate.nextDouble(5) + 2);
         storage.addProductPerKilogram(salt, generate.nextDouble(5) + 2);
         storage.addProductPerKilogram(sausage, generate.nextDouble(20) + 10);
@@ -149,11 +153,16 @@ public class StorageGenerator {
         storage.addProductPerKilogram(pistachio, generate.nextDouble(20) + 10);
         storage.addProductPerKilogram(chocolate, generate.nextDouble(20) + 10);
         storage.addProductPerKilogram(ham, generate.nextDouble(40) + 20);
-        storage.addEnumerableProduct(eggs, (generate.nextInt(300) + 10000));
+        storage.addEnumerableProduct(eggs, (generate.nextInt(300) + 100));
 
         // for Compliment ONLY
         storage.addProductPerKilogram(raspberries, 15);
         storage.addProductPerKilogram(whiteChocolate, 10);
+
+        storage.addEnumerableProduct(Juice, (generate.nextInt(50) + 100));
+        storage.addEnumerableProduct(Lemonade, (generate.nextInt(50) + 100));
+        storage.addEnumerableProduct(SoftDrink, (generate.nextInt(50) + 100));
+        storage.addEnumerableProduct(Beer, (generate.nextInt(50) + 100));
 
         return storage;
     }

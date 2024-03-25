@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import restaurant.building_blocks.product.Product;
 import restaurant.building_blocks.room.kitchen.Kitchen;
+import restaurant.simulation.Time;
 
 public class Test_Kitchen {
 

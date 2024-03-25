@@ -1,8 +1,8 @@
 package restaurant.test;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import restaurant.building_blocks.RestaurantMenu;
 import restaurant.simulation.SimulatorParameters;
 import restaurant.Restaurant;
 import restaurant.simulation.Time;
@@ -12,13 +12,12 @@ public class TestWorkDay {
 
     private WorkDay workDay;
     private Restaurant shipka;
-    Time cleaningTime = new Time(SimulatorParameters.WORK_DAY_HOURS + SimulatorParameters.WORK_DAY_START_HOUR - 1
-            , SimulatorParameters.CLEANING_START_TIME_MINUTES_BEFORE_CLOSE);
+
 
     @Before
     public void setup() throws InterruptedException {
 
-        shipka = new Restaurant("Shipka", 10, 4,  cleaningTime);
+        shipka = new Restaurant("Shipka", 10, 4, SimulatorParameters.CLEANING_START_TIME);
         //Here speed up the work day 1000 times.
         //In other words we set the work time per day to 28,8 seconds.
         workDay = new WorkDay();
@@ -64,5 +63,12 @@ public class TestWorkDay {
                 Assert.assertEquals(8, workDay.getHourlyLoad());
             }*/
         }
+    }
+
+    @Test
+    public void test_minutes_to_time() {
+        Time formedTime = WorkDay.minutesToTime(59);
+        Assert.assertEquals(0, formedTime.getHour());
+        Assert.assertEquals(59, formedTime.getMin());
     }
 }
