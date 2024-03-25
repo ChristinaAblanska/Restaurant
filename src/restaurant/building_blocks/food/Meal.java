@@ -15,14 +15,16 @@ public class Meal {
 
     public Meal() {
         this.name = "";
-        this.recipe = new Recipe(new Recipe.Ingredients(), 0,"");
+        this.recipe = new Recipe(new Recipe.Ingredients(), 0, "");
         this.price = 0;
     }
+
     public Meal(Recipe recipe) {
         this.name = "";
         this.recipe = recipe;
         this.price = calculatePriceProfit();
     }
+
     public Meal(String name, Recipe recipe) {
         this.name = name;
         this.recipe = recipe;
@@ -32,8 +34,8 @@ public class Meal {
     public double calculatePriceProfit() {
         double ingredientPrice = recipe.calculatePrice();
         double profit = ingredientPrice * Main.PROFIT; // Constant profit
-//        double tips = (ingredientPrice + profit) * Main.TIPS; // Constant tips
-        return ingredientPrice + profit; // + tips;
+        double tips = (ingredientPrice + profit) * Main.TIPS; // Constant tips
+        return ingredientPrice + profit + tips;
     }
 
     public double getPrice() {
@@ -54,7 +56,7 @@ public class Meal {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(name).append(" - ").append(String.format("%.2f",price)+" lv.");
+        result.append(name).append(" - ").append(String.format("%.2f", price) + " lv.");
         return result.toString();
     }
 }
