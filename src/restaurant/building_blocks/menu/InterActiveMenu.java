@@ -47,13 +47,6 @@ public class InterActiveMenu {
                         System.out.println(ordersQueue.getOrder(idToUpdate).toString1());
                         updateAmount(ordersQueue.getOrder(idToUpdate), scan);
                         System.out.println(ordersQueue.getOrder(idToUpdate).toString1());
-//                        ordersQueue.removeOrder(idToUpdate);
-//                        menu.showNewOrderSubMenu();
-//                        Order newOrder = createNewOrder(menu, scan);
-//                        if (!newOrder.isEmpty()) {
-//                            newOrder.setOrderStatus(OrderStatus.ACTIVE);
-//                            ordersQueue.addOrder(newOrder);
-//                        }
                     }
                     break;
                 // Revoke an order by id
@@ -162,15 +155,6 @@ public class InterActiveMenu {
     }
 
     private int getOrderId(Scanner scan) {
-//        int id = 0;
-//        System.out.println("Enter id: ");
-//        id = Integer.parseInt(scan.nextLine());
-//        while (id < 10000 || id > 19999) {
-//            System.out.println("Invalid input! Please try again!");
-//            id = Integer.parseInt(scan.nextLine());
-//        }
-//        return id;
-
         String id;
         System.out.println("Enter id: ");
         id = scan.nextLine();

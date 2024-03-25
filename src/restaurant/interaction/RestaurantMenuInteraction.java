@@ -65,7 +65,7 @@ public class RestaurantMenuInteraction {
         printStock(stockBefore, products);
 
         scan.close();
-        return;
+        System.exit(0);
     }
 
     private void updateTips(Waiter waiter, OrdersQueue ordersQueue) {

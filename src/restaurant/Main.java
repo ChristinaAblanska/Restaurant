@@ -13,12 +13,7 @@ public class Main {
     public static final double TIPS = 0.01;
 
     public static void main(String[] args) {
-        /*System.out.println("Project 1 - Shipka Restaurant");
-
-        InterActiveMenu interActiveMenu = new InterActiveMenu();
         Scanner scan = new Scanner(System.in);
-        interActiveMenu.interactWithTheMenu(scan);*/
-
 
         ProductStorage storage = new StorageGenerator().storageGenerator();
 
@@ -30,13 +25,20 @@ public class Main {
 
         shipka.getKitchen().setStorage(storage);
 
-        RestaurantSimulator simulator = new RestaurantSimulator(shipka);
-        simulator.startSimulation();
+        int choice = Console.readInteger(scan, "Choose what to do now?\n 1 - Simulation\n 2 - Interact with the menu\n");
 
-        // Menu Interaction
-        RestaurantMenuInteraction interaction = new RestaurantMenuInteraction(shipka, new Scanner(System.in));
-        interaction.go();
+        if (choice == 1) {
+            // Simulation
+            System.out.println("Simulation starts");
+            RestaurantSimulator simulator = new RestaurantSimulator(shipka);
+            simulator.startSimulation();
+            System.out.println("Simulation completed\n");
+        } else if (choice == 2) {
+            // Menu Interaction
+            RestaurantMenuInteraction interaction = new RestaurantMenuInteraction(shipka, scan);
+            interaction.go();
+        }
 
-
+        scan.close();
     }
 }

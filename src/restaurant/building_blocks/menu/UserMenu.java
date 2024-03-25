@@ -39,7 +39,7 @@ public class UserMenu {
 
     public void showSalads() {
         Meal meal1 = new Meal("Green Salad", recipeGenerator.generateGreenSalad());
-        Meal meal2 = new Meal("Cabbage and Carrots", recipeGenerator.generateCabbageCarrotSalad());
+        Meal meal2 = new Meal("Cabbage and Carrots Salad", recipeGenerator.generateCabbageCarrotSalad());
         Meal meal3 = new Meal("Shopska Salad", recipeGenerator.generateShopskaSalad());
         Meal meal4 = new Meal("Shepard's Salad", recipeGenerator.generateShepardSalad());
 
